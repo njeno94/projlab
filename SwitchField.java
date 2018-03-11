@@ -1,9 +1,19 @@
 package Model;
 
+/**
+ * A kapcsoló osztály szerepét tölti be.
+ * A hozzá tartozó kapcsolható lyuk állapotát tudja megváltoztatni.
+ */
 public class SwitchField extends Field {
 	
 	private SwitchHoleField hole;
 	
+	/**
+	 * Befogadja a paraméterként kapott Box objektumot.
+	 * Meghívja a hozzátartozó SwitchHoleField changeState() metódusát.
+	 * @param b		a láda, amit a mezõre akarnak tolni
+	 * @param d		az irány, amerre a ládát tolni szeretnék
+	 */
 	@Override
 	public void accept(Box b, Direction d) {
 		if (thing == null) {
@@ -25,14 +35,21 @@ public class SwitchField extends Field {
 		}
 	}
 	
+	/**
+	 *  Beállítja a hozzá tartozó kapcsolható lyukat
+	 * @param sh 	a kapcsolható lyuk, amit kapcsolni fog tudni
+	 */
 	public void setSwitchHoleField(SwitchHoleField sh) {
 		hole = (SwitchHoleField)sh;
 	}
 	
+	/**
+	 * Eltávolítja a pályáról a rajta lévõ dolgot,
+	 * és kikapcsolja a hozzá tartozó kapcsolható lyukat
+	 */
 	@Override
 	public void removeThing() {
 		thing = null;
 		hole.setState(false);
 	}
-
 }
