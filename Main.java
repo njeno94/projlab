@@ -5,65 +5,88 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		
-		Warehouse raktar = new Warehouse();
-		Worker w1 = new Worker();
-		Worker w2 = new Worker();
-		Box b1 = new Box();
-		Box b2 = new Box();
-		
-		SwitchHoleField f1 = new SwitchHoleField();
-		Field f2 = new Field();
-		Field f3 = new Field();
-		Field f4 = new Field();
-		SwitchField f5 = new SwitchField();
-		Field f6 = new Field();
-		
-		Game game = new Game();
-		
-		game.addField(f1);
-		game.addField(f2);
-		game.addField(f3);
-		game.addField(f4);
-		game.addField(f5);
-		game.addField(f6);
-		
-		//// Field-ek be�ll�t�sa
-		f1.setNeighbour(Direction.RIGHT, f2);
-		f2.setNeighbour(Direction.LEFT, f1);
-		f2.setNeighbour(Direction.RIGHT, f3);
-		f3.setNeighbour(Direction.LEFT, f2);
-		f3.setNeighbour(Direction.RIGHT, f4);
-		f4.setNeighbour(Direction.LEFT, f3);
-		f4.setNeighbour(Direction.RIGHT, f5);
-		f5.setNeighbour(Direction.LEFT, f4);
-		f5.setNeighbour(Direction.RIGHT, f6);
-		f6.setNeighbour(Direction.LEFT, f5);
-		
-		//// Munk�s, l�da be�ll�t�sa
-		f3.accept(w1, Direction.UP);
-		f2.accept(b1, Direction.UP);
-		f4.accept(b2, Direction.UP);
-		
-		//// Kapcsol� hozz�ad�sa
-		f5.setSwitchHoleField(f1);
 
-		
-		String s = null;
-		Scanner in = new Scanner(System.in);
-		
-		while (s == null || !(s.equals("exit"))) {
-			s = in.nextLine();
-			
-			switch(s) {
-			case "D":
-				w1.step(Direction.RIGHT);
-				break;
-			case "A":
-				w1.step(Direction.LEFT);
-				break;
-			}
-		}
-		System.out.println("w1 pont: " + w1.getPoint());
+	    Skeleton s1 = new Skeleton();
+
+        Scanner reader = new Scanner(System.in);
+        int option =0;
+        while(option != 17) {
+            System.out.println("1. Munkás üres mezőre lép\n" +
+                    "2. Munkást falnak megy\n" +
+                    "3. Munkás meghal lyukba esik\n" +
+                    "4. Munkás1 meghal Munkás2 falhoz nyomja\n" +
+                    "5. Munkás üres mezőre dobozt tol\n" +
+                    "6. Munkás kettő elemű dobozláncot tol\n" +
+                    "7. Munkás lyukba tolja a ládát\n" +
+                    "8. Munkás váltóra tolja a ládát\n" +
+                    "9. Munkás pontot kap\n" +
+                    "10.Munkás váltóra lép\n" +
+                    "11.Munkás inaktív lyukra lép\n" +
+                    "12.Munkás célmezőre lép\n" +
+                    "13.Munkás mozdíthatatlan dobozt tol\n" +
+                    "14.Munkás inaktív lyukra dobozt tol\n" +
+                    "15.Munkás aktiválja a váltót és lyukba lép\n" +
+                    "16.Munkás1 meghal Munkás2 lyukba löki egy dobozzal\n " +
+                    "17. Kilépés");
+            option = reader.nextInt();
+
+
+            switch (option) {
+                case 1:
+                    s1.WorkerStepToEmptyField();
+                    break;
+                case 2:
+                    s1.WorkerStepToWall();
+                    break;
+                case 3:
+                    s1.WorkerDie1FallIntoSwitchHoleField();
+                    break;
+                case 4:
+                    s1.Worker1Die2PushedToWallByWorker2();
+                    break;
+                case 5:
+                    s1.WorkerPushBoxToEmptyField();
+                    break;
+                case 6:
+                    s1.WorkerPushBoxesToEmptyField();
+                    break;
+                case 7:
+                    s1.WorkerPushBoxIntoSwitchHoleField();
+                    break;
+                case 8:
+                    s1.WorkerPushBoxToSwitchField();
+                    break;
+                case 9:
+                    s1.WorkerGetPoint();
+                    break;
+                case 10:
+                    s1.WorkerStepToSwitchField();
+                    break;
+                case 11:
+                    s1.WorkerStepToInactiveSwitchHoleField();
+                    break;
+                case 12:
+                    s1.WorkerStepToGoalField();
+                    break;
+                case 13:
+                    s1.WorkerPushBlockedBox();
+                    break;
+                case 14:
+                    s1.WorkerPushBoxToInactiveSwitchHoleField();
+                    break;
+                case 15:
+                    s1.WorkerActiveteTheHoleFieldAndFallIntoTheHall();
+                    break;
+                case 16:
+                    s1.Worker1Die3PushedIntoSwitchHoleFieldByWorker2WithBox();
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        reader.close();
+        System.exit(0);
+
 	}
 }
