@@ -1,8 +1,8 @@
 package Model;
 
 /**
- * A munkáshoz tartozó osztály. Feladata a munkás életének
- * valamint pontjainak kezelése, a lépés illetve a ládák tolása.
+ * A munkï¿½shoz tartozï¿½ osztï¿½ly. Feladata a munkï¿½s ï¿½letï¿½nek
+ * valamint pontjainak kezelï¿½se, a lï¿½pï¿½s illetve a lï¿½dï¿½k tolï¿½sa.
  */
 
 public class Worker extends Thing {
@@ -16,36 +16,49 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 *  a munkás lépéséért felelõs metódus,
-	 *  paraméterként megkapja, hogy milyen irányba lépjen
-	 * @param d		az irány, amerre lépni szeretne
+	 *  a munkï¿½s lï¿½pï¿½sï¿½ï¿½rt felelï¿½s metï¿½dus,
+	 *  paramï¿½terkï¿½nt megkapja, hogy milyen irï¿½nyba lï¿½pjen
+	 * @param d		az irï¿½ny, amerre lï¿½pni szeretne
 	 */
 	public void step(Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				".step(" + d.toString() + ")");
 		Field nextField = field.getNeighbour(d);
-		
 		nextField.accept(this, d);
+		Skeleton.printReturn();
 		
 	}
 	
 	/**
-	 * Ez a metódus kezeli a munkás tolását, amennyiben egy másik munkás tolja.
-	 * @param w		a másik munkás, aki tolni szeretné 
-	 * @param d		az irány, amerre tolni szeretné a munkást							
+	 * Ez a metï¿½dus kezeli a munkï¿½s tolï¿½sï¿½t, amennyiben egy mï¿½sik munkï¿½s tolja.
+	 * @param w		a mï¿½sik munkï¿½s, aki tolni szeretnï¿½ 
+	 * @param d		az irï¿½ny, amerre tolni szeretnï¿½ a munkï¿½st							
 	 */
 	@Override
 	public void pushed(Worker w, Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				"pushed(" + Skeleton.getName(w) + 
+				"," + d.toString()+ ")"
+		);
+		Skeleton.printReturn("");
 		//
 	}
 	
 	/**
-	 * Ez a metódus kezeli a Worker tolását,
-	 * amennyiben Box tolja. Paraméterként kapja a dobozt,
-	 * illetve, hogy milyen irányba szeretnék tolni. 
-	 * @param b		a doboz, amit rá akarnak tolni a munkásra
-	 * @param d		az irány, amerre tolni szeretnék a munkást
+	 * Ez a metï¿½dus kezeli a Worker tolï¿½sï¿½t,
+	 * amennyiben Box tolja. Paramï¿½terkï¿½nt kapja a dobozt,
+	 * illetve, hogy milyen irï¿½nyba szeretnï¿½k tolni. 
+	 * @param b		a doboz, amit rï¿½ akarnak tolni a munkï¿½sra
+	 * @param d		az irï¿½ny, amerre tolni szeretnï¿½k a munkï¿½st
 	 */
 	@Override
 	public void pushed(Box b, Direction d) {
+		
+		Skeleton.printCall(Skeleton.getName(this) + 
+				"pushed(" + Skeleton.getName(b) + 
+				"," + d.toString()+ ")"
+		);
+		
 		Field nextField = field.getNeighbour(d);
 		
 		if (nextField.accept(this, d)) {
@@ -54,10 +67,14 @@ public class Worker extends Thing {
 		else {
 			this.disappear();
 		}
+		Skeleton.printReturn();
 	}
 	
 	@Override
 	public void addPoint(Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				"addPoint(" + d.toString()+ ")"
+		);
 		Field neighbour = field.getNeighbour(d);
 		if (neighbour != null) {
 			neighbour.addPointToThing(d);
@@ -65,9 +82,14 @@ public class Worker extends Thing {
 		else {
 			points++;
 		}
+		Skeleton.printReturn();
 	}
 	
 	public int getPoint() {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				"getPoint()"
+		);
+		Skeleton.printReturn(""+points);
 		return points;
 	}
 	

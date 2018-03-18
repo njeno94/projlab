@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * Ez a singleton felelõs a játék irányításáért. Õ valósítja meg a raktár épületet.
+ * Ez a singleton felelï¿½s a jï¿½tï¿½k irï¿½nyï¿½tï¿½sï¿½ï¿½rt. ï¿½ valï¿½sï¿½tja meg a raktï¿½r ï¿½pï¿½letet.
  */
 public class Game {
 	private ArrayList<Field> raktarepulet;
@@ -16,51 +16,80 @@ public class Game {
 	}
 	
 	public void addField(Field f) {
+		Skeleton.printCall(Skeleton.getName(this) +
+				".addField(" +
+				Skeleton.getName(f) + ")"
+		);
 		raktarepulet.add(f);
+		Skeleton.printReturn();
 	}
 	/**
-	 * Elindítja a játékot, inicializálja a pályát,
-	 * ládákat és munkások kezdõpozícióját
+	 * Elindï¿½tja a jï¿½tï¿½kot, inicializï¿½lja a pï¿½lyï¿½t,
+	 * lï¿½dï¿½kat ï¿½s munkï¿½sok kezdï¿½pozï¿½ciï¿½jï¿½t
 	 */
 	public void startGame(){
+		Skeleton.printCall(Skeleton.getName(this) +
+				".startGame()"
+		);
+		Skeleton.printReturn();
 		
 	}
 	
 	/**
-	 *  Megvizsgálja, hogy a játék véget ért-e
-	 * @return Igaz ha vége, egyébként hamis
+	 *  Megvizsgï¿½lja, hogy a jï¿½tï¿½k vï¿½get ï¿½rt-e
+	 * @return Igaz ha vï¿½ge, egyï¿½bkï¿½nt hamis
 	 */
 	public boolean checkGameEnd() {
+		Skeleton.printCall(Skeleton.getName(this) +
+				".startGame()"
+		);
+		Skeleton.printReturn("False");
+		return false;
 		
 	}
 	
 	/**
-	 * Ellenõrzi a munkásokat, hogy tudnak-e még érdemi lépést tenni.
-	 * @return igaz, ha van olyan munkás, aki tud lépni, egyébként hamis
+	 * Ellenï¿½rzi a munkï¿½sokat, hogy tudnak-e mï¿½g ï¿½rdemi lï¿½pï¿½st tenni.
+	 * @return igaz, ha van olyan munkï¿½s, aki tud lï¿½pni, egyï¿½bkï¿½nt hamis
 	 */
 	public boolean checkWorkerDeadlock() {
-		
+		Skeleton.printCall(Skeleton.getName(this) +
+				".checkWorkerDeadlock()"
+		);
+		Skeleton.printReturn("True");
+		return true;
 	}
 	/**
-	 * Ellenõrzi,hogy a ládák mozgathatók-e.
-	 * @return igaz, ha van mozgatható láda, egyébként hamis
+	 * Ellenï¿½rzi,hogy a lï¿½dï¿½k mozgathatï¿½k-e.
+	 * @return igaz, ha van mozgathatï¿½ lï¿½da, egyï¿½bkï¿½nt hamis
 	 */
 	public boolean checkBoxDeadlock() {
-		
+		Skeleton.printCall(Skeleton.getName(this) +
+				".checkBoxDeadlock()"
+		);
+		Skeleton.printReturn("True");
+		return true;
 	}
 	
 	/**
-	 * Ellenõrzi, hogy van-e még pontot érõ célmezõ.
-	 * @return igaz, ha van, egyébként hamis
+	 * Ellenï¿½rzi, hogy van-e mï¿½g pontot ï¿½rï¿½ cï¿½lmezï¿½.
+	 * @return igaz, ha van, egyï¿½bkï¿½nt hamis
 	 */
 	public boolean checkGoalFields() {
-		
+		Skeleton.printCall(Skeleton.getName(this) +
+				".checkGoalFields()"
+		);
+		Skeleton.printReturn("True");
+		return  true;
 	}
 	
 	/**
-	 * Leállítja és befejezi a játékot.
+	 * Leï¿½llï¿½tja ï¿½s befejezi a jï¿½tï¿½kot.
 	 */
 	public void endGame() {
-		
+		Skeleton.printCall(Skeleton.getName(this) +
+				".endGame()"
+		);
+		Skeleton.printReturn();
 	}
 }

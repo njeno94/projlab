@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A raktárépület egy négyzetét reprezentálja,
- * amely képes tárolni egy ládát, vagy állhat rajta egy munkás,
- * illetve vannak speciális változatai.
- * Ismeri a körülötte lévõ mezõket.
+ * A raktï¿½rï¿½pï¿½let egy nï¿½gyzetï¿½t reprezentï¿½lja,
+ * amely kï¿½pes tï¿½rolni egy lï¿½dï¿½t, vagy ï¿½llhat rajta egy munkï¿½s,
+ * illetve vannak speciï¿½lis vï¿½ltozatai.
+ * Ismeri a kï¿½rï¿½lï¿½tte lï¿½vï¿½ mezï¿½ket.
  */
 public class Field {
 	protected Thing thing;
@@ -22,38 +22,55 @@ public class Field {
 	}
 	
 	/**
-	 * Beállítja d irányba az f mezõt szomszédnak.
-	 * @param d az irány, amerre a szomszédot beállítjuk
-	 * @param f a mezõ, ami a szomszéd lesz
+	 * Beï¿½llï¿½tja d irï¿½nyba az f mezï¿½t szomszï¿½dnak.
+	 * @param d az irï¿½ny, amerre a szomszï¿½dot beï¿½llï¿½tjuk
+	 * @param f a mezï¿½, ami a szomszï¿½d lesz
 	 */
 	public void setNeighbour(Direction d, Field f) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+					".setNeighbour(" +
+					d.toString() + ", " +
+					Skeleton.getName(f) + ")"
+				);
 		fields.put(d, f);
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * Visszaadja a d irányban lévõ szomszéd mezõt.
-	 * @param d az irány, amerre a mezõ van
-	 * @return d  irányban lévõ szomszéd mezõ
+	 * Visszaadja a d irï¿½nyban lï¿½vï¿½ szomszï¿½d mezï¿½t.
+	 * @param d az irï¿½ny, amerre a mezï¿½ vanfile:///home/jeno/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/0.png
+	 * @return d  irï¿½nyban lï¿½vï¿½ szomszï¿½d mezï¿½
 	 */
 	public Field getNeighbour(Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				".getNeighbour(" +
+				d.toString() + ")"
+				);
+		Skeleton.printReturn(Skeleton.getName(fields.get(d)));
 		return fields.get(d);
 	}
 	
 	/**
-	 *  Ez a függvény ellenõrzi, hogy a paraméterként kapott munkást
-	 *  be tudja-e fogadni a mezõ. Ha már van rajta valami,
-	 *  akkor meghívja a rajta lévõ thing pushed metódusát.
-	 *  Amennyiben a mezõ befogadja a paraméterként kapott Worker objektumot,
-	 *  az elõzõ mezõrõl eltávolítódik és a jelenlegi mezõre kerül.
-	 * @param w a munkás, aki szeretne a mezõre lépni
-	 * @param d az irány, amelyikbe a munkás menni szeretne
-	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
+	 *  Ez a fï¿½ggvï¿½ny ellenï¿½rzi, hogy a paramï¿½terkï¿½nt kapott munkï¿½st
+	 *  be tudja-e fogadni a mezï¿½. Ha mï¿½r van rajta valami,
+	 *  akkor meghï¿½vja a rajta lï¿½vï¿½ thing pushed metï¿½dusï¿½t.
+	 *  Amennyiben a mezï¿½ befogadja a paramï¿½terkï¿½nt kapott Worker objektumot,
+	 *  az elï¿½zï¿½ mezï¿½rï¿½l eltï¿½volï¿½tï¿½dik ï¿½s a jelenlegi mezï¿½re kerï¿½l.
+	 * @param w a munkï¿½s, aki szeretne a mezï¿½re lï¿½pni
+	 * @param d az irï¿½ny, amelyikbe a munkï¿½s menni szeretne
+	 * @return igazzal tï¿½r vissza, ha tudja fogadni, egyï¿½bkï¿½nt hamissal
 	 */
 	public boolean accept(Worker w, Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				".accept(" +
+				Skeleton.getName(w) + ", " +
+				d.toString() + ")"	
+			);
 		if (thing == null) {
 			w.removeFromField();
 			addThing(w);
 			w.addField(this);
+			Skeleton.printReturn("True");
 			return true;
 		}
 		else {
@@ -62,23 +79,30 @@ public class Field {
 				w.removeFromField();
 				addThing(w);
 				w.addField(this);
+				Skeleton.printReturn("True");
 				return true;
 			}
 		}
+		Skeleton.printReturn("False");
 		return false;
 	}
 	
 	/**
-	 *  Ez a függvény ellenõrzi, hogy a paraméterként kapott ládát
-	 *  be tudja-e fogadni a mezõ. Ha már van rajta valami,
-	 *  akkor meghívja a rajta lévõ thing pushed metódusát.
-	 *  Amennyiben a mezõ befogadja a paraméterként kapott Box objektumot,
-	 *  az elõzõ mezõrõl eltávolítódik és a jelenlegi mezõre kerül.
-	 * @param w a munkás, aki szeretne a mezõre lépni
-	 * @param d az irány, amelyikbe a munkás menni szeretne
-	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
+	 *  Ez a fï¿½ggvï¿½ny ellenï¿½rzi, hogy a paramï¿½terkï¿½nt kapott lï¿½dï¿½t
+	 *  be tudja-e fogadni a mezï¿½. Ha mï¿½r van rajta valami,
+	 *  akkor meghï¿½vja a rajta lï¿½vï¿½ thing pushed metï¿½dusï¿½t.
+	 *  Amennyiben a mezï¿½ befogadja a paramï¿½terkï¿½nt kapott Box objektumot,
+	 *  az elï¿½zï¿½ mezï¿½rï¿½l eltï¿½volï¿½tï¿½dik ï¿½s a jelenlegi mezï¿½re kerï¿½l.
+	 * @param w a munkï¿½s, aki szeretne a mezï¿½re lï¿½pni
+	 * @param d az irï¿½ny, amelyikbe a munkï¿½s menni szeretne
+	 * @return igazzal tï¿½r vissza, ha tudja fogadni, egyï¿½bkï¿½nt hamissal
 	 */
 	public void accept(Box b, Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				".accept(" +
+				Skeleton.getName(d) + ", " +
+				d.toString() + ")"	
+			);
 		if (thing == null) {
 			b.removeFromField();
 			addThing(b);
@@ -92,39 +116,60 @@ public class Field {
 				b.addField(this);
 			}
 		}
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * A rajta lévõ thingnek hívja a pontadásért felelõs metódusát.
-	 * @param d az irány, amerre van az adott thing
+	 * A rajta lï¿½vï¿½ thingnek hï¿½vja a pontadï¿½sï¿½rt felelï¿½s metï¿½dusï¿½t.
+	 * @param d az irï¿½ny, amerre van az adott thing
 	 */
 	public void addPointToThing(Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				".addPointToThing(" +
+				d.toString() + ")"	
+			);
 		if (thing != null) {
 			thing.addPoint(d);			
 		}
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * Hozzáadja a mezõhöz a paraméterként kapott thing objektumot.
-	 * @param t egy Thing, ami a mezõre lép
+	 * Hozzï¿½adja a mezï¿½hï¿½z a paramï¿½terkï¿½nt kapott thing objektumot.
+	 * @param t egy Thing, ami a mezï¿½re lï¿½p
 	 */
 	public void addThing(Thing t) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".addThing(" +
+				Skeleton.getName(t) + ")"
+			);
 		thing = t;
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * Eltávolítja a rajta lévõ thinget a mezõrõl.
+	 * Eltï¿½volï¿½tja a rajta lï¿½vï¿½ thinget a mezï¿½rï¿½l.
 	 */
 	public void removeThing() {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				".removeThing()"	
+			);
 		thing = null;
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * Megadja egy iránynak az ellentettjét
-	 * @param d az irány, aminek keressük az ellentettjét
-	 * @return a d irány ellentettje
+	 * Megadja egy irï¿½nynak az ellentettjï¿½t
+	 * @param d az irï¿½ny, aminek keressï¿½k az ellentettjï¿½t
+	 * @return a d irï¿½ny ellentettje
 	 */
 	public Direction convertDir(Direction d) {
+		++Skeleton.count;
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".conevertDir(" +
+				d.toString() +
+			 	")"	
+			);
 		Direction opp = null;
 		switch(d) {
 		case RIGHT:
@@ -140,6 +185,7 @@ public class Field {
 			opp = Direction.UP;
 			break;
 		}
+		Skeleton.printReturn(opp.toString());
 		return opp;
 	}
 }

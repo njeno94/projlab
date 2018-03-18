@@ -1,7 +1,7 @@
 package Model;
 
 /**
- * A munkás és a láda absztrakt õsosztálya. Felelõssége a mozgatásuk kezelése.
+ * A munkï¿½s ï¿½s a lï¿½da absztrakt ï¿½sosztï¿½lya. Felelï¿½ssï¿½ge a mozgatï¿½suk kezelï¿½se.
  */
 public abstract class Thing {
 	protected Field field;
@@ -18,44 +18,62 @@ public abstract class Thing {
 	public abstract void pushed(Box b, Direction d);
 
 	/**
-	 * Beállítja a Thing field attribútumát
-	 * @param f		a mezõ, amin van a dolog
+	 * Beï¿½llï¿½tja a Thing field attribï¿½tumï¿½t
+	 * @param f		a mezï¿½, amin van a dolog
 	 */
 	public void addField(Field f) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".saddField(" + 
+				Skeleton.getName(f) + ")"
+		);
 		field = f;
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 *  Hozzáadja a ládáért kapott pontokat
-	 *  a ládát toló Worker pontjaihoz,
-	 *  egyébként a célmezõtõl a tolást indító Workerig
-	 *  hívja a pontadó metódusokat.
+	 *  Hozzï¿½adja a lï¿½dï¿½ï¿½rt kapott pontokat
+	 *  a lï¿½dï¿½t tolï¿½ Worker pontjaihoz,
+	 *  egyï¿½bkï¿½nt a cï¿½lmezï¿½tï¿½l a tolï¿½st indï¿½tï¿½ Workerig
+	 *  hï¿½vja a pontadï¿½ metï¿½dusokat.
 	 * @param d
 	 */
 	public void addPoint(Direction d) {
-			Field neighbour = field.getNeighbour(d);
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".addPoint(" + 
+				d.toString() + ")"
+		);
+		Field neighbour = field.getNeighbour(d);
 			
-			if (neighbour != null) {
-				neighbour.addPointToThing(d);
-			}
-				}
-
-	/**
-	 * A thingen hívható mezõeltávolító metódus,
-	 * meghívja a Field removeThing() metódusát
-	 */
-	public void removeFromField() {
-		if (field != null) {		
-			field.removeThing();
+		if (neighbour != null) {
+			neighbour.addPointToThing(d);
 		}
+		Skeleton.printReturn();
 	}
 
 	/**
-	 * Eltûnteti a dolgot a pályáról.
+	 * A thingen hï¿½vhatï¿½ mezï¿½eltï¿½volï¿½tï¿½ metï¿½dus,
+	 * meghï¿½vja a Field removeThing() metï¿½dusï¿½t
+	 */
+	public void removeFromField() {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".removeFromField()"
+		);
+		if (field != null) {		
+			field.removeThing();
+		}
+		Skeleton.printReturn();
+	}
+
+	/**
+	 * Eltï¿½nteti a dolgot a pï¿½lyï¿½rï¿½l.
 	 */
 	public void disappear() {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".disappear()"
+		);
 		removeFromField();
 		field = null;
+		Skeleton.printReturn();
 	}
 
 }

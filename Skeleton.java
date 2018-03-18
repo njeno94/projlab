@@ -1,35 +1,55 @@
 package Model;
 
-
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class Skeleton {
 
+	static int count = 0;
+	
 //p�lya szerkezet---------
-
-		Worker w1 = new Worker();
-		Worker w2 = new Worker();
-		Box b1 = new Box();
-		Box b2 = new Box();
-		Wall f1 = new Wall();
-        Field f2 = new Field();
-		Field f3 = new Field();
-		Field f4 = new Field();
-		Field f5 = new Field();
-	    GoalField f6 = new GoalField();
-		SwitchField f7 = new SwitchField();
-		Field f8 = new Field();
-		Field f9 = new Field();
-		Field f10 = new Field();
-	    SwitchHoleField f11 = new SwitchHoleField();
-		Game game = new Game();
-		
+	 static Map<Object,String> gameobjectnames = new HashMap<Object,String>();
+	Worker w1 = new Worker();
+	Worker w2 = new Worker();
+	Box b1 = new Box();
+	Box b2 = new Box();
+	Wall f1 = new Wall();
+    Field f2 = new Field();
+	Field f3 = new Field();
+	Field f4 = new Field();
+	Field f5 = new Field();
+    GoalField f6 = new GoalField();
+	SwitchField f7 = new SwitchField();
+	Field f8 = new Field();
+	Field f9 = new Field();
+	Field f10 = new Field();
+    SwitchHoleField f11 = new SwitchHoleField();
+	Game game = new Game();
+	
+	private void setNames(){
+		gameobjectnames.put(w1, "w1");
+		gameobjectnames.put(w2, "w2");
+		gameobjectnames.put(b1, "b1");
+		gameobjectnames.put(b2, "b2");
+		gameobjectnames.put(f1, "f1");
+		gameobjectnames.put(f2, "f2");;
+		gameobjectnames.put(f3, "f3");;
+		gameobjectnames.put(f4, "f4");
+		gameobjectnames.put(f5, "f5");
+		gameobjectnames.put(f6, "f6");
+		gameobjectnames.put(f7, "f7");
+		gameobjectnames.put(f8, "f8");
+		gameobjectnames.put(f9, "f9");
+		gameobjectnames.put(f10, "f10");
+		gameobjectnames.put(f11, "f11");
+		gameobjectnames.put(game, "Game");
+	}	
 
 
 
 	
 	Skeleton(){
-
+        setNames();
 		game.addField(f1);
 		game.addField(f2);
 		game.addField(f3);
@@ -41,6 +61,7 @@ public class Skeleton {
         game.addField(f9);
         game.addField(f10);
         game.addField(f11);
+		SetFields();
 	}
 
 	public void SetFields(){
@@ -54,7 +75,6 @@ public class Skeleton {
 		f4.setNeighbour(Direction.RIGHT, f5);
 		f5.setNeighbour(Direction.LEFT, f4);
 		f5.setNeighbour(Direction.RIGHT, f6);
-
         f6.setNeighbour(Direction.LEFT, f5);
         f6.setNeighbour(Direction.RIGHT, f7);
         f7.setNeighbour(Direction.LEFT, f6);
@@ -73,6 +93,7 @@ public class Skeleton {
 
 	}
 	public void Reset(){
+		System.out.println("Pálya visszaállítása");
 	    w1.disappear();
 	    w2.disappear();
 	    b1.disappear();
@@ -229,12 +250,30 @@ public class Skeleton {
     }
 
 
-
-
-
 //---------------
+    
+    public static String getName(Object o) {
+    	return gameobjectnames.get(o);
+    }
+    
+    //
+    public static void printCall(String details) {
+    	++count;
+    	for(int i=0;i < count ; i++)
+    		System.out.print("\t");
+    	System.out.println("Call: " + details);
+    }
+    public static void printReturn(String details) {
+    	for(int i=0;i < count ; i++)
+    		System.out.print("\t");
+    	System.out.println("Return: " + details);
+    	--count;
+    }
 
-
-
-
+    public static void printReturn() {
+    	for(int i=0;i < count ; i++)
+    		System.out.print("\t");
+    	System.out.println("Return");
+    	--count;
+    }
 }

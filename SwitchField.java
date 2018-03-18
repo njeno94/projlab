@@ -1,21 +1,26 @@
 package Model;
 
 /**
- * A kapcsoló osztály szerepét tölti be.
- * A hozzá tartozó kapcsolható lyuk állapotát tudja megváltoztatni.
+ * A kapcsolï¿½ osztï¿½ly szerepï¿½t tï¿½lti be.
+ * A hozzï¿½ tartozï¿½ kapcsolhatï¿½ lyuk ï¿½llapotï¿½t tudja megvï¿½ltoztatni.
  */
 public class SwitchField extends Field {
 	
 	private SwitchHoleField hole;
 	
 	/**
-	 * Befogadja a paraméterként kapott Box objektumot.
-	 * Meghívja a hozzátartozó SwitchHoleField changeState() metódusát.
-	 * @param b		a láda, amit a mezõre akarnak tolni
-	 * @param d		az irány, amerre a ládát tolni szeretnék
+	 * Befogadja a paramï¿½terkï¿½nt kapott Box objektumot.
+	 * Meghï¿½vja a hozzï¿½tartozï¿½ SwitchHoleField changeState() metï¿½dusï¿½t.
+	 * @param b		a lï¿½da, amit a mezï¿½re akarnak tolni
+	 * @param d		az irï¿½ny, amerre a lï¿½dï¿½t tolni szeretnï¿½k
 	 */
 	@Override
 	public void accept(Box b, Direction d) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".accept(" + 
+				Skeleton.getName(b) + "," +
+				d.toString() + ")"
+		);
 		if (thing == null) {
 			b.removeFromField();
 			addThing(b);
@@ -33,23 +38,33 @@ public class SwitchField extends Field {
 				hole.changeState();
 			}
 		}
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 *  Beállítja a hozzá tartozó kapcsolható lyukat
-	 * @param sh 	a kapcsolható lyuk, amit kapcsolni fog tudni
+	 *  Beï¿½llï¿½tja a hozzï¿½ tartozï¿½ kapcsolhatï¿½ lyukat
+	 * @param sh 	a kapcsolhatï¿½ lyuk, amit kapcsolni fog tudni
 	 */
 	public void setSwitchHoleField(SwitchHoleField sh) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".setSwitchHoleField(" + 
+				Skeleton.getName(sh) +  ")"
+		);
 		hole = (SwitchHoleField)sh;
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * Eltávolítja a pályáról a rajta lévõ dolgot,
-	 * és kikapcsolja a hozzá tartozó kapcsolható lyukat
+	 * Eltï¿½volï¿½tja a pï¿½lyï¿½rï¿½l a rajta lï¿½vï¿½ dolgot,
+	 * ï¿½s kikapcsolja a hozzï¿½ tartozï¿½ kapcsolhatï¿½ lyukat
 	 */
 	@Override
 	public void removeThing() {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".removeThing()"
+		);
 		thing = null;
 		hole.setState(false);
+		Skeleton.printReturn();
 	}
 }

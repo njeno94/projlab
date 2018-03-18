@@ -1,32 +1,42 @@
 package Model;
 
 /**
- * Az egyszerû lyuk modellezésére szolgáló osztály.
- * Ha egy munkás rálép, meghal, ha egy dobozt rátolnak, eltûnik.
+ * Az egyszerï¿½ lyuk modellezï¿½sï¿½re szolgï¿½lï¿½ osztï¿½ly.
+ * Ha egy munkï¿½s rï¿½lï¿½p, meghal, ha egy dobozt rï¿½tolnak, eltï¿½nik.
  */
 public class Hole extends Field {
 	/**
-	 * Befogadja a paraméterként kapott Worker objektumot
-	 * és eltávolítja a pályáról.
-	 * @param w		a munkás, aki a mezõre szeretne lépni
-	 * @param d		az irány, amerre a munkás mozogni szeretne
+	 * Befogadja a paramï¿½terkï¿½nt kapott Worker objektumot
+	 * ï¿½s eltï¿½volï¿½tja a pï¿½lyï¿½rï¿½l.
+	 * @param w		a munkï¿½s, aki a mezï¿½re szeretne lï¿½pni
+	 * @param d		az irï¿½ny, amerre a munkï¿½s mozogni szeretne
 	 * @return
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
-		System.out.println("A munkás meghalt, beleesett a lyukba!");
+		Skeleton.printCall(Skeleton.getName(this) +
+				".accept(" + Skeleton.getName(w) +
+				"," + d.toString() + ")"
+	);
+		//System.out.println("A munkï¿½s meghalt, beleesett a lyukba!");
 		w.disappear();
+		Skeleton.printReturn("False");
 		return false;
 	}
 	
 	/**
-	 * Befogadja a paraméterként kapott Box objektumot, s eltávolítja a pályáról
-	 * @param b		a láda, amit a mezõre akarnak tolni
-	 * @param d		az irány, amerre a ládát tolni szeretnék
+	 * Befogadja a paramï¿½terkï¿½nt kapott Box objektumot, s eltï¿½volï¿½tja a pï¿½lyï¿½rï¿½l
+	 * @param b		a lï¿½da, amit a mezï¿½re akarnak tolni
+	 * @param d		az irï¿½ny, amerre a lï¿½dï¿½t tolni szeretnï¿½k
 	 */
 	@Override
 	public void accept(Box b, Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) +
+				".accept(" + Skeleton.getName(b) +
+				"," + d.toString() + ")"
+	);
 		b.disappear();
-		System.out.println("A doboz beleesett a lyukba!");
+		//System.out.println("A doboz beleesett a lyukba!");
+		Skeleton.printReturn();
 	}
 }

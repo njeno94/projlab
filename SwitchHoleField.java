@@ -1,8 +1,8 @@
 package Model;
 
 /**
- * A kapcsolható lyuk modellje: vagy egyszerû mezõként,
- * vagy lyukként viselkedik állapotától függõen.
+ * A kapcsolhatï¿½ lyuk modellje: vagy egyszerï¿½ mezï¿½kï¿½nt,
+ * vagy lyukkï¿½nt viselkedik ï¿½llapotï¿½tï¿½l fï¿½ggï¿½en.
  *
  */
 public class SwitchHoleField extends Field {
@@ -17,19 +17,25 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 *  befogadja a paraméterként kapott Worker objektumot.
-	 * @param w 	a munkás, aki a mezõre szeretne lépni
-	 * @param d		az irány, amerre a munkás lépni szeretne
-	 * @return		igaz, ha a munkás rá tud lépni, egyébként hamis
+	 *  befogadja a paramï¿½terkï¿½nt kapott Worker objektumot.
+	 * @param w 	a munkï¿½s, aki a mezï¿½re szeretne lï¿½pni
+	 * @param d		az irï¿½ny, amerre a munkï¿½s lï¿½pni szeretne
+	 * @return		igaz, ha a munkï¿½s rï¿½ tud lï¿½pni, egyï¿½bkï¿½nt hamis
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".accept(" + 
+				Skeleton.getName(w) + "," +
+				d.toString() + ")"
+		);
 		
 		if (!state) {
 			if (thing == null) {
 				w.removeFromField();
 				addThing(w);
 				w.addField(this);
+				Skeleton.printReturn("True");
 				return true;
 			}
 			else {
@@ -38,24 +44,34 @@ public class SwitchHoleField extends Field {
 					w.removeFromField();
 					addThing(w);
 					w.addField(this);
+					Skeleton.printReturn("True");
 					return true;
 				}
 			}
+			Skeleton.printReturn("False");
 			return false;
 		}
 		else {
 			w.disappear();
+			Skeleton.printReturn("False");
 			return false;
 		}
 	}
 	
 	/**
-	 * Befogadja a paraméterként kapott Box objektumot.
-	 * @param b		a láda, amit a mezõre szeretnének tolni
-	 * @param d		az irány, amerre a ládát tolni szeretnék
+	 * Befogadja a paramï¿½terkï¿½nt kapott Box objektumot.
+	 * @param b		a lï¿½da, amit a mezï¿½re szeretnï¿½nek tolni
+	 * @param d		az irï¿½ny, amerre a lï¿½dï¿½t tolni szeretnï¿½k
 	 */
 	@Override
 	public void accept(Box b, Direction d) {
+		
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".accept(" + 
+				Skeleton.getName(b) + "," +
+				d.toString() + ")"
+		);
+		
 		if (!state) {
 			if (thing == null) {
 				b.removeFromField();
@@ -74,23 +90,33 @@ public class SwitchHoleField extends Field {
 		else {
 			b.disappear();
 		}
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * Beállítja a mezõ állapotát
-	 * @param s az állapot amit beállít a mezõnek
+	 * Beï¿½llï¿½tja a mezï¿½ ï¿½llapotï¿½t
+	 * @param s az ï¿½llapot amit beï¿½llï¿½t a mezï¿½nek
 	 */
 	public void setState(boolean s) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".setState(" + 
+				s + ")"
+		);
 		state = s;
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * Átállítja a mezõ állapotát. Ha nyitottra állítja,
-	 * akkor eltûnik róla a rajta lévõ dolog.
+	 * ï¿½tï¿½llï¿½tja a mezï¿½ ï¿½llapotï¿½t. Ha nyitottra ï¿½llï¿½tja,
+	 * akkor eltï¿½nik rï¿½la a rajta lï¿½vï¿½ dolog.
 	 */
 	public void changeState() {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".changeState()"
+		);
 		if (state && thing!=null) {
 			thing.disappear();
 		}
+		Skeleton.printReturn();
 	}
 }

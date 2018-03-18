@@ -1,44 +1,56 @@
 package Model;
 
 /**
- * Egy speciális Field, amely a raktár épületnek
- * azt a négyzetét reprezentálja, ahová dobozt kell juttatni.
- * Amennyiben toltak rá ládát, a láda nem mozdítható onnan. 
+ * Egy speciï¿½lis Field, amely a raktï¿½r ï¿½pï¿½letnek
+ * azt a nï¿½gyzetï¿½t reprezentï¿½lja, ahovï¿½ dobozt kell juttatni.
+ * Amennyiben toltak rï¿½ lï¿½dï¿½t, a lï¿½da nem mozdï¿½thatï¿½ onnan. 
  */
 public class GoalField extends Field {
 	
 	/**
-	 * Befogadja a paraméterként kapott Worker objektumot.
-	 * Meghívja a a paraméterként kapott Box objektum addPoint() metódusát
-	 * ellentétes iránnyal, hogy a lánc végén megkapja a dobozt toló munkás a pontot.
-	 * @param w a munkás, aki a mezõre akar lépni
-	 * @param d az irány, amerre a munkás mozogni szeretne
+	 * Befogadja a paramï¿½terkï¿½nt kapott Worker objektumot.
+	 * Meghï¿½vja a a paramï¿½terkï¿½nt kapott Box objektum addPoint() metï¿½dusï¿½t
+	 * ellentï¿½tes irï¿½nnyal, hogy a lï¿½nc vï¿½gï¿½n megkapja a dobozt tolï¿½ munkï¿½s a pontot.
+	 * @param w a munkï¿½s, aki a mezï¿½re akar lï¿½pni
+	 * @param d az irï¿½ny, amerre a munkï¿½s mozogni szeretne
 	 * @return
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".accept(" + 
+				Skeleton.getName(w) + "," +
+				d.toString() + ")"
+		);
 		if (thing == null) {
 			w.removeFromField();
 			thing = w;
 			w.addField(this);
+			Skeleton.printReturn("True");
 			return true;
 		}
 		else {
-			System.out.println("Ezt worker nem tudja már eltolni, mert célmezõre jutott a láda!");
+			System.out.println("Ezt worker nem tudja mï¿½r eltolni, mert cï¿½lmezï¿½re jutott a lï¿½da!");
 		}
+		Skeleton.printReturn("False");
 		return false;
 	}
 	
 	/**
-	 * Befogadja a paraméterként kapott Box objektumot.
-	 * Meghívja a a paraméterként kapott Box objektum addPoint() metódusát
-	 * ellentétes iránnyal, hogy a lánc végén megkapja a dobozt toló munkás a pontot.
-	 * @param b a láda, amit a mezõre akarnak tolni
-	 * @param d az irány, amerre a ládát tolni szeretnék
+	 * Befogadja a paramï¿½terkï¿½nt kapott Box objektumot.
+	 * Meghï¿½vja a a paramï¿½terkï¿½nt kapott Box objektum addPoint() metï¿½dusï¿½t
+	 * ellentï¿½tes irï¿½nnyal, hogy a lï¿½nc vï¿½gï¿½n megkapja a dobozt tolï¿½ munkï¿½s a pontot.
+	 * @param b a lï¿½da, amit a mezï¿½re akarnak tolni
+	 * @param d az irï¿½ny, amerre a lï¿½dï¿½t tolni szeretnï¿½k
 	 * @return
 	 */
 	@Override
 	public void accept(Box b, Direction d) {
+		Skeleton.printCall( Skeleton.getName(this) + 
+				".accept(" + 
+				Skeleton.getName(b) + "," +
+				d.toString() + ")"
+		);
 		if (thing == null) {
 			b.addPoint(convertDir(d));
 			b.removeFromField();
@@ -46,7 +58,8 @@ public class GoalField extends Field {
 			b.addField(this);
 		}
 		else {
-			System.out.println("Ezen a célmezõn már van doboz!");
+			System.out.println("Ezen a cï¿½lmezï¿½n mï¿½r van doboz!");
 		}
+		Skeleton.printReturn();
 	}
 }

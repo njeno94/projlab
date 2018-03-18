@@ -2,30 +2,40 @@ package Model;
 
 
 /**
- * Ez az osztály reprezentálja a ládákat a játékban.
+ * Ez az osztï¿½ly reprezentï¿½lja a lï¿½dï¿½kat a jï¿½tï¿½kban.
  */
 public class Box extends Thing {
 	
 	/**
-	 * A ládák tolását valósítja meg, amikor munkás tolja a ládát.
-	 * @param w a munkás, aki tolja a ládát
-	 * @param d az irány, amelyik irányba a ládát tolja a munkás
+	 * A lï¿½dï¿½k tolï¿½sï¿½t valï¿½sï¿½tja meg, amikor munkï¿½s tolja a lï¿½dï¿½t.
+	 * @param w a munkï¿½s, aki tolja a lï¿½dï¿½t
+	 * @param d az irï¿½ny, amelyik irï¿½nyba a lï¿½dï¿½t tolja a munkï¿½s
 	 */
 	public void pushed(Worker w, Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				"pushed(" + Skeleton.getName(w) + 
+				"," + d.toString()+ ")"
+		);
 		Field nextField = field.getNeighbour(d);
 		
 		nextField.accept(this, d);
+		Skeleton.printReturn();
 	}
 	
 	/**
-	 * A ládák tolását valósítja meg, amikor munkás tolja a ládát.
-	 * @param b a láda, amit egy munkás ennek a ládának a helyére akar tolni.
-	 * @param d az irány, amelyikbe a ládát tolni akarják
+	 * A lï¿½dï¿½k tolï¿½sï¿½t valï¿½sï¿½tja meg, amikor munkï¿½s tolja a lï¿½dï¿½t.
+	 * @param b a lï¿½da, amit egy munkï¿½s ennek a lï¿½dï¿½nak a helyï¿½re akar tolni.
+	 * @param d az irï¿½ny, amelyikbe a lï¿½dï¿½t tolni akarjï¿½k
 	 */
 	public void pushed(Box b, Direction d) {
+		Skeleton.printCall(Skeleton.getName(this) + 
+				"pushed(" + Skeleton.getName(b) + 
+				"," + d.toString()+ ")"
+		);
 		Field nextField = field.getNeighbour(d);
-		
+	
 		nextField.accept(this, d);
+		Skeleton.printReturn();
 	}
 
 }
