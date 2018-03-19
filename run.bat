@@ -1,0 +1,1 @@
+java -classpath out Model.Main
