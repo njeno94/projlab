@@ -13,7 +13,7 @@ public class Box extends Thing {
 	 */
 	public void pushed(Worker w, Direction d) {
 		Skeleton.printCall(Skeleton.getName(this) + 
-				"pushed(" + Skeleton.getName(w) + 
+				".pushed(" + Skeleton.getName(w) + 
 				"," + d.toString()+ ")"
 		);
 		Field nextField = field.getNeighbour(d);
@@ -29,7 +29,7 @@ public class Box extends Thing {
 	 */
 	public void pushed(Box b, Direction d) {
 		Skeleton.printCall(Skeleton.getName(this) + 
-				"pushed(" + Skeleton.getName(b) + 
+				".pushed(" + Skeleton.getName(b) + 
 				"," + d.toString()+ ")"
 		);
 		Field nextField = field.getNeighbour(d);

@@ -23,7 +23,7 @@ public abstract class Thing {
 	 */
 	public void addField(Field f) {
 		Skeleton.printCall( Skeleton.getName(this) + 
-				".saddField(" + 
+				".addField(" + 
 				Skeleton.getName(f) + ")"
 		);
 		field = f;
