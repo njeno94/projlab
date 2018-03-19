@@ -53,8 +53,8 @@ public class SwitchHoleField extends Field {
 		}
 		else {
 			w.disappear();
-			Skeleton.printReturn("False");
-			return false;
+			Skeleton.printReturn("True");
+			return true;
 		}
 	}
 	
