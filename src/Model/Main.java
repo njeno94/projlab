@@ -25,9 +25,8 @@ public class Main {
                     "12.Munkás célmezőre lép\n" +
                     "13.Munkás mozdíthatatlan dobozt tol\n" +
                     "14.Munkás inaktív lyukra dobozt tol\n" +
-                    "15.Munkás aktiválja a váltót és lyukba lép\n" +
-                    "16.Munkás1 meghal Munkás2 lyukba löki egy dobozzal\n " +
-                    "17. Kilépés");
+                    "15.Munkás1 meghal Munkás2 lyukba löki egy dobozzal\n" +
+                    "16. Kilépés");
             option = reader.nextInt();
 
 
@@ -75,9 +74,6 @@ public class Main {
                     s1.WorkerPushBoxToInactiveSwitchHoleField();
                     break;
                 case 15:
-                    s1.WorkerActiveteTheHoleFieldAndFallIntoTheHall();
-                    break;
-                case 16:
                     s1.Worker1Die3PushedIntoSwitchHoleFieldByWorker2WithBox();
                     break;
                 default:

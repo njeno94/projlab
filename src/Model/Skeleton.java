@@ -226,16 +226,6 @@ public class Skeleton {
         w1.step(Direction.RIGHT);
         Reset();
     }
-    public void WorkerActiveteTheHoleFieldAndFallIntoTheHall() {
-        f10.addThing(w1);
-        w1.addField(f10);
-        f9.addThing(b1);
-        b1.addField(f9);
-        w1.step(Direction.LEFT);
-        w1.step(Direction.RIGHT);
-        w1.step(Direction.RIGHT);
-        Reset();
-    }
 
     public void Worker1Die3PushedIntoSwitchHoleFieldByWorker2WithBox() {
         f11.setState(true);
