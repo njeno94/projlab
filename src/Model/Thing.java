@@ -15,19 +15,14 @@ public abstract class Thing {
 
 	public abstract void pushed(Worker w, Direction d);
 	
-	public abstract void pushed(Box b, Direction d);
+	public abstract void pushed(Box b, Direction d, int force, int friction);
 
 	/**
 	 * Be�ll�tja a Thing field attrib�tum�t
 	 * @param f		a mez�, amin van a dolog
 	 */
 	public void addField(Field f) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".addField(" + 
-				Skeleton.getName(f) + ")"
-		);
 		field = f;
-		Skeleton.printReturn();
 	}
 	
 	/**
@@ -38,16 +33,11 @@ public abstract class Thing {
 	 * @param d
 	 */
 	public void addPoint(Direction d) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".addPoint(" + 
-				d.toString() + ")"
-		);
 		Field neighbour = field.getNeighbour(d);
 			
 		if (neighbour != null) {
 			neighbour.addPointToThing(d);
 		}
-		Skeleton.printReturn();
 	}
 
 	/**
@@ -55,25 +45,18 @@ public abstract class Thing {
 	 * megh�vja a Field removeThing() met�dus�t
 	 */
 	public void removeFromField() {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".removeFromField()"
-		);
 		if (field != null) {		
 			field.removeThing();
 		}
-		Skeleton.printReturn();
 	}
 
 	/**
 	 * Elt�nteti a dolgot a p�ly�r�l.
 	 */
 	public void disappear() {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".disappear()"
-		);
 		removeFromField();
 		field = null;
-		Skeleton.printReturn();
 	}
-
+	
+	public abstract void Draw();
 }

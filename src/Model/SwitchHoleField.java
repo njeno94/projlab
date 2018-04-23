@@ -24,18 +24,11 @@ public class SwitchHoleField extends Field {
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".accept(" + 
-				Skeleton.getName(w) + "," +
-				d.toString() + ")"
-		);
-		
 		if (!state) {
 			if (thing == null) {
 				w.removeFromField();
 				addThing(w);
 				w.addField(this);
-				Skeleton.printReturn("True");
 				return true;
 			}
 			else {
@@ -44,16 +37,13 @@ public class SwitchHoleField extends Field {
 					w.removeFromField();
 					addThing(w);
 					w.addField(this);
-					Skeleton.printReturn("True");
 					return true;
 				}
 			}
-			Skeleton.printReturn("False");
 			return false;
 		}
 		else {
 			w.disappear();
-			Skeleton.printReturn("True");
 			return true;
 		}
 	}
@@ -64,14 +54,7 @@ public class SwitchHoleField extends Field {
 	 * @param d		az ir�ny, amerre a l�d�t tolni szeretn�k
 	 */
 	@Override
-	public void accept(Box b, Direction d) {
-		
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".accept(" + 
-				Skeleton.getName(b) + "," +
-				d.toString() + ")"
-		);
-		
+	public void accept(Box b, Direction d, int force, int friction) {
 		if (!state) {
 			if (thing == null) {
 				b.removeFromField();
@@ -79,7 +62,7 @@ public class SwitchHoleField extends Field {
 				b.addField(this);
 			}
 			else {
-				thing.pushed(b, d);
+				thing.pushed(b, d, force, friction);
 				if (thing == null) {
 					b.removeFromField();
 					addThing(b);
@@ -90,7 +73,6 @@ public class SwitchHoleField extends Field {
 		else {
 			b.disappear();
 		}
-		Skeleton.printReturn();
 	}
 	
 	/**
@@ -98,12 +80,7 @@ public class SwitchHoleField extends Field {
 	 * @param s az �llapot amit be�ll�t a mez�nek
 	 */
 	public void setState(boolean s) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".setState(" + 
-				s + ")"
-		);
 		state = s;
-		Skeleton.printReturn();
 	}
 	
 	/**
@@ -111,12 +88,19 @@ public class SwitchHoleField extends Field {
 	 * akkor elt�nik r�la a rajta l�v� dolog.
 	 */
 	public void changeState() {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".changeState()"
-		);
 		if (state && thing!=null) {
 			thing.disappear();
 		}
-		Skeleton.printReturn();
+	}
+	
+	@Override
+	public void Draw() {
+		System.out.print("t");
+		if (thing != null) {
+			thing.Draw();
+		}
+		else {
+			System.out.print(" ");
+		}
 	}
 }

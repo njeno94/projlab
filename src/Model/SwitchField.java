@@ -15,12 +15,7 @@ public class SwitchField extends Field {
 	 * @param d		az ir�ny, amerre a l�d�t tolni szeretn�k
 	 */
 	@Override
-	public void accept(Box b, Direction d) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".accept(" + 
-				Skeleton.getName(b) + "," +
-				d.toString() + ")"
-		);
+	public void accept(Box b, Direction d, int force, int friction) {
 		if (thing == null) {
 			b.removeFromField();
 			addThing(b);
@@ -29,7 +24,7 @@ public class SwitchField extends Field {
 			hole.changeState();
 		}
 		else {
-			thing.pushed(b, d);
+			thing.pushed(b, d, force, friction);
 			if (thing == null) {
 				b.removeFromField();
 				addThing(b);
@@ -38,20 +33,14 @@ public class SwitchField extends Field {
 				hole.changeState();
 			}
 		}
-		Skeleton.printReturn();
 	}
 	
 	/**
 	 *  Be�ll�tja a hozz� tartoz� kapcsolhat� lyukat
 	 * @param sh 	a kapcsolhat� lyuk, amit kapcsolni fog tudni
 	 */
-	public void setSwitchHoleField(SwitchHoleField sh) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".setSwitchHoleField(" + 
-				Skeleton.getName(sh) +  ")"
-		);
+	public void setSwitchHoleField(Field sh) {
 		hole = (SwitchHoleField)sh;
-		Skeleton.printReturn();
 	}
 	
 	/**
@@ -60,11 +49,19 @@ public class SwitchField extends Field {
 	 */
 	@Override
 	public void removeThing() {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".removeThing()"
-		);
 		thing = null;
 		hole.setState(false);
-		Skeleton.printReturn();
 	}
+	
+	@Override
+	public void Draw() {
+		System.out.print("s");
+		if (thing != null) {
+			thing.Draw();
+		}
+		else {
+			System.out.print(" ");
+		}
+	}
+	
 }

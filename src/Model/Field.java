@@ -12,13 +12,15 @@ import java.util.Map;
 public class Field {
 	protected Thing thing;
 	private Map<Direction, Field> fields;
-	
+	public static int frictionAtStart = 1;
+	private int currentFriction;
 	/**
 	 * konstruktor
 	 */
 	public Field() {
 		thing = null;
 		fields = new HashMap<Direction, Field>();
+		currentFriction = 2;
 	}
 	
 	/**
@@ -27,13 +29,7 @@ public class Field {
 	 * @param f a mez�, ami a szomsz�d lesz
 	 */
 	public void setNeighbour(Direction d, Field f) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-					".setNeighbour(" +
-					d.toString() + ", " +
-					Skeleton.getName(f) + ")"
-				);
 		fields.put(d, f);
-		Skeleton.printReturn();
 	}
 	
 	/**
@@ -42,11 +38,6 @@ public class Field {
 	 * @return d  ir�nyban l�v� szomsz�d mez�
 	 */
 	public Field getNeighbour(Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				".getNeighbour(" +
-				d.toString() + ")"
-				);
-		Skeleton.printReturn(Skeleton.getName(fields.get(d)));
 		return fields.get(d);
 	}
 	
@@ -61,16 +52,10 @@ public class Field {
 	 * @return igazzal t�r vissza, ha tudja fogadni, egy�bk�nt hamissal
 	 */
 	public boolean accept(Worker w, Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				".accept(" +
-				Skeleton.getName(w) + ", " +
-				d.toString() + ")"	
-			);
 		if (thing == null) {
 			w.removeFromField();
 			addThing(w);
 			w.addField(this);
-			Skeleton.printReturn("True");
 			return true;
 		}
 		else {
@@ -79,11 +64,9 @@ public class Field {
 				w.removeFromField();
 				addThing(w);
 				w.addField(this);
-				Skeleton.printReturn("True");
 				return true;
 			}
 		}
-		Skeleton.printReturn("False");
 		return false;
 	}
 	
@@ -97,26 +80,23 @@ public class Field {
 	 * @param d az ir�ny, amelyikbe a munk�s menni szeretne
 	 * @return igazzal t�r vissza, ha tudja fogadni, egy�bk�nt hamissal
 	 */
-	public void accept(Box b, Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				".accept(" +
-				Skeleton.getName(d) + ", " +
-				d.toString() + ")"	
-			);
-		if (thing == null) {
-			b.removeFromField();
-			addThing(b);
-			b.addField(this);
-		}
-		else {
-			thing.pushed(b, d);
+	public void accept(Box b, Direction d, int force, int friction) {
+		if (force > friction) {
 			if (thing == null) {
 				b.removeFromField();
 				addThing(b);
 				b.addField(this);
 			}
+			else {
+				thing.pushed(b, d, force, friction + currentFriction);
+				if (thing == null) {
+						b.removeFromField();
+						addThing(b);
+						b.addField(this);						
+				}
+			}
 		}
-		Skeleton.printReturn();
+		
 	}
 	
 	/**
@@ -124,14 +104,9 @@ public class Field {
 	 * @param d az ir�ny, amerre van az adott thing
 	 */
 	public void addPointToThing(Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				".addPointToThing(" +
-				d.toString() + ")"	
-			);
 		if (thing != null) {
 			thing.addPoint(d);			
 		}
-		Skeleton.printReturn();
 	}
 	
 	/**
@@ -139,23 +114,14 @@ public class Field {
 	 * @param t egy Thing, ami a mez�re l�p
 	 */
 	public void addThing(Thing t) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".addThing(" +
-				Skeleton.getName(t) + ")"
-			);
 		thing = t;
-		Skeleton.printReturn();
 	}
 	
 	/**
 	 * Elt�vol�tja a rajta l�v� thinget a mez�r�l.
 	 */
 	public void removeThing() {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				".removeThing()"	
-			);
 		thing = null;
-		Skeleton.printReturn();
 	}
 	
 	/**
@@ -164,12 +130,6 @@ public class Field {
 	 * @return a d ir�ny ellentettje
 	 */
 	public Direction convertDir(Direction d) {
-		++Skeleton.count;
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".conevertDir(" +
-				d.toString() +
-			 	")"	
-			);
 		Direction opp = null;
 		switch(d) {
 		case RIGHT:
@@ -185,7 +145,28 @@ public class Field {
 			opp = Direction.UP;
 			break;
 		}
-		Skeleton.printReturn(opp.toString());
 		return opp;
+	}
+	
+	public void increaseFriction() {
+		currentFriction -= 3;
+	}
+	
+	public void decreaseFriction() {
+		currentFriction += 3;
+	}
+	
+	public int getFriction() {
+		return currentFriction;
+	}
+	
+	public void Draw() {
+		System.out.print("f");
+		if (thing != null) {
+			thing.Draw();
+		}
+		else {
+			System.out.print(" ");
+		}
 	}
 }

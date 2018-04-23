@@ -12,14 +12,10 @@ public class Box extends Thing {
 	 * @param d az ir�ny, amelyik ir�nyba a l�d�t tolja a munk�s
 	 */
 	public void pushed(Worker w, Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				".pushed(" + Skeleton.getName(w) + 
-				"," + d.toString()+ ")"
-		);
 		Field nextField = field.getNeighbour(d);
 		
-		nextField.accept(this, d);
-		Skeleton.printReturn();
+		nextField.accept(this, d, w.getForce(), field.getFriction());
+
 	}
 	
 	/**
@@ -27,15 +23,15 @@ public class Box extends Thing {
 	 * @param b a l�da, amit egy munk�s ennek a l�d�nak a hely�re akar tolni.
 	 * @param d az ir�ny, amelyikbe a l�d�t tolni akarj�k
 	 */
-	public void pushed(Box b, Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				".pushed(" + Skeleton.getName(b) + 
-				"," + d.toString()+ ")"
-		);
+	public void pushed(Box b, Direction d, int force, int friction) {
 		Field nextField = field.getNeighbour(d);
 	
-		nextField.accept(this, d);
-		Skeleton.printReturn();
+		nextField.accept(this, d, force, friction);
+	}
+
+	@Override
+	public void Draw() {
+		System.out.print("b");
 	}
 
 }

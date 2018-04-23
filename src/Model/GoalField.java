@@ -17,22 +17,15 @@ public class GoalField extends Field {
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".accept(" + 
-				Skeleton.getName(w) + "," +
-				d.toString() + ")"
-		);
 		if (thing == null) {
 			w.removeFromField();
 			thing = w;
 			w.addField(this);
-			Skeleton.printReturn("True");
 			return true;
 		}
 		else {
-			System.out.println("Ezt worker nem tudja m�r eltolni, mert c�lmez�re jutott a l�da!");
+			//Box has reached GoalField
 		}
-		Skeleton.printReturn("False");
 		return false;
 	}
 	
@@ -45,12 +38,7 @@ public class GoalField extends Field {
 	 * @return
 	 */
 	@Override
-	public void accept(Box b, Direction d) {
-		Skeleton.printCall( Skeleton.getName(this) + 
-				".accept(" + 
-				Skeleton.getName(b) + "," +
-				d.toString() + ")"
-		);
+	public void accept(Box b, Direction d, int force, int friction) {
 		if (thing == null) {
 			b.addPoint(convertDir(d));
 			b.removeFromField();
@@ -60,6 +48,16 @@ public class GoalField extends Field {
 		else {
 			System.out.println("Ezen a c�lmez�n m�r van doboz!");
 		}
-		Skeleton.printReturn();
 	}
+	@Override
+	public void Draw() {
+		System.out.print("g");
+		if (thing != null) {
+			thing.Draw();
+		}
+		else {
+			System.out.print(" ");
+		}
+	}
+	
 }

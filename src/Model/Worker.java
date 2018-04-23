@@ -7,12 +7,15 @@ package Model;
 
 public class Worker extends Thing {
 	private int points;
-	
+	private int force;
+	private String name;
 	/**
 	 * Konstruktor
 	 */
-	public Worker() {
+	public Worker(String name) {
+		this.name = name;
 		points = 0;
+		force = 3;
 	}
 	
 	/**
@@ -21,12 +24,9 @@ public class Worker extends Thing {
 	 * @param d		az ir�ny, amerre l�pni szeretne
 	 */
 	public void step(Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				".step(" + d.toString() + ")");
 		Field nextField = field.getNeighbour(d);
-		nextField.accept(this, d);
-		Skeleton.printReturn();
-		
+		if (nextField != null)
+			nextField.accept(this, d);
 	}
 	
 	/**
@@ -36,12 +36,7 @@ public class Worker extends Thing {
 	 */
 	@Override
 	public void pushed(Worker w, Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				"pushed(" + Skeleton.getName(w) + 
-				"," + d.toString()+ ")"
-		);
-		Skeleton.printReturn("");
-		//
+		//Not possible
 	}
 	
 	/**
@@ -52,13 +47,7 @@ public class Worker extends Thing {
 	 * @param d		az ir�ny, amerre tolni szeretn�k a munk�st
 	 */
 	@Override
-	public void pushed(Box b, Direction d) {
-		
-		Skeleton.printCall(Skeleton.getName(this) + 
-				"pushed(" + Skeleton.getName(b) + 
-				"," + d.toString()+ ")"
-		);
-		
+	public void pushed(Box b, Direction d, int force, int friction) {
 		Field nextField = field.getNeighbour(d);
 		
 		if (nextField.accept(this, d)) {
@@ -67,14 +56,10 @@ public class Worker extends Thing {
 		else {
 			this.disappear();
 		}
-		Skeleton.printReturn();
 	}
 	
 	@Override
 	public void addPoint(Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				"addPoint(" + d.toString()+ ")"
-		);
 		Field neighbour = field.getNeighbour(d);
 		if (neighbour != null) {
 			neighbour.addPointToThing(d);
@@ -82,15 +67,34 @@ public class Worker extends Thing {
 		else {
 			points++;
 		}
-		Skeleton.printReturn();
 	}
 	
 	public int getPoint() {
-		Skeleton.printCall(Skeleton.getName(this) + 
-				"getPoint()"
-		);
-		Skeleton.printReturn(""+points);
 		return points;
+	}
+	
+	public void oilFieldWithOil() {
+		field.decreaseFriction();
+	}
+	
+	public void oilFieldWithHoney() {
+		field.increaseFriction();
+	}
+	
+	public int getForce() {
+		return force;
+	}
+
+	@Override
+	public void Draw() {
+		System.out.print("w");
+	}
+	
+	@Override
+	public void disappear() {
+		super.disappear();
+		System.out.println(name + " died ...");
+		Game.endGame();
 	}
 	
 }

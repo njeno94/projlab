@@ -14,13 +14,7 @@ public class Hole extends Field {
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) +
-				".accept(" + Skeleton.getName(w) +
-				"," + d.toString() + ")"
-	);
-		//System.out.println("A munk�s meghalt, beleesett a lyukba!");
 		w.disappear();
-		Skeleton.printReturn("False");
 		return false;
 	}
 	
@@ -30,13 +24,13 @@ public class Hole extends Field {
 	 * @param d		az ir�ny, amerre a l�d�t tolni szeretn�k
 	 */
 	@Override
-	public void accept(Box b, Direction d) {
-		Skeleton.printCall(Skeleton.getName(this) +
-				".accept(" + Skeleton.getName(b) +
-				"," + d.toString() + ")"
-	);
+	public void accept(Box b, Direction d, int force, int friction) {
 		b.disappear();
-		//System.out.println("A doboz beleesett a lyukba!");
-		Skeleton.printReturn();
+	}
+	
+	@Override
+	public void Draw() {
+		System.out.print("h");
+		System.out.print(" ");
 	}
 }
