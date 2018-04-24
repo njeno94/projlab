@@ -20,9 +20,9 @@ public class Main {
 		
 		String s = null;
 		Scanner in = new Scanner(System.in);
-		
-		while (s == null || !(s.equals("exit"))) {
-			s = in.nextLine();
+
+		s = in.nextLine();
+		while(!s.equals("exit")) {
 			
 			switch(s.toUpperCase()) {
 			case "D":
@@ -52,7 +52,9 @@ public class Main {
 			if (game.checkGameEnd()) {
 				Game.endGame();
 			}
-		}
+			s = in.nextLine();					
+
+		} 
 		
         System.exit(0);
 
