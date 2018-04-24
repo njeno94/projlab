@@ -12,7 +12,7 @@ import java.util.Map;
 public class Field {
 	protected Thing thing;
 	private Map<Direction, Field> fields;
-	public static int frictionAtStart = 1;
+	private static final int frictionAtStart = 1;
 	private int currentFriction;
 	/**
 	 * konstruktor
@@ -20,7 +20,7 @@ public class Field {
 	public Field() {
 		thing = null;
 		fields = new HashMap<Direction, Field>();
-		currentFriction = 2;
+		currentFriction = frictionAtStart;
 	}
 	
 	/**
@@ -172,11 +172,11 @@ public class Field {
 	}
 
 	public void DrawFriction(){
-		if( currentFriction == 2 ){
+		if( currentFriction == frictionAtStart ){
 			System.out.print(" ");			
-		} else if( currentFriction < 2 ){
+		} else if( currentFriction < frictionAtStart ){
 			System.out.print("h");			
-		}else if( currentFriction > 0 ){
+		}else if( currentFriction > frictionAtStart ){
 			System.out.print("o");		
 		}
 	}
