@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class Game {
 	private ArrayList<Field> raktarepulet;
 	private ArrayList<GoalField> celmezok;
-	private int SHFindex, SFindex;
 	private boolean firstWorkerSetted;
+	private int width;
 	
 	/**
 	 * Konstruktor
@@ -21,8 +21,6 @@ public class Game {
 		raktarepulet = new ArrayList<Field>();
 		celmezok = new ArrayList<GoalField>();
 		firstWorkerSetted = false;
-		SHFindex = -1;
-		SFindex = -1;
 	}
 	
 	public void addField(Field f) {
@@ -91,14 +89,16 @@ public class Game {
 	}
 	
 	public void setMap(Worker w1, Worker w2, String fileName) {
+	
+	ArrayList<SwitchField> switchfields = new ArrayList<SwitchField>();
+	ArrayList<SwitchHoleField> switchholefields = new ArrayList<SwitchHoleField>();
 		
 		String line = "";
+		String[] fields = null;
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-
-        	int j = 0;
             while ((line = br.readLine()) != null) {
-                String[] fields = line.split(";");
+                fields = line.split(";");
                 
                 for (int i = 0; i < fields.length; i++) {
                 	Field f = null;
@@ -110,17 +110,20 @@ public class Game {
                 			f = new Hole();
                 			break;
                 		case 's':
-                			f = new SwitchField();
-                			SFindex = j;
+
+                			SwitchField sf = new SwitchField();
+					switchfields.add(sf);
+					f=sf;
                 			break;
                 		case 't':
-                			f = new SwitchHoleField();
-                			SHFindex = j;
-                			System.out.println(SHFindex);
+                			SwitchHoleField shf = new SwitchHoleField();
+					switchholefields.add(shf);
+					f=shf;
                 			break;
                 		case 'g':
-                			f = new GoalField();
-                			celmezok.add((GoalField)f);
+					GoalField g = new GoalField();
+                			celmezok.add(g);
+					f=g;
                 			break;
                 		case 'f':
                 			f = new Field();
@@ -160,7 +163,6 @@ public class Game {
                 	}
                 	if (f != null)
                 		raktarepulet.add(f);
-                	j++; //For the indexes
                 }
             }
 
@@ -168,17 +170,18 @@ public class Game {
         	//
         }
         
-        setSwitchField(SFindex,SHFindex);
+	width=fields.length;
+        setSwitchField(switchfields,switchholefields);
         
         setNeighbours();
 	}
 	
 	public void setNeighbours() {
-		for (int i=0; i < raktarepulet.size() - 10; i++) {
+		for (int i=0; i < raktarepulet.size() - width; i++) {
 			raktarepulet.get(i).setNeighbour(Direction.DOWN, raktarepulet.get(i+10));
 		}
 		
-		for (int i=raktarepulet.size() - 1; i >= 10; i--) {
+		for (int i=raktarepulet.size() - 1; i >= width; i--) {
 			raktarepulet.get(i).setNeighbour(Direction.UP, raktarepulet.get(i-10));
 		}
 		
@@ -191,16 +194,17 @@ public class Game {
 		}
 	}
 	
-	public void setSwitchField(int SFidx, int SHFidx) {
-		SwitchField sf = (SwitchField)raktarepulet.get(SFidx);
-		sf.setSwitchHoleField(raktarepulet.get(SHFidx));
+	public void setSwitchField(ArrayList<SwitchField> swlist, ArrayList<SwitchHoleField> swhlist) {
+		for( SwitchField sw : swlist){
+			sw.setSwitchHoleField(swhlist.get(swlist.indexOf(sw)));
+		}
 	}
 	
 	public void showWareHouse() {
 		for (int i=0; i<raktarepulet.size(); i++) {
 			System.out.print("|");
 			raktarepulet.get(i).Draw();
-			if ((i + 1 )% 10 == 0) {
+			if ((i + 1 )% width == 0) {
 				System.out.print("|");				
 				System.out.println();
 			}

@@ -57,9 +57,10 @@ public class GoalField extends Field {
 		System.out.print("g");
 		if (thing != null) {
 			thing.Draw();
-		}
-		else {
+			DrawFriction();
+		} else {
 			System.out.print(" ");
+			DrawFriction();
 		}
 	}
 	

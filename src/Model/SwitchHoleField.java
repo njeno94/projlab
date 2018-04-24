@@ -100,9 +100,11 @@ public class SwitchHoleField extends Field {
 		System.out.print("t");
 		if (thing != null) {
 			thing.Draw();
-		}
-		else {
+			DrawFriction();
+		} else {
 			System.out.print(" ");
+			DrawFriction();
 		}
+
 	}
 }

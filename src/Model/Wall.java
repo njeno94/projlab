@@ -36,7 +36,7 @@ public class Wall extends Field {
 			thing.Draw();
 		}
 		else {
-			System.out.print(" ");
+			System.out.print("  ");
 		}
 	}
 }

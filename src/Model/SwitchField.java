@@ -60,9 +60,10 @@ public class SwitchField extends Field {
 		System.out.print("s");
 		if (thing != null) {
 			thing.Draw();
-		}
-		else {
+			DrawFriction();
+		} else {
 			System.out.print(" ");
+			DrawFriction();
 		}
 	}
 	

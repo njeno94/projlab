@@ -32,7 +32,6 @@ public class Hole extends Field {
 	
 	@Override
 	public void Draw() {
-		System.out.print("h");
-		System.out.print(" ");
+		System.out.print("h  ");
 	}
 }

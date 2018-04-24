@@ -164,9 +164,20 @@ public class Field {
 		System.out.print("f");
 		if (thing != null) {
 			thing.Draw();
-		}
-		else {
+			DrawFriction();
+		} else {
 			System.out.print(" ");
+			DrawFriction();
+		}
+	}
+
+	public void DrawFriction(){
+		if( currentFriction == 2 ){
+			System.out.print(" ");			
+		} else if( currentFriction < 2 ){
+			System.out.print("h");			
+		}else if( currentFriction > 0 ){
+			System.out.print("o");		
 		}
 	}
 }

@@ -12,7 +12,7 @@ public class Main {
 
 		
 		Game game = new Game();
-		game.setMap(w1, w2, "emoji.txt");
+		game.setMap(w1, w2, args[0]);
 		
 
 		game.showWareHouse();
@@ -24,7 +24,7 @@ public class Main {
 		while (s == null || !(s.equals("exit"))) {
 			s = in.nextLine();
 			
-			switch(s) {
+			switch(s.toUpperCase()) {
 			case "D":
 				if (w1 != null)
 				w1.step(Direction.RIGHT);
@@ -38,9 +38,15 @@ public class Main {
 			case "S":
 				w1.step(Direction.DOWN);
 				break;
+			case "H" :
+				w1.oilFieldWithHoney();
+				break;
+			case "O" :
+				w1.oilFieldWithOil();
+				break;
 			}
 			
-			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+			//new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 			game.showWareHouse();
 			if (game.checkGameEnd()) {
 				Game.endGame();
