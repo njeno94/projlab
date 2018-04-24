@@ -42,7 +42,9 @@ public class Main {
 			
 			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 			game.showWareHouse();
-			
+			if (game.checkGameEnd()) {
+				Game.endGame();
+			}
 		}
 		
         System.exit(0);

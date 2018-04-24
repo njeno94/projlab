@@ -25,7 +25,9 @@ public class Hole extends Field {
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
-		b.disappear();
+		if (force > friction) {			
+			b.disappear();
+		}
 	}
 	
 	@Override

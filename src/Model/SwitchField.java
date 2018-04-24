@@ -16,15 +16,7 @@ public class SwitchField extends Field {
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
-		if (thing == null) {
-			b.removeFromField();
-			addThing(b);
-			b.addField(this);
-			hole.setState(true);
-			hole.changeState();
-		}
-		else {
-			thing.pushed(b, d, force, friction);
+		if (force > friction) {
 			if (thing == null) {
 				b.removeFromField();
 				addThing(b);
@@ -32,6 +24,16 @@ public class SwitchField extends Field {
 				hole.setState(true);
 				hole.changeState();
 			}
+			else {
+				thing.pushed(b, d, force, friction);
+				if (thing == null) {
+					b.removeFromField();
+					addThing(b);
+					b.addField(this);
+					hole.setState(true);
+					hole.changeState();
+				}
+			}			
 		}
 	}
 	

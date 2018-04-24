@@ -55,23 +55,25 @@ public class SwitchHoleField extends Field {
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
-		if (!state) {
-			if (thing == null) {
-				b.removeFromField();
-				addThing(b);
-				b.addField(this);
-			}
-			else {
-				thing.pushed(b, d, force, friction);
+		if (force > friction) {
+			if (!state) {
 				if (thing == null) {
 					b.removeFromField();
 					addThing(b);
 					b.addField(this);
 				}
+				else {
+					thing.pushed(b, d, force, friction);
+					if (thing == null) {
+						b.removeFromField();
+						addThing(b);
+						b.addField(this);
+					}
+				}
 			}
-		}
-		else {
-			b.disappear();
+			else {
+				b.disappear();
+			}
 		}
 	}
 	

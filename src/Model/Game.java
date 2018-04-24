@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Game {
 	private ArrayList<Field> raktarepulet;
-	private ArrayList<Field> celmezok;
+	private ArrayList<GoalField> celmezok;
 	private int SHFindex, SFindex;
 	private boolean firstWorkerSetted;
 	
@@ -19,7 +19,7 @@ public class Game {
 	 */
 	Game() {
 		raktarepulet = new ArrayList<Field>();
-		celmezok = new ArrayList<Field>();
+		celmezok = new ArrayList<GoalField>();
 		firstWorkerSetted = false;
 		SHFindex = -1;
 		SFindex = -1;
@@ -41,8 +41,11 @@ public class Game {
 	 * @return Igaz ha v�ge, egy�bk�nt hamis
 	 */
 	public boolean checkGameEnd() {
-		return false;
-		
+		if (!checkGoalFields()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
@@ -67,7 +70,17 @@ public class Game {
 	 * @return igaz, ha van, egy�bk�nt hamis
 	 */
 	public boolean checkGoalFields() {
-		return  true;
+		int count = 0;
+		for (GoalField g : celmezok) {
+			if (g.isBoxReached()) {
+				count++;
+			}
+		}
+		if (count == celmezok.size()) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	/**
@@ -107,7 +120,7 @@ public class Game {
                 			break;
                 		case 'g':
                 			f = new GoalField();
-                			celmezok.add(f);
+                			celmezok.add((GoalField)f);
                 			break;
                 		case 'f':
                 			f = new Field();
@@ -161,13 +174,10 @@ public class Game {
 	}
 	
 	public void setNeighbours() {
-
-		System.out.println(raktarepulet.size());
-		//DOWN irany
 		for (int i=0; i < raktarepulet.size() - 10; i++) {
 			raktarepulet.get(i).setNeighbour(Direction.DOWN, raktarepulet.get(i+10));
 		}
-		//UP irany
+		
 		for (int i=raktarepulet.size() - 1; i >= 10; i--) {
 			raktarepulet.get(i).setNeighbour(Direction.UP, raktarepulet.get(i-10));
 		}
@@ -179,14 +189,12 @@ public class Game {
 		for (int i=raktarepulet.size() - 1; i > 0; i--) {
 			raktarepulet.get(i).setNeighbour(Direction.LEFT, raktarepulet.get(i-1));
 		}
-		
 	}
 	
 	public void setSwitchField(int SFidx, int SHFidx) {
 		SwitchField sf = (SwitchField)raktarepulet.get(SFidx);
 		sf.setSwitchHoleField(raktarepulet.get(SHFidx));
 	}
-	
 	
 	public void showWareHouse() {
 		for (int i=0; i<raktarepulet.size(); i++) {
