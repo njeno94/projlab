@@ -151,7 +151,7 @@ public class Game {
                 		}
                 	}
                 	
-                	if (fields[i].length() > 2) {                		
+                		if (fields[i].length() > 2) {                		
                 		switch(fields[i].charAt(2)) {
                 		case 'o':
                 			f.increaseFriction();
@@ -171,8 +171,9 @@ public class Game {
         }
         
 	width=fields.length;
-        setSwitchField(switchfields,switchholefields);
-        
+	if( !switchfields.isEmpty()  && !switchholefields.isEmpty()){
+        	setSwitchField(switchfields,switchholefields);
+	}
         setNeighbours();
 	}
 	
