@@ -1,1 +1,1 @@
-java -classpath out Model.Main
+java -classpath out Model.Main src/Model/warehouse.txt
