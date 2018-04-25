@@ -1,1 +1,1 @@
-java -classpath out Model.Main src/Model/warehouse.txt
+java -classpath out -Dfile.encoding=UTF8 Model.Main src/Model/warehouse.txt
