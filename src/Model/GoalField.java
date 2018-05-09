@@ -18,9 +18,7 @@ public class GoalField extends Field {
 	@Override
 	public boolean accept(Worker w, Direction d) {
 		if (thing == null) {
-			w.removeFromField();
-			thing = w;
-			w.addField(this);
+			moveThingToCurrentField(w);
 			return true;
 		}
 		else {
@@ -42,9 +40,7 @@ public class GoalField extends Field {
 		if (force > friction) {
 			if (thing == null) {
 				b.addPoint(convertDir(d));
-				b.removeFromField();
-				thing = b;
-				b.addField(this);
+				moveThingToCurrentField(b);
 				boxReached = true;
 			}
 			else {
@@ -57,11 +53,10 @@ public class GoalField extends Field {
 		System.out.print("g");
 		if (thing != null) {
 			thing.Draw();
-			DrawFriction();
 		} else {
 			System.out.print(" ");
-			DrawFriction();
 		}
+		DrawFriction();
 	}
 	
 	public boolean isBoxReached() {

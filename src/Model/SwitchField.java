@@ -17,22 +17,11 @@ public class SwitchField extends Field {
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
+			pushThingIfExists(b, d, force, friction + currentFriction);
 			if (thing == null) {
-				b.removeFromField();
-				addThing(b);
-				b.addField(this);
+				moveThingToCurrentField(b);
 				hole.setState(true);
-				hole.changeState();
-			}
-			else {
-				thing.pushed(b, d, force, friction);
-				if (thing == null) {
-					b.removeFromField();
-					addThing(b);
-					b.addField(this);
-					hole.setState(true);
-					hole.changeState();
-				}
+				hole.changeState();						
 			}			
 		}
 	}
@@ -41,7 +30,7 @@ public class SwitchField extends Field {
 	 *  Beállítja a hozzá tartozó kapcsolható lyukat
 	 * @param sh 	a kapcsolható lyuk, amit kapcsolni fog tudni
 	 */
-	public void setSwitchHoleField(Field sh) {
+	public void setSwitchHoleField(SwitchHoleField sh) {
 		hole = (SwitchHoleField)sh;
 	}
 	
@@ -60,11 +49,10 @@ public class SwitchField extends Field {
 		System.out.print("s");
 		if (thing != null) {
 			thing.Draw();
-			DrawFriction();
 		} else {
 			System.out.print(" ");
-			DrawFriction();
 		}
+		DrawFriction();
 	}
 	
 }

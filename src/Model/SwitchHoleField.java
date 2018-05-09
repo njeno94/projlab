@@ -25,20 +25,10 @@ public class SwitchHoleField extends Field {
 	@Override
 	public boolean accept(Worker w, Direction d) {
 		if (!state) {
+			pushThingIfExists(w, d);	
 			if (thing == null) {
-				w.removeFromField();
-				addThing(w);
-				w.addField(this);
+				moveThingToCurrentField(w);
 				return true;
-			}
-			else {
-				thing.pushed(w, d);
-				if (thing == null) {
-					w.removeFromField();
-					addThing(w);
-					w.addField(this);
-					return true;
-				}
 			}
 			return false;
 		}
@@ -57,18 +47,9 @@ public class SwitchHoleField extends Field {
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
 			if (!state) {
+				pushThingIfExists(b, d, force, friction + currentFriction);
 				if (thing == null) {
-					b.removeFromField();
-					addThing(b);
-					b.addField(this);
-				}
-				else {
-					thing.pushed(b, d, force, friction);
-					if (thing == null) {
-						b.removeFromField();
-						addThing(b);
-						b.addField(this);
-					}
+					moveThingToCurrentField(b);							
 				}
 			}
 			else {
@@ -100,11 +81,9 @@ public class SwitchHoleField extends Field {
 		System.out.print("t");
 		if (thing != null) {
 			thing.Draw();
-			DrawFriction();
 		} else {
 			System.out.print(" ");
-			DrawFriction();
 		}
-
+		DrawFriction();
 	}
 }

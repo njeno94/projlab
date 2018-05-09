@@ -13,7 +13,7 @@ public class Field {
 	protected Thing thing;
 	private Map<Direction, Field> fields;
 	private static final int frictionAtStart = 1;
-	private int currentFriction;
+	protected int currentFriction;
 	/**
 	 * konstruktor
 	 */
@@ -52,20 +52,10 @@ public class Field {
 	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
 	 */
 	public boolean accept(Worker w, Direction d) {
+		pushThingIfExists(w, d);	
 		if (thing == null) {
-			w.removeFromField();
-			addThing(w);
-			w.addField(this);
+			moveThingToCurrentField(w);
 			return true;
-		}
-		else {
-			thing.pushed(w, d);
-			if (thing == null) {
-				w.removeFromField();
-				addThing(w);
-				w.addField(this);
-				return true;
-			}
 		}
 		return false;
 	}
@@ -82,21 +72,12 @@ public class Field {
 	 */
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
+			pushThingIfExists(b, d, force, friction + currentFriction);
 			if (thing == null) {
-				b.removeFromField();
-				addThing(b);
-				b.addField(this);
+				moveThingToCurrentField(b);							
 			}
-			else {
-				thing.pushed(b, d, force, friction + currentFriction);
-				if (thing == null) {
-						b.removeFromField();
-						addThing(b);
-						b.addField(this);						
-				}
-			}
+
 		}
-		
 	}
 	
 	/**
@@ -129,7 +110,7 @@ public class Field {
 	 * @param d az irány, aminek keressük az ellentettjét
 	 * @return a d irány ellentettje
 	 */
-	public Direction convertDir(Direction d) {
+	public static Direction convertDir(Direction d) {
 		Direction opp = null;
 		switch(d) {
 		case RIGHT:
@@ -179,4 +160,23 @@ public class Field {
 			System.out.print("o");		
 		}
 	}
+
+	protected void moveThingToCurrentField(Thing t){
+		t.removeFromField();
+		addThing(t);
+		t.addField(this);
+	}
+
+	protected void pushThingIfExists(Box b, Direction d, int force, int friction){
+		if (thing != null) {
+			thing.pushed(b, d, force, friction);
+		}
+	}
+
+	protected void pushThingIfExists(Worker w, Direction d){
+		if (thing != null) {
+			thing.pushed(w, d);
+		}
+	}
+	
 }
