@@ -1,8 +1,8 @@
 package Model;
 
 /**
- * A kapcsolhat� lyuk modellje: vagy egyszer� mez�k�nt,
- * vagy lyukk�nt viselkedik �llapot�t�l f�gg�en.
+ * A kapcsolható lyuk modellje: vagy egyszerű mezőként,
+ * vagy lyukként viselkedik állapotától függően.
  *
  */
 public class SwitchHoleField extends Field {
@@ -17,10 +17,10 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 *  befogadja a param�terk�nt kapott Worker objektumot.
-	 * @param w 	a munk�s, aki a mez�re szeretne l�pni
-	 * @param d		az ir�ny, amerre a munk�s l�pni szeretne
-	 * @return		igaz, ha a munk�s r� tud l�pni, egy�bk�nt hamis
+	 *  befogadja a paraméterként kapott Worker objektumot.
+	 * @param w 	a munkás, aki a mezőre szeretne lépni
+	 * @param d		az irány, amerre a munkás lépni szeretne
+	 * @return		igaz, ha a munkás rá tud lépni, egyébként hamis
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
@@ -49,9 +49,9 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 * Befogadja a param�terk�nt kapott Box objektumot.
-	 * @param b		a l�da, amit a mez�re szeretn�nek tolni
-	 * @param d		az ir�ny, amerre a l�d�t tolni szeretn�k
+	 * Befogadja a paraméterként kapott Box objektumot.
+	 * @param b		a láda, amit a mezőre szeretnének tolni
+	 * @param d		az irány, amerre a ládát tolni szeretnék
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
@@ -78,16 +78,16 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 * Be�ll�tja a mez� �llapot�t
-	 * @param s az �llapot amit be�ll�t a mez�nek
+	 * Beállítja a mező állapotát
+	 * @param s az állapot amit beállít a mezőnek
 	 */
 	public void setState(boolean s) {
 		state = s;
 	}
 	
 	/**
-	 * �t�ll�tja a mez� �llapot�t. Ha nyitottra �ll�tja,
-	 * akkor elt�nik r�la a rajta l�v� dolog.
+	 * Átállítja a mező állapotát. Ha nyitottra állítja,
+	 * akkor eltűnik róla a rajta lévő dolog.
 	 */
 	public void changeState() {
 		if (state && thing!=null) {
