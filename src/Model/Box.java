@@ -2,14 +2,14 @@ package Model;
 
 
 /**
- * Ez az oszt�ly reprezent�lja a l�d�kat a j�t�kban.
+ * Ez az osztály reprezentálja a ládákat a játékban.
  */
 public class Box extends Thing {
 	
 	/**
-	 * A l�d�k tol�s�t val�s�tja meg, amikor munk�s tolja a l�d�t.
-	 * @param w a munk�s, aki tolja a l�d�t
-	 * @param d az ir�ny, amelyik ir�nyba a l�d�t tolja a munk�s
+	 * A ládák tolását valósítja meg, amikor munkás tolja a ládát.
+	 * @param w a munkás, aki tolja a ládát
+	 * @param d az irány, amelyik irányba a ládát tolja a munkás
 	 */
 	public void pushed(Worker w, Direction d) {
 		Field nextField = field.getNeighbour(d);
@@ -19,9 +19,9 @@ public class Box extends Thing {
 	}
 	
 	/**
-	 * A l�d�k tol�s�t val�s�tja meg, amikor munk�s tolja a l�d�t.
-	 * @param b a l�da, amit egy munk�s ennek a l�d�nak a hely�re akar tolni.
-	 * @param d az ir�ny, amelyikbe a l�d�t tolni akarj�k
+	 * A ládák tolását valósítja meg, amikor munkás tolja a ládát.
+	 * @param b a láda, amit egy munkás ennek a ládának a helyére akar tolni.
+	 * @param d az irány, amelyikbe a ládát tolni akarják
 	 */
 	public void pushed(Box b, Direction d, int force, int friction) {
 		Field nextField = field.getNeighbour(d);

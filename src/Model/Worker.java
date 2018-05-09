@@ -1,8 +1,8 @@
 package Model;
 
 /**
- * A munk�shoz tartoz� oszt�ly. Feladata a munk�s �let�nek
- * valamint pontjainak kezel�se, a l�p�s illetve a l�d�k tol�sa.
+ * A munkáshoz tartozó osztály. Feladata a munkás életének
+ * valamint pontjainak kezelése, a lépés illetve a ládák tolása.
  */
 
 public class Worker extends Thing {
@@ -19,9 +19,9 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 *  a munk�s l�p�s��rt felel�s met�dus,
-	 *  param�terk�nt megkapja, hogy milyen ir�nyba l�pjen
-	 * @param d		az ir�ny, amerre l�pni szeretne
+	 *  a munkás lépéséért felelős metódus,
+	 *  paraméterként megkapja, hogy milyen irányba lépjen
+	 * @param d		az irány, amerre lépni szeretne
 	 */
 	public void step(Direction d) {
 		Field nextField = field.getNeighbour(d);
@@ -30,9 +30,9 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 * Ez a met�dus kezeli a munk�s tol�s�t, amennyiben egy m�sik munk�s tolja.
-	 * @param w		a m�sik munk�s, aki tolni szeretn� 
-	 * @param d		az ir�ny, amerre tolni szeretn� a munk�st							
+	 * Ez a metódus kezeli a munkás tolását, amennyiben egy másik munkás tolja.
+	 * @param w		a másik munkás, aki tolni szeretné 
+	 * @param d		az irány, amerre tolni szeretné a munkást							
 	 */
 	@Override
 	public void pushed(Worker w, Direction d) {
@@ -40,11 +40,11 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 * Ez a met�dus kezeli a Worker tol�s�t,
-	 * amennyiben Box tolja. Param�terk�nt kapja a dobozt,
-	 * illetve, hogy milyen ir�nyba szeretn�k tolni. 
-	 * @param b		a doboz, amit r� akarnak tolni a munk�sra
-	 * @param d		az ir�ny, amerre tolni szeretn�k a munk�st
+	 * Ez a metódus kezeli a Worker tolását,
+	 * amennyiben Box tolja. Paraméterként kapja a dobozt,
+	 * illetve, hogy milyen irányba szeretnék tolni. 
+	 * @param b		a doboz, amit rá akarnak tolni a munkásra
+	 * @param d		az irány, amerre tolni szeretnék a munkást
 	 */
 	@Override
 	public void pushed(Box b, Direction d, int force, int friction) {

@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A rakt�r�p�let egy n�gyzet�t reprezent�lja,
- * amely k�pes t�rolni egy l�d�t, vagy �llhat rajta egy munk�s,
- * illetve vannak speci�lis v�ltozatai.
- * Ismeri a k�r�l�tte l�v� mez�ket.
+ * A raktárépület egy négyzetét reprezentálja,
+ * amely képes tárolni egy ládát, vagy állhat rajta egy munkás,
+ * illetve vannak speciális változatai.
+ * Ismeri a körülötte lévő mezőket.
  */
 public class Field {
 	protected Thing thing;
@@ -24,32 +24,32 @@ public class Field {
 	}
 	
 	/**
-	 * Be�ll�tja d ir�nyba az f mez�t szomsz�dnak.
-	 * @param d az ir�ny, amerre a szomsz�dot be�ll�tjuk
-	 * @param f a mez�, ami a szomsz�d lesz
+	 * Beállítja d irányba az f mezőt szomszédnak.
+	 * @param d az irány, amerre a szomszádot beállítjuk
+	 * @param f a mező, ami a szomszéd lesz
 	 */
 	public void setNeighbour(Direction d, Field f) {
 		fields.put(d, f);
 	}
 	
 	/**
-	 * Visszaadja a d ir�nyban l�v� szomsz�d mez�t.
-	 * @param d az ir�ny, amerre a mez� vanfile:///home/jeno/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/0.png
-	 * @return d  ir�nyban l�v� szomsz�d mez�
+	 * Visszaadja a d irányban lévő szomszéd mezőt.
+	 * @param d az irány, amerre a mező van
+	 * @return d  irányban lévő szomszéd mező
 	 */
 	public Field getNeighbour(Direction d) {
 		return fields.get(d);
 	}
 	
 	/**
-	 *  Ez a f�ggv�ny ellen�rzi, hogy a param�terk�nt kapott munk�st
-	 *  be tudja-e fogadni a mez�. Ha m�r van rajta valami,
-	 *  akkor megh�vja a rajta l�v� thing pushed met�dus�t.
-	 *  Amennyiben a mez� befogadja a param�terk�nt kapott Worker objektumot,
-	 *  az el�z� mez�r�l elt�vol�t�dik �s a jelenlegi mez�re ker�l.
-	 * @param w a munk�s, aki szeretne a mez�re l�pni
-	 * @param d az ir�ny, amelyikbe a munk�s menni szeretne
-	 * @return igazzal t�r vissza, ha tudja fogadni, egy�bk�nt hamissal
+	 *  Ez a függvény ellenőrzi, hogy a paraméterként kapott munkást
+	 *  be tudja-e fogadni a mező. Ha már van rajta valami,
+	 *  akkor meghívja a rajta lévő thing pushed metódusát.
+	 *  Amennyiben a mező befogadja a paraméterként kapott Worker objektumot,
+	 *  az előző mezőről eltávolítódik és a jelenlegi mezőre kerül.
+	 * @param w a munkás, aki szeretne a mezőre lépni
+	 * @param d az irány, amelyikbe a munkás menni szeretne
+	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
 	 */
 	public boolean accept(Worker w, Direction d) {
 		if (thing == null) {
@@ -71,14 +71,14 @@ public class Field {
 	}
 	
 	/**
-	 *  Ez a f�ggv�ny ellen�rzi, hogy a param�terk�nt kapott l�d�t
-	 *  be tudja-e fogadni a mez�. Ha m�r van rajta valami,
-	 *  akkor megh�vja a rajta l�v� thing pushed met�dus�t.
-	 *  Amennyiben a mez� befogadja a param�terk�nt kapott Box objektumot,
-	 *  az el�z� mez�r�l elt�vol�t�dik �s a jelenlegi mez�re ker�l.
-	 * @param w a munk�s, aki szeretne a mez�re l�pni
-	 * @param d az ir�ny, amelyikbe a munk�s menni szeretne
-	 * @return igazzal t�r vissza, ha tudja fogadni, egy�bk�nt hamissal
+	 *  Ez a függvény ellenőrzi, hogy a paraméterként kapott ládát
+	 *  be tudja-e fogadni a mező. Ha már van rajta valami,
+	 *  akkor meghívja a rajta lévő thing pushed metódusát.
+	 *  Amennyiben a mező befogadja a paraméterként kapott Box objektumot,
+	 *  az előző mezőről eltávolítódik és a jelenlegi mezőre kerül.
+	 * @param w a munkás, aki szeretne a mezőre lépni
+	 * @param d az irány, amelyikbe a munkás menni szeretne
+	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
 	 */
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
@@ -100,8 +100,8 @@ public class Field {
 	}
 	
 	/**
-	 * A rajta l�v� thingnek h�vja a pontad�s�rt felel�s met�dus�t.
-	 * @param d az ir�ny, amerre van az adott thing
+	 * A rajta lévő thingnek hívja a pontadásért felelős metódusát.
+	 * @param d az irány, amerre van az adott thing
 	 */
 	public void addPointToThing(Direction d) {
 		if (thing != null) {
@@ -110,24 +110,24 @@ public class Field {
 	}
 	
 	/**
-	 * Hozz�adja a mez�h�z a param�terk�nt kapott thing objektumot.
-	 * @param t egy Thing, ami a mez�re l�p
+	 * Hozz�adja a mezőhöz a paraméterként kapott thing objektumot.
+	 * @param t egy Thing, ami a mezőre lép
 	 */
 	public void addThing(Thing t) {
 		thing = t;
 	}
 	
 	/**
-	 * Elt�vol�tja a rajta l�v� thinget a mez�r�l.
+	 * Eltávolítja a rajta lévő thinget a mezőről.
 	 */
 	public void removeThing() {
 		thing = null;
 	}
 	
 	/**
-	 * Megadja egy ir�nynak az ellentettj�t
-	 * @param d az ir�ny, aminek keress�k az ellentettj�t
-	 * @return a d ir�ny ellentettje
+	 * Megadja egy iránynak az ellentettjét
+	 * @param d az irány, aminek keressük az ellentettjét
+	 * @return a d irány ellentettje
 	 */
 	public Direction convertDir(Direction d) {
 		Direction opp = null;
@@ -164,11 +164,10 @@ public class Field {
 		System.out.print("f");
 		if (thing != null) {
 			thing.Draw();
-			DrawFriction();
 		} else {
 			System.out.print(" ");
-			DrawFriction();
 		}
+		DrawFriction();
 	}
 
 	public void DrawFriction(){

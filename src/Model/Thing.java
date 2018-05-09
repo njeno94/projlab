@@ -1,7 +1,7 @@
 package Model;
 
 /**
- * A munk�s �s a l�da absztrakt �soszt�lya. Felel�ss�ge a mozgat�suk kezel�se.
+ * A munkás és a láda absztrakt ősosztálya. Felelőssége a mozgatásuk kezelüse.
  */
 public abstract class Thing {
 	protected Field field;
@@ -18,18 +18,18 @@ public abstract class Thing {
 	public abstract void pushed(Box b, Direction d, int force, int friction);
 
 	/**
-	 * Be�ll�tja a Thing field attrib�tum�t
-	 * @param f		a mez�, amin van a dolog
+	 * Beállítja a Thing field attribútumát
+	 * @param f		a mező, amin van a dolog
 	 */
 	public void addField(Field f) {
 		field = f;
 	}
 	
 	/**
-	 *  Hozz�adja a l�d��rt kapott pontokat
-	 *  a l�d�t tol� Worker pontjaihoz,
-	 *  egy�bk�nt a c�lmez�t�l a tol�st ind�t� Workerig
-	 *  h�vja a pontad� met�dusokat.
+	 *  Hozzáadja a ládáért kapott pontokat
+	 *  a ládát toló Worker pontjaihoz,
+	 *  egyébként a célmezőtől a tolást indító Workerig
+	 *  hívja a pontadó metódusokat.
 	 * @param d
 	 */
 	public void addPoint(Direction d) {
@@ -41,8 +41,8 @@ public abstract class Thing {
 	}
 
 	/**
-	 * A thingen h�vhat� mez�elt�vol�t� met�dus,
-	 * megh�vja a Field removeThing() met�dus�t
+	 * A thingen hívható mezóeltávolító metódus,
+	 * meghívja a Field removeThing() metódusát
 	 */
 	public void removeFromField() {
 		if (field != null) {		
@@ -51,7 +51,7 @@ public abstract class Thing {
 	}
 
 	/**
-	 * Elt�nteti a dolgot a p�ly�r�l.
+	 * Eltűnteti a dolgot a pályáról.
 	 */
 	public void disappear() {
 		removeFromField();

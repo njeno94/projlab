@@ -1,18 +1,18 @@
 package Model;
 
 /**
- * Egy speci�lis Field, amely a rakt�r �p�letnek
- * azt a n�gyzet�t reprezent�lja, ahov� dobozt kell juttatni.
- * Amennyiben toltak r� l�d�t, a l�da nem mozd�that� onnan. 
+ * Egy speciális Field, amely a raktár épületnek
+ * azt a négyzetét reprezentálja, ahová dobozt kell juttatni.
+ * Amennyiben toltak rá ládát, a láda nem mozdítható onnan. 
  */
 public class GoalField extends Field {
 	private boolean boxReached = false;
 	/**
-	 * Befogadja a param�terk�nt kapott Worker objektumot.
-	 * Megh�vja a a param�terk�nt kapott Box objektum addPoint() met�dus�t
-	 * ellent�tes ir�nnyal, hogy a l�nc v�g�n megkapja a dobozt tol� munk�s a pontot.
-	 * @param w a munk�s, aki a mez�re akar l�pni
-	 * @param d az ir�ny, amerre a munk�s mozogni szeretne
+	 * Befogadja a paraméterként kapott Worker objektumot.
+	 * Meghívja a a paraméterként kapott Box objektum addPoint() metódusát
+	 * ellentétes iránnyal, hogy a lánc végén megkapja a dobozt toló munkás a pontot.
+	 * @param w a munkás, aki a mezőre akar lépni
+	 * @param d az irány, amerre a munkás mozogni szeretne
 	 * @return
 	 */
 	@Override
@@ -30,11 +30,11 @@ public class GoalField extends Field {
 	}
 	
 	/**
-	 * Befogadja a param�terk�nt kapott Box objektumot.
-	 * Megh�vja a a param�terk�nt kapott Box objektum addPoint() met�dus�t
-	 * ellent�tes ir�nnyal, hogy a l�nc v�g�n megkapja a dobozt tol� munk�s a pontot.
-	 * @param b a l�da, amit a mez�re akarnak tolni
-	 * @param d az ir�ny, amerre a l�d�t tolni szeretn�k
+	 * Befogadja a paraméterként kapott Box objektumot.
+	 * Meghívja a a paraméterként kapott Box objektum addPoint() metódusát
+	 * ellentétes iránnyal, hogy a lánc végén megkapja a dobozt toló munkás a pontot.
+	 * @param b a láda, amit a mezőre akarnak tolni
+	 * @param d az irány, amerre a ládát tolni szeretnék
 	 * @return
 	 */
 	@Override

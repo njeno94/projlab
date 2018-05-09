@@ -1,18 +1,18 @@
 package Model;
 
 /**
- * A kapcsol� oszt�ly szerep�t t�lti be.
- * A hozz� tartoz� kapcsolhat� lyuk �llapot�t tudja megv�ltoztatni.
+ * A kapcsoló osztály szerepét tölti be.
+ * A hozzá tartozó kapcsolható lyuk állapotát tudja megváltoztatni.
  */
 public class SwitchField extends Field {
 	
 	private SwitchHoleField hole;
 	
 	/**
-	 * Befogadja a param�terk�nt kapott Box objektumot.
-	 * Megh�vja a hozz�tartoz� SwitchHoleField changeState() met�dus�t.
-	 * @param b		a l�da, amit a mez�re akarnak tolni
-	 * @param d		az ir�ny, amerre a l�d�t tolni szeretn�k
+	 * Befogadja a paraméterként kapott Box objektumot.
+	 * Meghívja a hozzátartozó SwitchHoleField changeState() metódusát.
+	 * @param b		a láda, amit a mezőre akarnak tolni
+	 * @param d		az irány, amerre a ládátt tolni szeretnék
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
@@ -38,16 +38,16 @@ public class SwitchField extends Field {
 	}
 	
 	/**
-	 *  Be�ll�tja a hozz� tartoz� kapcsolhat� lyukat
-	 * @param sh 	a kapcsolhat� lyuk, amit kapcsolni fog tudni
+	 *  Beállítja a hozzá tartozó kapcsolható lyukat
+	 * @param sh 	a kapcsolható lyuk, amit kapcsolni fog tudni
 	 */
 	public void setSwitchHoleField(Field sh) {
 		hole = (SwitchHoleField)sh;
 	}
 	
 	/**
-	 * Elt�vol�tja a p�ly�r�l a rajta l�v� dolgot,
-	 * �s kikapcsolja a hozz� tartoz� kapcsolhat� lyukat
+	 * Eltávolítja a pályáról a rajta lévő dolgot,
+	 * és kikapcsolja a hozzá tartozó kapcsolható lyukat
 	 */
 	@Override
 	public void removeThing() {
