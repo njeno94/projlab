@@ -39,8 +39,8 @@ public class Box extends Thing {
 		Direction[] dirs = Direction.values();
 		for (int i = 0; i < dirs.length; i++) {
 			if (field != null) {
-				if ((field.getNeighbour(dirs[i]) != null) && (field.getNeighbour(field.convertDir(dirs[i])) != null)) {
-					if ((field.getNeighbour(dirs[i]).isOpened()) && (field.getNeighbour(field.convertDir(dirs[i])).isOpened())) {					
+				if ((field.getNeighbour(dirs[i]) != null) && (field.getNeighbour(Field.convertDir(dirs[i])) != null)) {
+					if ((field.getNeighbour(dirs[i]).isOpened()) && (field.getNeighbour(Field.convertDir(dirs[i])).isOpened())) {					
 						return true;
 					}
 				}				
