@@ -18,7 +18,6 @@ import javax.swing.Timer;
 import Model.Direction;
 import Model.Field;
 import Model.Game;
-import Model.Worker;
 import View.View;
 
 public class Controller implements ActionListener, KeyListener {
