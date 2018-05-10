@@ -1,15 +1,15 @@
 package Model;
 
 /**
- * Az egyszerÅ± lyuk modellezÃ©sÃ©re szolgÃ¡lÃ³ osztÃ¡ly.
- * Ha egy munkÃ¡s rÃ¡lÃ©p, meghal, ha egy dobozt rÃ¡tolnak, eltÅ±nik.
+ * Az egyszerû lyuk modellezésére szolgáló osztály.
+ * Ha egy munkás rálép, meghal, ha egy dobozt rátolnak, eltûnik.
  */
 public class Hole extends Field {
 	/**
-	 * Befogadja a paramÃ©terkÃ©nt kapott Worker objektumot
-	 * Ã©s eltÃ¡volÃ­tja a pÃ¡lyÃ¡rÃ³l.
-	 * @param w		a munkÃ¡s, aki a mezÅ‘re szeretne lÃ©pni
-	 * @param d		az irÃ¡ny, amerre a munkÃ¡s mozogni szeretne
+	 * Befogadja a paraméterként kapott Worker objektumot
+	 * és eltávolítja a pályáról.
+	 * @param w		a munkás, aki a mezõre szeretne lépni
+	 * @param d		az irány, amerre a munkás mozogni szeretne
 	 * @return
 	 */
 	@Override
@@ -19,9 +19,9 @@ public class Hole extends Field {
 	}
 	
 	/**
-	 * Befogadja a paramÃ©terkÃ©nt kapott Box objektumot, Ã©s eltÃ¡volÃ­tja a pÃ¡lyÃ¡rÃ³l
-	 * @param b		a lÃ¡da, amit a mezÅ‘re akarnak tolni
-	 * @param d		az irÃ¡ny, amerre a lÃ¡dÃ¡t tolni szeretnÃ©k
+	 * Befogadja a paraméterként kapott Box objektumot, és eltávolítja a pályáról
+	 * @param b		a láda, amit a mezõre akarnak tolni
+	 * @param d		az irány, amerre a ládát tolni szeretnék
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {

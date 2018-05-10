@@ -1,18 +1,19 @@
 package Model;
 
 /**
- * A kapcsol√≥ oszt√°ly szerep√©t t√∂lti be.
- * A hozz√° tartoz√≥ kapcsolhat√≥ lyuk √°llapot√°t tudja megv√°ltoztatni.
+ * A kapcsolÛ oszt·ly szerepÈt tˆlti be.
+ * A hozz· tartozÛ kapcsolhatÛ lyuk ·llapot·t tudja megv·ltoztatni.
  */
 public class SwitchField extends Field {
 	
 	private SwitchHoleField hole;
+	private boolean active = false;
 	
 	/**
-	 * Befogadja a param√©terk√©nt kapott Box objektumot.
-	 * Megh√≠vja a hozz√°tartoz√≥ SwitchHoleField changeState() met√≥dus√°t.
-	 * @param b		a l√°da, amit a mez≈ëre akarnak tolni
-	 * @param d		az ir√°ny, amerre a l√°d√°tt tolni szeretn√©k
+	 * Befogadja a paramÈterkÈnt kapott Box objektumot.
+	 * MeghÌvja a hozz·tartozÛ SwitchHoleField changeState() metÛdus·t.
+	 * @param b		a l·da, amit a mezıre akarnak tolni
+	 * @param d		az ir·ny, amerre a l·d·tt tolni szeretnÈk
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
@@ -21,22 +22,23 @@ public class SwitchField extends Field {
 			if (thing == null) {
 				moveThingToCurrentField(b);
 				hole.setState(true);
-				hole.changeState();						
+				hole.changeState();
+				active = true;
 			}			
 		}
 	}
 	
 	/**
-	 *  Be√°ll√≠tja a hozz√° tartoz√≥ kapcsolhat√≥ lyukat
-	 * @param sh 	a kapcsolhat√≥ lyuk, amit kapcsolni fog tudni
+	 *  Be·llÌtja a hozz· tartozÛ kapcsolhatÛ lyukat
+	 * @param sh 	a kapcsolhatÛ lyuk, amit kapcsolni fog tudni
 	 */
-	public void setSwitchHoleField(SwitchHoleField sh) {
+	public void setSwitchHoleField(Field sh) {
 		hole = (SwitchHoleField)sh;
 	}
 	
 	/**
-	 * Elt√°vol√≠tja a p√°ly√°r√≥l a rajta l√©v≈ë dolgot,
-	 * √©s kikapcsolja a hozz√° tartoz√≥ kapcsolhat√≥ lyukat
+	 * Elt·volÌtja a p·ly·rÛl a rajta lÈvı dolgot,
+	 * Ès kikapcsolja a hozz· tartozÛ kapcsolhatÛ lyukat
 	 */
 	@Override
 	public void removeThing() {
@@ -55,4 +57,7 @@ public class SwitchField extends Field {
 		DrawFriction();
 	}
 	
+	public boolean isActive() {
+		return active;
+	}
 }

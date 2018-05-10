@@ -1,27 +1,30 @@
 package Model;
 
-/**
- * A munk√°shoz tartoz√≥ oszt√°ly. Feladata a munk√°s √©let√©nek
- * valamint pontjainak kezel√©se, a l√©p√©s illetve a l√°d√°k tol√°sa.
- */
+import View.ThingView;
 
+/**
+ * A munk·shoz tartozÛ oszt·ly. Feladata a munk·s ÈletÈnek
+ * valamint pontjainak kezelÈse, a lÈpÈs illetve a l·d·k tol·sa.
+ */
 public class Worker extends Thing {
 	private int points;
 	private int force;
 	private String name;
+	private boolean playing;
 	/**
 	 * Konstruktor
 	 */
 	public Worker(String name) {
 		this.name = name;
 		points = 0;
-		force = 3;
+		force = 6;
+		playing = true;
 	}
 	
 	/**
-	 *  a munk√°s l√©p√©s√©√©rt felel≈ës met√≥dus,
-	 *  param√©terk√©nt megkapja, hogy milyen ir√°nyba l√©pjen
-	 * @param d		az ir√°ny, amerre l√©pni szeretne
+	 *  a munk·s lÈpÈsÈÈrt felelıs metÛdus,
+	 *  paramÈterkÈnt megkapja, hogy milyen ir·nyba lÈpjen
+	 * @param d		az ir·ny, amerre lÈpni szeretne
 	 */
 	public void step(Direction d) {
 		Field nextField = field.getNeighbour(d);
@@ -30,9 +33,9 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 * Ez a met√≥dus kezeli a munk√°s tol√°s√°t, amennyiben egy m√°sik munk√°s tolja.
-	 * @param w		a m√°sik munk√°s, aki tolni szeretn√© 
-	 * @param d		az ir√°ny, amerre tolni szeretn√© a munk√°st							
+	 * Ez a metÛdus kezeli a munk·s tol·s·t, amennyiben egy m·sik munk·s tolja.
+	 * @param w		a m·sik munk·s, aki tolni szeretnÈ 
+	 * @param d		az ir·ny, amerre tolni szeretnÈ a munk·st							
 	 */
 	@Override
 	public void pushed(Worker w, Direction d) {
@@ -40,11 +43,11 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 * Ez a met√≥dus kezeli a Worker tol√°s√°t,
-	 * amennyiben Box tolja. Param√©terk√©nt kapja a dobozt,
-	 * illetve, hogy milyen ir√°nyba szeretn√©k tolni. 
-	 * @param b		a doboz, amit r√° akarnak tolni a munk√°sra
-	 * @param d		az ir√°ny, amerre tolni szeretn√©k a munk√°st
+	 * Ez a metÛdus kezeli a Worker tol·s·t,
+	 * amennyiben Box tolja. ParamÈterkÈnt kapja a dobozt,
+	 * illetve, hogy milyen ir·nyba szeretnÈk tolni. 
+	 * @param b		a doboz, amit r· akarnak tolni a munk·sra
+	 * @param d		az ir·ny, amerre tolni szeretnÈk a munk·st
 	 */
 	@Override
 	public void pushed(Box b, Direction d, int force, int friction) {
@@ -93,8 +96,30 @@ public class Worker extends Thing {
 	@Override
 	public void disappear() {
 		super.disappear();
-		System.out.println(name + " died ...");
-		Game.endGame();
+		playing = false;
+		System.out.println(points);
 	}
 	
+	public boolean canStep() {
+		Direction[] dirs = Direction.values();
+		for (Direction d : dirs) {
+			if (field != null) {
+				if (field.getNeighbour(d) != null) {
+					if (field.getNeighbour(d).isOpened()) {
+						return true;					
+					}
+				}				
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public ThingView getView() {
+		return new ThingView(this, name);
+	}
+	
+	public boolean isPlaying() {
+		return playing;
+	}
 }

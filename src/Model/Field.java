@@ -2,18 +2,20 @@ package Model;
 
 import java.util.HashMap;
 import java.util.Map;
+import View.ThingView;
 
 /**
- * A rakt√°r√©p√ºlet egy n√©gyzet√©t reprezent√°lja,
- * amely k√©pes t√°rolni egy l√°d√°t, vagy √°llhat rajta egy munk√°s,
- * illetve vannak speci√°lis v√°ltozatai.
- * Ismeri a k√∂r√ºl√∂tte l√©v≈ë mez≈ëket.
+ * A rakt·rÈp¸let egy nÈgyzetÈt reprezent·lja,
+ * amely kÈpes t·rolni egy l·d·t, vagy ·llhat rajta egy munk·s,
+ * illetve vannak speci·lis v·ltozatai.
+ * Ismeri a kˆr¸lˆtte lÈvı mezıket.
  */
 public class Field {
 	protected Thing thing;
 	private Map<Direction, Field> fields;
-	private static final int frictionAtStart = 1;
+	public static final int frictionAtStart = 1;
 	protected int currentFriction;
+	protected boolean opened;
 	/**
 	 * konstruktor
 	 */
@@ -21,35 +23,36 @@ public class Field {
 		thing = null;
 		fields = new HashMap<Direction, Field>();
 		currentFriction = frictionAtStart;
+		opened = true;
 	}
 	
 	/**
-	 * Be√°ll√≠tja d ir√°nyba az f mez≈ët szomsz√©dnak.
-	 * @param d az ir√°ny, amerre a szomsz√°dot be√°ll√≠tjuk
-	 * @param f a mez≈ë, ami a szomsz√©d lesz
+	 * Be·llÌtja d ir·nyba az f mezıt szomszÈdnak.
+	 * @param d az ir·ny, amerre a szomsz·dot be·llÌtjuk
+	 * @param f a mezı, ami a szomszÈd lesz
 	 */
 	public void setNeighbour(Direction d, Field f) {
 		fields.put(d, f);
 	}
 	
 	/**
-	 * Visszaadja a d ir√°nyban l√©v≈ë szomsz√©d mez≈ët.
-	 * @param d az ir√°ny, amerre a mez≈ë van
-	 * @return d  ir√°nyban l√©v≈ë szomsz√©d mez≈ë
+	 * Visszaadja a d ir·nyban lÈvı szomszÈd mezıt.
+	 * @param d az ir·ny, amerre a mezı van
+	 * @return d  ir·nyban lÈvı szomszÈd mezı
 	 */
 	public Field getNeighbour(Direction d) {
 		return fields.get(d);
 	}
 	
 	/**
-	 *  Ez a f√ºggv√©ny ellen≈ërzi, hogy a param√©terk√©nt kapott munk√°st
-	 *  be tudja-e fogadni a mez≈ë. Ha m√°r van rajta valami,
-	 *  akkor megh√≠vja a rajta l√©v≈ë thing pushed met√≥dus√°t.
-	 *  Amennyiben a mez≈ë befogadja a param√©terk√©nt kapott Worker objektumot,
-	 *  az el≈ëz≈ë mez≈ër≈ël elt√°vol√≠t√≥dik √©s a jelenlegi mez≈ëre ker√ºl.
-	 * @param w a munk√°s, aki szeretne a mez≈ëre l√©pni
-	 * @param d az ir√°ny, amelyikbe a munk√°s menni szeretne
-	 * @return igazzal t√©r vissza, ha tudja fogadni, egy√©bk√©nt hamissal
+	 *  Ez a f¸ggvÈny ellenırzi, hogy a paramÈterkÈnt kapott munk·st
+	 *  be tudja-e fogadni a mezı. Ha m·r van rajta valami,
+	 *  akkor meghÌvja a rajta lÈvı thing pushed metÛdus·t.
+	 *  Amennyiben a mezı befogadja a paramÈterkÈnt kapott Worker objektumot,
+	 *  az elızı mezırıl elt·volÌtÛdik Ès a jelenlegi mezıre ker¸l.
+	 * @param w a munk·s, aki szeretne a mezıre lÈpni
+	 * @param d az ir·ny, amelyikbe a munk·s menni szeretne
+	 * @return igazzal tÈr vissza, ha tudja fogadni, egyÈbkÈnt hamissal
 	 */
 	public boolean accept(Worker w, Direction d) {
 		pushThingIfExists(w, d);	
@@ -61,28 +64,29 @@ public class Field {
 	}
 	
 	/**
-	 *  Ez a f√ºggv√©ny ellen≈ërzi, hogy a param√©terk√©nt kapott l√°d√°t
-	 *  be tudja-e fogadni a mez≈ë. Ha m√°r van rajta valami,
-	 *  akkor megh√≠vja a rajta l√©v≈ë thing pushed met√≥dus√°t.
-	 *  Amennyiben a mez≈ë befogadja a param√©terk√©nt kapott Box objektumot,
-	 *  az el≈ëz≈ë mez≈ër≈ël elt√°vol√≠t√≥dik √©s a jelenlegi mez≈ëre ker√ºl.
-	 * @param w a munk√°s, aki szeretne a mez≈ëre l√©pni
-	 * @param d az ir√°ny, amelyikbe a munk√°s menni szeretne
-	 * @return igazzal t√©r vissza, ha tudja fogadni, egy√©bk√©nt hamissal
+	 *  Ez a f¸ggvÈny ellenırzi, hogy a paramÈterkÈnt kapott l·d·t
+	 *  be tudja-e fogadni a mezı. Ha m·r van rajta valami,
+	 *  akkor meghÌvja a rajta lÈvı thing pushed metÛdus·t.
+	 *  Amennyiben a mezı befogadja a paramÈterkÈnt kapott Box objektumot,
+	 *  az elızı mezırıl elt·volÌtÛdik Ès a jelenlegi mezıre ker¸l.
+	 * @param w a munk·s, aki szeretne a mezıre lÈpni
+	 * @param d az ir·ny, amelyikbe a munk·s menni szeretne
+	 * @return igazzal tÈr vissza, ha tudja fogadni, egyÈbkÈnt hamissal
 	 */
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
 			pushThingIfExists(b, d, force, friction + currentFriction);
 			if (thing == null) {
-				moveThingToCurrentField(b);							
+				moveThingToCurrentField(b);
+				opened = false;
 			}
 
 		}
 	}
 	
 	/**
-	 * A rajta l√©v≈ë thingnek h√≠vja a pontad√°s√©rt felel≈ës met√≥dus√°t.
-	 * @param d az ir√°ny, amerre van az adott thing
+	 * A rajta lÈvı thingnek hÌvja a pontad·sÈrt felelıs metÛdus·t.
+	 * @param d az ir·ny, amerre van az adott thing
 	 */
 	public void addPointToThing(Direction d) {
 		if (thing != null) {
@@ -91,24 +95,25 @@ public class Field {
 	}
 	
 	/**
-	 * HozzÔøΩadja a mez≈ëh√∂z a param√©terk√©nt kapott thing objektumot.
-	 * @param t egy Thing, ami a mez≈ëre l√©p
+	 * Hozz·adja a mezıhˆz a paramÈterkÈnt kapott thing objektumot.
+	 * @param t egy Thing, ami a mezıre lÈp
 	 */
 	public void addThing(Thing t) {
 		thing = t;
 	}
 	
 	/**
-	 * Elt√°vol√≠tja a rajta l√©v≈ë thinget a mez≈ër≈ël.
+	 * Elt·volÌtja a rajta lÈvı thinget a mezırıl.
 	 */
 	public void removeThing() {
 		thing = null;
+		opened = true;
 	}
 	
 	/**
-	 * Megadja egy ir√°nynak az ellentettj√©t
-	 * @param d az ir√°ny, aminek keress√ºk az ellentettj√©t
-	 * @return a d ir√°ny ellentettje
+	 * Megadja egy ir·nynak az ellentettjÈt
+	 * @param d az ir·ny, aminek keress¸k az ellentettjÈt
+	 * @return a d ir·ny ellentettje
 	 */
 	public static Direction convertDir(Direction d) {
 		Direction opp = null;
@@ -130,11 +135,11 @@ public class Field {
 	}
 	
 	public void increaseFriction() {
-		currentFriction -= 3;
+		currentFriction -= 2;
 	}
 	
 	public void decreaseFriction() {
-		currentFriction += 3;
+		currentFriction += 2;
 	}
 	
 	public int getFriction() {
@@ -151,32 +156,44 @@ public class Field {
 		DrawFriction();
 	}
 
-	public void DrawFriction(){
+	public void DrawFriction() {
 		if( currentFriction == frictionAtStart ){
-			System.out.print(" ");			
+			System.out.print(" ");		
 		} else if( currentFriction < frictionAtStart ){
 			System.out.print("h");			
-		}else if( currentFriction > frictionAtStart ){
+		} else if( currentFriction > frictionAtStart ){
 			System.out.print("o");		
 		}
 	}
-
-	protected void moveThingToCurrentField(Thing t){
+	
+	protected void moveThingToCurrentField(Thing t) {
 		t.removeFromField();
 		addThing(t);
 		t.addField(this);
 	}
-
+	
 	protected void pushThingIfExists(Box b, Direction d, int force, int friction){
 		if (thing != null) {
 			thing.pushed(b, d, force, friction);
 		}
 	}
-
+	
 	protected void pushThingIfExists(Worker w, Direction d){
 		if (thing != null) {
 			thing.pushed(w, d);
 		}
 	}
+	
+	public boolean isOpened() {
+		return opened;
+	}
+	
+	public ThingView getActualThingView() {
+		if (thing == null) {
+			return null;
+		}
+		return thing.getView();
+	}
+	
 	
 }

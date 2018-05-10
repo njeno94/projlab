@@ -4,68 +4,96 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import View.ThingView;
+import View.View;
 
 /**
- * Ez a singleton felel≈ës a j√°t√©k ir√°ny√≠t√°s√°√©rt. ≈ê val√≥s√≠tja meg a rakt√°r √©p√ºletet.
+ * Ez a singleton felelıs a j·tÈk ir·nyÌt·s·Èrt. ’ valÛsÌtja meg a rakt·r Èp¸letet.
  */
 public class Game {
-	private ArrayList<Field> raktarepulet;
-	private ArrayList<GoalField> celmezok;
+	private List<Field> raktarepulet;
+	private List<GoalField> celmezok;
+	private List<Box> dobozok;
 	private boolean firstWorkerSetted;
+	private boolean twoPlayerMode;
 	private int width;
+	private Worker w1;
+	private Worker w2;
 	
+	private View view;
 	/**
 	 * Konstruktor
 	 */
-	Game() {
+	public Game(View v) {
+		view = v;
+		
 		raktarepulet = new ArrayList<Field>();
 		celmezok = new ArrayList<GoalField>();
-		firstWorkerSetted = false;
+		dobozok = new ArrayList<Box>();
 	}
 	
 	public void addField(Field f) {
 		raktarepulet.add(f);
 	}
 	/**
-	 * Elind√≠tja a j√°t√©kot, inicializ√°lja a p√°ly√°t,
-	 * l√°d√°kat √©s munk√°sok kezd≈ëpoz√≠ci√≥j√°t
+	 * ElindÌtja a j·tÈkot, inicializ·lja a p·ly·t,
+	 * l·d·kat Ès munk·sok kezdıpozÌciÛj·t
 	 */
-	public void startGame(){
-		
+	public void startGame(boolean twoPlayerMode){
+		raktarepulet.clear();
+		dobozok.clear();
+		celmezok.clear();
+		firstWorkerSetted = false;
+		this.twoPlayerMode = twoPlayerMode;
+		w1 = new Worker("w1");
+		w2 = new Worker("w2");
 	}
 	
 	/**
-	 *  Megvizsg√°lja, hogy a j√°t√©k v√©get √©rt-e
-	 * @return Igaz ha v√©ge, egy√©bk√©nt hamis
+	 *  Megvizsg·lja, hogy a j·tÈk vÈget Èrt-e
+	 * @return Igaz ha vÈge, egyÈbkÈnt hamis
 	 */
 	public boolean checkGameEnd() {
-		if (!checkGoalFields()) {
+		if (checkGoalFields() || !checkWorkerDeadlock() || !checkBoxDeadlock()) {
 			return true;
 		} else {
 			return false;
 		}
+		
+	}
+	
+	public boolean checkWorkersAlive() {
+		return (w1.isPlaying() && w2.isPlaying());
 	}
 	
 	/**
-	 * Ellen≈ërzi a munk√°sokat, hogy tudnak-e m√©g √©rdemi l√©p√©st tenni.
-	 * @return igaz, ha van olyan munk√°s, aki tud l√©pni, egy√©bk√©nt hamis
+	 * Ellenırzi a munk·sokat, hogy tudnak-e mÈg Èrdemi lÈpÈst tenni.
+	 * @return igaz, ha van olyan munk·s, aki tud lÈpni, egyÈbkÈnt hamis
 	 */
 	public boolean checkWorkerDeadlock() {
-
-		return true;
+		if (w1.canStep() || w2.canStep()) {
+			return true;
+		}
+		return false;
 	}
 	/**
-	 * Ellen≈ërzi,hogy a l√°d√°k mozgathat√≥k-e.
-	 * @return igaz, ha van mozgathat√≥ l√°da, egy√©bk√©nt hamis
+	 * Ellenırzi,hogy a l·d·k mozgathatÛk-e.
+	 * @return igaz, ha van mozgathatÛ l·da, egyÈbkÈnt hamis
 	 */
 	public boolean checkBoxDeadlock() {
-
-		return true;
+		for (Box b : dobozok) {
+			if (b.canBePushed()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
-	 * Ellen≈ërzi, hogy van-e m√©g pontot √©r≈ë c√©lmez≈ë.
-	 * @return igaz, ha van, egy√©bk√©nt hamis
+	 * Ellenırzi, hogy van-e mÈg pontot Èrı cÈlmezı.
+	 * @return igaz, ha van, egyÈbkÈnt hamis
 	 */
 	public boolean checkGoalFields() {
 		int count = 0;
@@ -82,115 +110,129 @@ public class Game {
 	}
 	
 	/**
-	 * Le√°ll√≠tja √©s befejezi a j√°t√©kot.
+	 * Le·llÌtja Ès befejezi a j·tÈkot.
 	 */
 	public static void endGame() {
 		System.exit(0);
 	}
 	
-	public void setMap(Worker w1, Worker w2, String fileName) {
+	public void setMap(String fileName) {
 	
-		ArrayList<SwitchField> switchfields = new ArrayList<SwitchField>();
-		ArrayList<SwitchHoleField> switchholefields = new ArrayList<SwitchHoleField>();
-			
+	ArrayList<SwitchField> switchfields = new ArrayList<SwitchField>();
+	ArrayList<SwitchHoleField> switchholefields = new ArrayList<SwitchHoleField>();
+		
 		String line = "";
 		String[] fields = null;
-	
-	        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-	            while ((line = br.readLine()) != null) {
-	                fields = line.split(";");
-	                
-	                for (int i = 0; i < fields.length; i++) {
-	                	Field f = null;
-	                	switch(fields[i].charAt(0)) {
-	                		case 'w':
-	                			f = new Wall();
-	                			break;
-	                		case 'h':
-	                			f = new Hole();
-	                			break;
-	                		case 's':
-	                			SwitchField sf = new SwitchField();
-						switchfields.add(sf);
-						f=sf;
-	                			break;
-	                		case 't':
-	                			SwitchHoleField shf = new SwitchHoleField();
-						switchholefields.add(shf);
-						f=shf;
-	                			break;
-	                		case 'g':
-						GoalField g = new GoalField();
-	                			celmezok.add(g);
-						f=g;
-	                			break;
-	                		case 'f':
-	                			f = new Field();
-	                			break;
-	                	}
-	
-	                	if (fields[i].length() > 1) {
-	                		switch(fields[i].charAt(1)) {
-	                		case 'w':
-	                			if (!firstWorkerSetted) {
-	                    				f.addThing(w1);
-	                    				w1.addField(f);
-	                    				firstWorkerSetted = true;
-	                			} else {
-	                    				f.addThing(w2);
-	                    				w2.addField(f);;
-	                			}
-	                			
-	                			break;
-	                		case 'b':
-	                			Box b = new Box();
-	                			f.addThing(b);
-	                			b.addField(f);
-	                			break;
-	                		}
-	                	}
-	                	
-	                		if (fields[i].length() > 2) {                		
-	                		switch(fields[i].charAt(2)) {
-	                		case 'o':
-	                			f.increaseFriction();
-	                			break;
-	                		case 'h':
-	                			f.decreaseFriction();
-	                			break;
-	                		}
-	                	}
-	                	if (f != null)
-	                		raktarepulet.add(f);
-	                }
-	            }
-	
-	        } catch (IOException e) {
-	        	//
-	        }
-	        
-		width=fields.length;
-		if( !switchfields.isEmpty()  && !switchholefields.isEmpty()){
-	        	setSwitchField(switchfields,switchholefields);
-		}
-	        setNeighbours();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            while ((line = br.readLine()) != null) {
+                fields = line.split(";");
+                
+                for (int i = 0; i < fields.length; i++) {
+                	Field f = null;
+                	switch(fields[i].charAt(0)) {
+                		case 'w':
+                			Wall w = new Wall();
+                			view.createWallView(w);
+                			f = w;
+                			break;
+                		case 'h':
+                			Hole h = new Hole();
+                			view.createHoleView(h);
+                			f = h;
+                			break;
+                		case 's':
+                			SwitchField sf = new SwitchField();
+                			switchfields.add(sf);
+                			view.createSwitchFieldView(sf);
+                			f = sf;
+                			break;
+                		case 't':
+                			SwitchHoleField shf = new SwitchHoleField();
+							switchholefields.add(shf);
+							view.createSwitchHoleFieldView(shf);
+							f=shf;
+                			break;
+                		case 'g':
+                			GoalField g = new GoalField();
+                			celmezok.add(g);
+                			view.createGoalFieldView(g);
+                			f=g;
+                			break;
+                		case 'f':
+                			f = new Field();
+                			view.createFieldView(f);
+                			break;
+                	}
+
+                	if (fields[i].length() > 1) {
+                		switch(fields[i].charAt(1)) {
+                		case 'w':
+                			if (!firstWorkerSetted) {
+                    			f.addThing(w1);
+                    			w1.addField(f);
+                    			firstWorkerSetted = true;
+                    			view.addThingView(new ThingView(w1, "w1"));
+                			} else {
+                				if (twoPlayerMode) {
+                					f.addThing(w2);
+                					w2.addField(f);
+                					view.addThingView(new ThingView(w2, "w2"));                					
+                				}
+                			}
+                			
+                			break;
+                		case 'b':
+                			Box b = new Box();
+                			f.addThing(b);
+                			b.addField(f);
+                			dobozok.add(b);
+                			view.addThingView(new ThingView(b));
+                			break;
+                		}
+                	}
+                	
+                		if (fields[i].length() > 2) {                		
+                		switch(fields[i].charAt(2)) {
+                		case 'o':
+                			f.increaseFriction();
+                			break;
+                		case 'h':
+                			f.decreaseFriction();
+                			break;
+                		}
+                	}
+                	if (f != null)
+                		raktarepulet.add(f);
+                }
+            }
+
+        } catch (IOException e) {
+        	//
+        }
+        
+	width=fields.length;
+	if( !switchfields.isEmpty()  && !switchholefields.isEmpty()){
+        	setSwitchField(switchfields,switchholefields);
+	}
+        setNeighbours();
 	}
 	
 	public void setNeighbours() {
 		for (int i=0; i < raktarepulet.size() - width; i++) {
-			raktarepulet.get(i).setNeighbour(Direction.DOWN, raktarepulet.get(i + width));
+			raktarepulet.get(i).setNeighbour(Direction.DOWN, raktarepulet.get(i+10));
 		}
 		
 		for (int i=raktarepulet.size() - 1; i >= width; i--) {
-			raktarepulet.get(i).setNeighbour(Direction.UP, raktarepulet.get(i - width));
+			raktarepulet.get(i).setNeighbour(Direction.UP, raktarepulet.get(i-10));
 		}
 		
 		for (int i=0; i < raktarepulet.size() - 1; i++) {
-			raktarepulet.get(i).setNeighbour(Direction.RIGHT, raktarepulet.get(i + 1));
+			raktarepulet.get(i).setNeighbour(Direction.RIGHT, raktarepulet.get(i+1));
 		}
 		
 		for (int i=raktarepulet.size() - 1; i > 0; i--) {
-			raktarepulet.get(i).setNeighbour(Direction.LEFT, raktarepulet.get(i -1));
+			raktarepulet.get(i).setNeighbour(Direction.LEFT, raktarepulet.get(i-1));
 		}
 	}
 	
@@ -201,7 +243,7 @@ public class Game {
 	}
 	
 	public void showWareHouse() {
-		for (int i=0; i<raktarepulet.size(); i++) {
+		for (int i=0; i < raktarepulet.size(); i++) {
 			System.out.print("|");
 			raktarepulet.get(i).Draw();
 			if ((i + 1 )% width == 0) {
@@ -209,5 +251,40 @@ public class Game {
 				System.out.println();
 			}
 		}
+	}
+	
+	public void moveW1(Direction d) {
+		w1.step(d);
+	}
+	
+	public void moveW2(Direction d) {
+		if (twoPlayerMode)
+			w2.step(d);
+	}
+	
+	public void oilW1(String oilType) {
+		switch(oilType) {
+		case "o":
+			w1.oilFieldWithOil();
+			break;
+		case "h":
+			w1.oilFieldWithHoney();
+			break;
+		}
+	}
+	
+	public void oilW2(String oilType) {
+		switch(oilType) {
+		case "n":
+			w2.oilFieldWithOil();
+			break;
+		case "m":
+			w2.oilFieldWithHoney();
+			break;
+		}
+	}
+
+	public List<Field> getWareHouse(){
+		return raktarepulet;
 	}
 }

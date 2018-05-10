@@ -1,7 +1,9 @@
 package Model;
 
+import View.ThingView;
+
 /**
- * A munkÃ¡s Ã©s a lÃ¡da absztrakt Å‘sosztÃ¡lya. FelelÅ‘ssÃ©ge a mozgatÃ¡suk kezelÃ¼se.
+ * A munkás és a láda absztrakt õsosztálya. Felelõssége a mozgatásuk kezelése.
  */
 public abstract class Thing {
 	protected Field field;
@@ -18,18 +20,18 @@ public abstract class Thing {
 	public abstract void pushed(Box b, Direction d, int force, int friction);
 
 	/**
-	 * BeÃ¡llÃ­tja a Thing field attribÃºtumÃ¡t
-	 * @param f		a mezÅ‘, amin van a dolog
+	 * Beállítja a Thing field attribútumát
+	 * @param f		a mezõ, amin van a dolog
 	 */
 	public void addField(Field f) {
 		field = f;
 	}
 	
 	/**
-	 *  HozzÃ¡adja a lÃ¡dÃ¡Ã©rt kapott pontokat
-	 *  a lÃ¡dÃ¡t tolÃ³ Worker pontjaihoz,
-	 *  egyÃ©bkÃ©nt a cÃ©lmezÅ‘tÅ‘l a tolÃ¡st indÃ­tÃ³ Workerig
-	 *  hÃ­vja a pontadÃ³ metÃ³dusokat.
+	 *  Hozzáadja a ládáért kapott pontokat
+	 *  a ládát toló Worker pontjaihoz,
+	 *  egyébként a célmezõtõl a tolást indító Workerig
+	 *  hívja a pontadó metódusokat.
 	 * @param d
 	 */
 	public void addPoint(Direction d) {
@@ -41,8 +43,8 @@ public abstract class Thing {
 	}
 
 	/**
-	 * A thingen hÃ­vhatÃ³ mezÃ³eltÃ¡volÃ­tÃ³ metÃ³dus,
-	 * meghÃ­vja a Field removeThing() metÃ³dusÃ¡t
+	 * A thingen hívható mezóeltávolító metódus,
+	 * meghívja a Field removeThing() metódusát
 	 */
 	public void removeFromField() {
 		if (field != null) {		
@@ -51,7 +53,7 @@ public abstract class Thing {
 	}
 
 	/**
-	 * EltÅ±nteti a dolgot a pÃ¡lyÃ¡rÃ³l.
+	 * Eltûnteti a dolgot a pályáról.
 	 */
 	public void disappear() {
 		removeFromField();
@@ -59,4 +61,6 @@ public abstract class Thing {
 	}
 	
 	public abstract void Draw();
+	
+	public abstract ThingView getView();
 }

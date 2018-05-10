@@ -1,8 +1,8 @@
 package Model;
 
 /**
- * A kapcsolhat√≥ lyuk modellje: vagy egyszer≈± mez≈ëk√©nt,
- * vagy lyukk√©nt viselkedik √°llapot√°t√≥l f√ºgg≈ëen.
+ * A kapcsolhatÛ lyuk modellje: vagy egyszer˚ mezıkÈnt,
+ * vagy lyukkÈnt viselkedik ·llapot·tÛl f¸ggıen.
  *
  */
 public class SwitchHoleField extends Field {
@@ -17,10 +17,10 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 *  befogadja a param√©terk√©nt kapott Worker objektumot.
-	 * @param w 	a munk√°s, aki a mez≈ëre szeretne l√©pni
-	 * @param d		az ir√°ny, amerre a munk√°s l√©pni szeretne
-	 * @return		igaz, ha a munk√°s r√° tud l√©pni, egy√©bk√©nt hamis
+	 *  befogadja a paramÈterkÈnt kapott Worker objektumot.
+	 * @param w 	a munk·s, aki a mezıre szeretne lÈpni
+	 * @param d		az ir·ny, amerre a munk·s lÈpni szeretne
+	 * @return		igaz, ha a munk·s r· tud lÈpni, egyÈbkÈnt hamis
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
@@ -39,9 +39,9 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 * Befogadja a param√©terk√©nt kapott Box objektumot.
-	 * @param b		a l√°da, amit a mez≈ëre szeretn√©nek tolni
-	 * @param d		az ir√°ny, amerre a l√°d√°t tolni szeretn√©k
+	 * Befogadja a paramÈterkÈnt kapott Box objektumot.
+	 * @param b		a l·da, amit a mezıre szeretnÈnek tolni
+	 * @param d		az ir·ny, amerre a l·d·t tolni szeretnÈk
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
@@ -59,19 +59,19 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 * Be√°ll√≠tja a mez≈ë √°llapot√°t
-	 * @param s az √°llapot amit be√°ll√≠t a mez≈ënek
+	 * Be·llÌtja a mezı ·llapot·t
+	 * @param s az ·llapot amit be·llÌt a mezınek
 	 */
 	public void setState(boolean s) {
 		state = s;
 	}
 	
 	/**
-	 * √Åt√°ll√≠tja a mez≈ë √°llapot√°t. Ha nyitottra √°ll√≠tja,
-	 * akkor elt≈±nik r√≥la a rajta l√©v≈ë dolog.
+	 * ¡t·llÌtja a mezı ·llapot·t. Ha nyitottra ·llÌtja,
+	 * akkor elt˚nik rÛla a rajta lÈvı dolog.
 	 */
 	public void changeState() {
-		if (state && thing!=null) {
+		if (state && thing != null) {
 			thing.disappear();
 		}
 	}
@@ -85,5 +85,9 @@ public class SwitchHoleField extends Field {
 			System.out.print(" ");
 		}
 		DrawFriction();
+	}
+	
+	public boolean getState() {
+		return state;
 	}
 }
