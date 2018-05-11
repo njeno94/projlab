@@ -6,7 +6,6 @@ package Model;
  * Amennyiben toltak rá ládát, a láda nem mozdítható onnan. 
  */
 public class GoalField extends Field {
-	private boolean boxReached = false;
 	/**
 	 * Befogadja a paraméterként kapott Worker objektumot.
 	 * Meghívja a a paraméterként kapott Box objektum addPoint() metódusát
@@ -57,10 +56,6 @@ public class GoalField extends Field {
 			System.out.print(" ");
 		}
 		DrawFriction();
-	}
-	
-	public boolean isBoxReached() {
-		return boxReached;
 	}
 	
 }

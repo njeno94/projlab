@@ -16,6 +16,7 @@ public class Field {
 	public static final int frictionAtStart = 1;
 	protected int currentFriction;
 	protected boolean opened;
+	protected boolean boxReached;
 	/**
 	 * konstruktor
 	 */
@@ -24,6 +25,7 @@ public class Field {
 		fields = new HashMap<Direction, Field>();
 		currentFriction = frictionAtStart;
 		opened = true;
+		boxReached = false; //Csak a GoalFieldben használjuk, viszont a Box felõl mindenkit Fieldként kezelünk.
 	}
 	
 	/**
@@ -193,6 +195,10 @@ public class Field {
 			return null;
 		}
 		return thing.getView();
+	}
+	
+	public boolean isBoxReached() {
+		return boxReached;
 	}
 	
 	

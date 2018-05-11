@@ -53,4 +53,8 @@ public class Box extends Thing {
 	public ThingView getView() {
 		return new ThingView(this);
 	}
+	
+	public boolean isReachedToGoalField() {
+		return field.isBoxReached();
+	}
 }

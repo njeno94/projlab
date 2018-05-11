@@ -18,7 +18,7 @@ public class Game {
 	private List<Box> dobozok;
 	private boolean firstWorkerSetted;
 	private boolean twoPlayerMode;
-	private int width;
+	public static int width = 500;
 	private Worker w1;
 	private Worker w2;
 	
@@ -84,7 +84,7 @@ public class Game {
 	 */
 	public boolean checkBoxDeadlock() {
 		for (Box b : dobozok) {
-			if (b.canBePushed()) {
+			if (b.canBePushed()  && !b.isReachedToGoalField()) {
 				return true;
 			}
 		}
@@ -211,7 +211,7 @@ public class Game {
         	//
         }
         
-	width=fields.length;
+	width = fields.length;
 	if( !switchfields.isEmpty()  && !switchholefields.isEmpty()){
         	setSwitchField(switchfields,switchholefields);
 	}
