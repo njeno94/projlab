@@ -38,7 +38,7 @@ public class Controller implements ActionListener, KeyListener {
 	public Controller() {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(View.width, View.height);
+		frame.setSize(view.width, view.height);
 		frame.setTitle("Sokoban Killer by emoji");
 		
 		menuBar = new JMenuBar();
@@ -170,12 +170,12 @@ public class Controller implements ActionListener, KeyListener {
 		}
 		
 		if (!game.checkGoalFields()) {
-			JOptionPane.showMessageDialog(frame, "Minden célhelyre kerül láda!", "W valaki won", 0);
+			JOptionPane.showMessageDialog(frame, "Minden célhelyre került láda!", "W valaki won", 0);
 			return true;
 		}
 		
 		if (!game.checkBoxDeadlock()) {
-			JOptionPane.showMessageDialog(frame, "Nincs mozgatható láda!", "Game over", 0);
+			JOptionPane.showMessageDialog(frame, "Nincs elég mozgatható láda!", "Game over", 0);
 			return true;
 		}
 		
