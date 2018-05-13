@@ -1,8 +1,8 @@
 package Model;
 
 /**
- * A kapcsolhatï¿½ lyuk modellje: vagy egyszerï¿½ mezï¿½kï¿½nt,
- * vagy lyukkï¿½nt viselkedik ï¿½llapotï¿½tï¿½l fï¿½ggï¿½en.
+ * A kapcsolható lyuk modellje: vagy egyszerû mezõként,
+ * vagy lyukként viselkedik állapotától függõen.
  *
  */
 public class SwitchHoleField extends Field {
@@ -17,28 +17,18 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 *  befogadja a paramï¿½terkï¿½nt kapott Worker objektumot.
-	 * @param w 	a munkï¿½s, aki a mezï¿½re szeretne lï¿½pni
-	 * @param d		az irï¿½ny, amerre a munkï¿½s lï¿½pni szeretne
-	 * @return		igaz, ha a munkï¿½s rï¿½ tud lï¿½pni, egyï¿½bkï¿½nt hamis
+	 *  befogadja a paraméterként kapott Worker objektumot.
+	 * @param w 	a munkás, aki a mezõre szeretne lépni
+	 * @param d		az irány, amerre a munkás lépni szeretne
+	 * @return		igaz, ha a munkás rá tud lépni, egyébként hamis
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
 		if (!state) {
+			pushThingIfExists(w, d);	
 			if (thing == null) {
-				w.removeFromField();
-				addThing(w);
-				w.addField(this);
+				moveThingToCurrentField(w);
 				return true;
-			}
-			else {
-				thing.pushed(w, d);
-				if (thing == null) {
-					w.removeFromField();
-					addThing(w);
-					w.addField(this);
-					return true;
-				}
 			}
 			return false;
 		}
@@ -49,26 +39,17 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 * Befogadja a paramï¿½terkï¿½nt kapott Box objektumot.
-	 * @param b		a lï¿½da, amit a mezï¿½re szeretnï¿½nek tolni
-	 * @param d		az irï¿½ny, amerre a lï¿½dï¿½t tolni szeretnï¿½k
+	 * Befogadja a paraméterként kapott Box objektumot.
+	 * @param b		a láda, amit a mezõre szeretnének tolni
+	 * @param d		az irány, amerre a ládát tolni szeretnék
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
 			if (!state) {
+				pushThingIfExists(b, d, force, friction + currentFriction);
 				if (thing == null) {
-					b.removeFromField();
-					addThing(b);
-					b.addField(this);
-				}
-				else {
-					thing.pushed(b, d, force, friction);
-					if (thing == null) {
-						b.removeFromField();
-						addThing(b);
-						b.addField(this);
-					}
+					moveThingToCurrentField(b);							
 				}
 			}
 			else {
@@ -78,19 +59,19 @@ public class SwitchHoleField extends Field {
 	}
 	
 	/**
-	 * Beï¿½llï¿½tja a mezï¿½ ï¿½llapotï¿½t
-	 * @param s az ï¿½llapot amit beï¿½llï¿½t a mezï¿½nek
+	 * Beállítja a mezõ állapotát
+	 * @param s az állapot amit beállít a mezõnek
 	 */
 	public void setState(boolean s) {
 		state = s;
 	}
 	
 	/**
-	 * ï¿½tï¿½llï¿½tja a mezï¿½ ï¿½llapotï¿½t. Ha nyitottra ï¿½llï¿½tja,
-	 * akkor eltï¿½nik rï¿½la a rajta lï¿½vï¿½ dolog.
+	 * Átállítja a mezõ állapotát. Ha nyitottra állítja,
+	 * akkor eltûnik róla a rajta lévõ dolog.
 	 */
 	public void changeState() {
-		if (state && thing!=null) {
+		if (state && thing != null) {
 			thing.disappear();
 		}
 	}
@@ -100,11 +81,13 @@ public class SwitchHoleField extends Field {
 		System.out.print("t");
 		if (thing != null) {
 			thing.Draw();
-			DrawFriction();
 		} else {
 			System.out.print(" ");
-			DrawFriction();
 		}
-
+		DrawFriction();
+	}
+	
+	public boolean getState() {
+		return state;
 	}
 }

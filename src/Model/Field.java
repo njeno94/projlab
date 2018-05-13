@@ -2,18 +2,21 @@ package Model;
 
 import java.util.HashMap;
 import java.util.Map;
+import View.ThingView;
 
 /**
- * A raktï¿½rï¿½pï¿½let egy nï¿½gyzetï¿½t reprezentï¿½lja,
- * amely kï¿½pes tï¿½rolni egy lï¿½dï¿½t, vagy ï¿½llhat rajta egy munkï¿½s,
- * illetve vannak speciï¿½lis vï¿½ltozatai.
- * Ismeri a kï¿½rï¿½lï¿½tte lï¿½vï¿½ mezï¿½ket.
+ * A raktárépület egy négyzetét reprezentálja,
+ * amely képes tárolni egy ládát, vagy állhat rajta egy munkás,
+ * illetve vannak speciális változatai.
+ * Ismeri a körülötte lévõ mezõket.
  */
 public class Field {
 	protected Thing thing;
 	private Map<Direction, Field> fields;
-	private static final int frictionAtStart = 1;
-	private int currentFriction;
+	public static final int frictionAtStart = 1;
+	protected int currentFriction;
+	protected boolean opened;
+	protected boolean boxReached;
 	/**
 	 * konstruktor
 	 */
@@ -21,87 +24,71 @@ public class Field {
 		thing = null;
 		fields = new HashMap<Direction, Field>();
 		currentFriction = frictionAtStart;
+		opened = true;
+		boxReached = false; //Csak a GoalFieldben használjuk, viszont a Box felõl mindenkit Fieldként kezelünk.
 	}
 	
 	/**
-	 * Beï¿½llï¿½tja d irï¿½nyba az f mezï¿½t szomszï¿½dnak.
-	 * @param d az irï¿½ny, amerre a szomszï¿½dot beï¿½llï¿½tjuk
-	 * @param f a mezï¿½, ami a szomszï¿½d lesz
+	 * Beállítja d irányba az f mezõt szomszédnak.
+	 * @param d az irány, amerre a szomszádot beállítjuk
+	 * @param f a mezõ, ami a szomszéd lesz
 	 */
 	public void setNeighbour(Direction d, Field f) {
 		fields.put(d, f);
 	}
 	
 	/**
-	 * Visszaadja a d irï¿½nyban lï¿½vï¿½ szomszï¿½d mezï¿½t.
-	 * @param d az irï¿½ny, amerre a mezï¿½ vanfile:///home/jeno/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/0.png
-	 * @return d  irï¿½nyban lï¿½vï¿½ szomszï¿½d mezï¿½
+	 * Visszaadja a d irányban lévõ szomszéd mezõt.
+	 * @param d az irány, amerre a mezõ van
+	 * @return d  irányban lévõ szomszéd mezõ
 	 */
 	public Field getNeighbour(Direction d) {
 		return fields.get(d);
 	}
 	
 	/**
-	 *  Ez a fï¿½ggvï¿½ny ellenï¿½rzi, hogy a paramï¿½terkï¿½nt kapott munkï¿½st
-	 *  be tudja-e fogadni a mezï¿½. Ha mï¿½r van rajta valami,
-	 *  akkor meghï¿½vja a rajta lï¿½vï¿½ thing pushed metï¿½dusï¿½t.
-	 *  Amennyiben a mezï¿½ befogadja a paramï¿½terkï¿½nt kapott Worker objektumot,
-	 *  az elï¿½zï¿½ mezï¿½rï¿½l eltï¿½volï¿½tï¿½dik ï¿½s a jelenlegi mezï¿½re kerï¿½l.
-	 * @param w a munkï¿½s, aki szeretne a mezï¿½re lï¿½pni
-	 * @param d az irï¿½ny, amelyikbe a munkï¿½s menni szeretne
-	 * @return igazzal tï¿½r vissza, ha tudja fogadni, egyï¿½bkï¿½nt hamissal
+	 *  Ez a függvény ellenõrzi, hogy a paraméterként kapott munkást
+	 *  be tudja-e fogadni a mezõ. Ha már van rajta valami,
+	 *  akkor meghívja a rajta lévõ thing pushed metódusát.
+	 *  Amennyiben a mezõ befogadja a paraméterként kapott Worker objektumot,
+	 *  az elõzõ mezõrõl eltávolítódik és a jelenlegi mezõre kerül.
+	 * @param w a munkás, aki szeretne a mezõre lépni
+	 * @param d az irány, amelyikbe a munkás menni szeretne
+	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
 	 */
 	public boolean accept(Worker w, Direction d) {
+		pushThingIfExists(w, d);	
 		if (thing == null) {
-			w.removeFromField();
-			addThing(w);
-			w.addField(this);
+			moveThingToCurrentField(w);
 			return true;
-		}
-		else {
-			thing.pushed(w, d);
-			if (thing == null) {
-				w.removeFromField();
-				addThing(w);
-				w.addField(this);
-				return true;
-			}
 		}
 		return false;
 	}
 	
 	/**
-	 *  Ez a fï¿½ggvï¿½ny ellenï¿½rzi, hogy a paramï¿½terkï¿½nt kapott lï¿½dï¿½t
-	 *  be tudja-e fogadni a mezï¿½. Ha mï¿½r van rajta valami,
-	 *  akkor meghï¿½vja a rajta lï¿½vï¿½ thing pushed metï¿½dusï¿½t.
-	 *  Amennyiben a mezï¿½ befogadja a paramï¿½terkï¿½nt kapott Box objektumot,
-	 *  az elï¿½zï¿½ mezï¿½rï¿½l eltï¿½volï¿½tï¿½dik ï¿½s a jelenlegi mezï¿½re kerï¿½l.
-	 * @param w a munkï¿½s, aki szeretne a mezï¿½re lï¿½pni
-	 * @param d az irï¿½ny, amelyikbe a munkï¿½s menni szeretne
-	 * @return igazzal tï¿½r vissza, ha tudja fogadni, egyï¿½bkï¿½nt hamissal
+	 *  Ez a függvény ellenõrzi, hogy a paraméterként kapott ládát
+	 *  be tudja-e fogadni a mezõ. Ha már van rajta valami,
+	 *  akkor meghívja a rajta lévõ thing pushed metódusát.
+	 *  Amennyiben a mezõ befogadja a paraméterként kapott Box objektumot,
+	 *  az elõzõ mezõrõl eltávolítódik és a jelenlegi mezõre kerül.
+	 * @param w a munkás, aki szeretne a mezõre lépni
+	 * @param d az irány, amelyikbe a munkás menni szeretne
+	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
 	 */
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
+			pushThingIfExists(b, d, force, friction + currentFriction);
 			if (thing == null) {
-				b.removeFromField();
-				addThing(b);
-				b.addField(this);
+				moveThingToCurrentField(b);
+				opened = false;
 			}
-			else {
-				thing.pushed(b, d, force, friction + currentFriction);
-				if (thing == null) {
-						b.removeFromField();
-						addThing(b);
-						b.addField(this);						
-				}
-			}
+
 		}
-		
 	}
 	
 	/**
-	 * A rajta lï¿½vï¿½ thingnek hï¿½vja a pontadï¿½sï¿½rt felelï¿½s metï¿½dusï¿½t.
-	 * @param d az irï¿½ny, amerre van az adott thing
+	 * A rajta lévõ thingnek hívja a pontadásért felelõs metódusát.
+	 * @param d az irány, amerre van az adott thing
 	 */
 	public void addPointToThing(Direction d) {
 		if (thing != null) {
@@ -110,26 +97,27 @@ public class Field {
 	}
 	
 	/**
-	 * Hozzï¿½adja a mezï¿½hï¿½z a paramï¿½terkï¿½nt kapott thing objektumot.
-	 * @param t egy Thing, ami a mezï¿½re lï¿½p
+	 * Hozzáadja a mezõhöz a paraméterként kapott thing objektumot.
+	 * @param t egy Thing, ami a mezõre lép
 	 */
 	public void addThing(Thing t) {
 		thing = t;
 	}
 	
 	/**
-	 * Eltï¿½volï¿½tja a rajta lï¿½vï¿½ thinget a mezï¿½rï¿½l.
+	 * Eltávolítja a rajta lévõ thinget a mezõrõl.
 	 */
 	public void removeThing() {
 		thing = null;
+		opened = true;
 	}
 	
 	/**
-	 * Megadja egy irï¿½nynak az ellentettjï¿½t
-	 * @param d az irï¿½ny, aminek keressï¿½k az ellentettjï¿½t
-	 * @return a d irï¿½ny ellentettje
+	 * Megadja egy iránynak az ellentettjét
+	 * @param d az irány, aminek keressük az ellentettjét
+	 * @return a d irány ellentettje
 	 */
-	public Direction convertDir(Direction d) {
+	public static Direction convertDir(Direction d) {
 		Direction opp = null;
 		switch(d) {
 		case RIGHT:
@@ -149,11 +137,11 @@ public class Field {
 	}
 	
 	public void increaseFriction() {
-		currentFriction -= 3;
+		currentFriction -= 2;
 	}
 	
 	public void decreaseFriction() {
-		currentFriction += 3;
+		currentFriction += 2;
 	}
 	
 	public int getFriction() {
@@ -164,20 +152,54 @@ public class Field {
 		System.out.print("f");
 		if (thing != null) {
 			thing.Draw();
-			DrawFriction();
 		} else {
 			System.out.print(" ");
-			DrawFriction();
 		}
+		DrawFriction();
 	}
 
-	public void DrawFriction(){
+	public void DrawFriction() {
 		if( currentFriction == frictionAtStart ){
-			System.out.print(" ");			
+			System.out.print(" ");		
 		} else if( currentFriction < frictionAtStart ){
 			System.out.print("h");			
-		}else if( currentFriction > frictionAtStart ){
+		} else if( currentFriction > frictionAtStart ){
 			System.out.print("o");		
 		}
 	}
+	
+	protected void moveThingToCurrentField(Thing t) {
+		t.removeFromField();
+		addThing(t);
+		t.addField(this);
+	}
+	
+	protected void pushThingIfExists(Box b, Direction d, int force, int friction){
+		if (thing != null) {
+			thing.pushed(b, d, force, friction);
+		}
+	}
+	
+	protected void pushThingIfExists(Worker w, Direction d){
+		if (thing != null) {
+			thing.pushed(w, d);
+		}
+	}
+	
+	public boolean isOpened() {
+		return opened;
+	}
+	
+	public ThingView getActualThingView() {
+		if (thing == null) {
+			return null;
+		}
+		return thing.getView();
+	}
+	
+	public boolean isBoxReached() {
+		return boxReached;
+	}
+	
+	
 }

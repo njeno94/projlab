@@ -1,34 +1,41 @@
 package Model;
 
 /**
- * A falat illetve az oszlopot modellezï¿½ osztï¿½ly. 
+ * A falat illetve az oszlopot modellezõ osztály. 
  */
 public class Wall extends Field {
 	
+	public Wall() {
+		//
+		this.opened = false; ///For the game end checks...
+	}
+	
 	/**
-	 * A felï¿½ldefiniï¿½lt befogadï¿½ metï¿½dus,
-	 * ezt hï¿½vjï¿½k meg a Worker objektumok,
-	 * ï¿½s nem tudja ï¿½ket befogadni ez a mezï¿½,
-	 * hiszen ez falat vagy oszlopot reprezentï¿½lï¿½ mezï¿½.
-	 * @param w		a munkï¿½s, aki a mezï¿½re akar lï¿½pni
-	 * @param d		az irï¿½ny, amerre a munkï¿½s menni szeretne
-	 * @return		mivel nem tud semmilyen dolgot fogadni, mindig hamissal tï¿½r vissza
+	 * A felüldefiniált befogadó metódus,
+	 * ezt hívják meg a Worker objektumok,
+	 * és nem tudja õket befogadni ez a mezó,
+	 * hiszen ez falat vagy oszlopot reprezentáló mezõ.
+	 * @param w		a munkás, aki a mezõre akar lépni
+	 * @param d		az irány, amerre a munkás menni szeretne
+	 * @return		mivel nem tud semmilyen dolgot fogadni, mindig hamissal tér vissza
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
 		return false;
 	}
-	 /**
-	  * A felï¿½ldefiniï¿½lt befogadï¿½ metï¿½dus,
-	  * ezt hï¿½vjï¿½k meg a Box objektumok,
-	  * ï¿½s nem tudja ï¿½ket befogadni ez a mezï¿½, hiszen ez falat
-	  * vagy oszlopot reprezentï¿½lï¿½ mezï¿½.
-	  * @param b 	a lï¿½da, amit a mezï¿½re szeretnï¿½nek tolni
-	  * @param d	az irï¿½ny, amerre a lï¿½dï¿½t tolni szeretnï¿½k
+	
+	/**
+	  * A felüldefiniált befogadó metódus,
+	  * ezt hívják meg a Box objektumok,
+	  * és nem tudja õket befogadni ez a mezõ, hiszen ez falat
+	  * vagy oszlopot reprezentáló mezõ.
+	  * @param b 	a láda, amit a mezõre szeretnének tolni
+	  * @param d	az irány, amerre a ládát tolni szeretnék
 	  */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
 	}
+	
 	@Override
 	public void Draw() {
 		System.out.print("w");

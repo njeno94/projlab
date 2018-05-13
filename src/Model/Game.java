@@ -4,68 +4,96 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import View.ThingView;
+import View.View;
 
 /**
- * Ez a singleton felelï¿½s a jï¿½tï¿½k irï¿½nyï¿½tï¿½sï¿½ï¿½rt. ï¿½ valï¿½sï¿½tja meg a raktï¿½r ï¿½pï¿½letet.
+ * Ez a singleton felelõs a játék irányításáért. Õ valósítja meg a raktár épületet.
  */
 public class Game {
-	private ArrayList<Field> raktarepulet;
-	private ArrayList<GoalField> celmezok;
+	private List<Field> raktarepulet;
+	private List<GoalField> celmezok;
+	private List<Box> dobozok;
 	private boolean firstWorkerSetted;
-	private int width;
+	private boolean twoPlayerMode;
+	public static int width = 500;
+	private Worker w1;
+	private Worker w2;
 	
+	private View view;
 	/**
 	 * Konstruktor
 	 */
-	Game() {
+	public Game(View v) {
+		view = v;
+		
 		raktarepulet = new ArrayList<Field>();
 		celmezok = new ArrayList<GoalField>();
-		firstWorkerSetted = false;
+		dobozok = new ArrayList<Box>();
 	}
 	
 	public void addField(Field f) {
 		raktarepulet.add(f);
 	}
 	/**
-	 * Elindï¿½tja a jï¿½tï¿½kot, inicializï¿½lja a pï¿½lyï¿½t,
-	 * lï¿½dï¿½kat ï¿½s munkï¿½sok kezdï¿½pozï¿½ciï¿½jï¿½t
+	 * Elindítja a játékot, inicializálja a pályát,
+	 * ládákat és munkások kezdõpozícióját
 	 */
-	public void startGame(){
-		
+	public void startGame(boolean twoPlayerMode){
+		raktarepulet.clear();
+		dobozok.clear();
+		celmezok.clear();
+		firstWorkerSetted = false;
+		this.twoPlayerMode = twoPlayerMode;
+		w1 = new Worker("w1");
+		w2 = new Worker("w2");
 	}
 	
 	/**
-	 *  Megvizsgï¿½lja, hogy a jï¿½tï¿½k vï¿½get ï¿½rt-e
-	 * @return Igaz ha vï¿½ge, egyï¿½bkï¿½nt hamis
+	 *  Megvizsgálja, hogy a játék véget ért-e
+	 * @return Igaz ha vége, egyébként hamis
 	 */
 	public boolean checkGameEnd() {
-		if (!checkGoalFields()) {
+		if (checkGoalFields() || !checkWorkerDeadlock() || !checkBoxDeadlock()) {
 			return true;
 		} else {
 			return false;
 		}
+		
+	}
+	
+	public boolean checkWorkersAlive() {
+		return (w1.isPlaying() && w2.isPlaying());
 	}
 	
 	/**
-	 * Ellenï¿½rzi a munkï¿½sokat, hogy tudnak-e mï¿½g ï¿½rdemi lï¿½pï¿½st tenni.
-	 * @return igaz, ha van olyan munkï¿½s, aki tud lï¿½pni, egyï¿½bkï¿½nt hamis
+	 * Ellenõrzi a munkásokat, hogy tudnak-e még érdemi lépést tenni.
+	 * @return igaz, ha van olyan munkás, aki tud lépni, egyébként hamis
 	 */
 	public boolean checkWorkerDeadlock() {
-
-		return true;
+		if (w1.canStep() || w2.canStep()) {
+			return true;
+		}
+		return false;
 	}
 	/**
-	 * Ellenï¿½rzi,hogy a lï¿½dï¿½k mozgathatï¿½k-e.
-	 * @return igaz, ha van mozgathatï¿½ lï¿½da, egyï¿½bkï¿½nt hamis
+	 * Ellenõrzi,hogy a ládák mozgathatók-e.
+	 * @return igaz, ha van mozgatható láda, egyébként hamis
 	 */
 	public boolean checkBoxDeadlock() {
-
-		return true;
+		for (Box b : dobozok) {
+			if (b.canBePushed()  && !b.isReachedToGoalField()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
-	 * Ellenï¿½rzi, hogy van-e mï¿½g pontot ï¿½rï¿½ cï¿½lmezï¿½.
-	 * @return igaz, ha van, egyï¿½bkï¿½nt hamis
+	 * Ellenõrzi, hogy van-e még pontot érõ célmezõ.
+	 * @return igaz, ha van, egyébként hamis
 	 */
 	public boolean checkGoalFields() {
 		int count = 0;
@@ -82,13 +110,13 @@ public class Game {
 	}
 	
 	/**
-	 * Leï¿½llï¿½tja ï¿½s befejezi a jï¿½tï¿½kot.
+	 * Leállítja és befejezi a játékot.
 	 */
 	public static void endGame() {
 		System.exit(0);
 	}
 	
-	public void setMap(Worker w1, Worker w2, String fileName) {
+	public void setMap(String fileName) {
 	
 	ArrayList<SwitchField> switchfields = new ArrayList<SwitchField>();
 	ArrayList<SwitchHoleField> switchholefields = new ArrayList<SwitchHoleField>();
@@ -104,29 +132,36 @@ public class Game {
                 	Field f = null;
                 	switch(fields[i].charAt(0)) {
                 		case 'w':
-                			f = new Wall();
+                			Wall w = new Wall();
+                			view.createWallView(w);
+                			f = w;
                 			break;
                 		case 'h':
-                			f = new Hole();
+                			Hole h = new Hole();
+                			view.createHoleView(h);
+                			f = h;
                 			break;
                 		case 's':
-
                 			SwitchField sf = new SwitchField();
-					switchfields.add(sf);
-					f=sf;
+                			switchfields.add(sf);
+                			view.createSwitchFieldView(sf);
+                			f = sf;
                 			break;
                 		case 't':
                 			SwitchHoleField shf = new SwitchHoleField();
-					switchholefields.add(shf);
-					f=shf;
+							switchholefields.add(shf);
+							view.createSwitchHoleFieldView(shf);
+							f=shf;
                 			break;
                 		case 'g':
-					GoalField g = new GoalField();
+                			GoalField g = new GoalField();
                 			celmezok.add(g);
-					f=g;
+                			view.createGoalFieldView(g);
+                			f=g;
                 			break;
                 		case 'f':
                 			f = new Field();
+                			view.createFieldView(f);
                 			break;
                 	}
 
@@ -137,9 +172,13 @@ public class Game {
                     			f.addThing(w1);
                     			w1.addField(f);
                     			firstWorkerSetted = true;
+                    			view.addThingView(new ThingView(w1, "w1"));
                 			} else {
-                    			f.addThing(w2);
-                    			w2.addField(f);;
+                				if (twoPlayerMode) {
+                					f.addThing(w2);
+                					w2.addField(f);
+                					view.addThingView(new ThingView(w2, "w2"));                					
+                				}
                 			}
                 			
                 			break;
@@ -147,6 +186,8 @@ public class Game {
                 			Box b = new Box();
                 			f.addThing(b);
                 			b.addField(f);
+                			dobozok.add(b);
+                			view.addThingView(new ThingView(b));
                 			break;
                 		}
                 	}
@@ -170,7 +211,7 @@ public class Game {
         	//
         }
         
-	width=fields.length;
+	width = fields.length;
 	if( !switchfields.isEmpty()  && !switchholefields.isEmpty()){
         	setSwitchField(switchfields,switchholefields);
 	}
@@ -202,7 +243,7 @@ public class Game {
 	}
 	
 	public void showWareHouse() {
-		for (int i=0; i<raktarepulet.size(); i++) {
+		for (int i=0; i < raktarepulet.size(); i++) {
 			System.out.print("|");
 			raktarepulet.get(i).Draw();
 			if ((i + 1 )% width == 0) {
@@ -210,5 +251,40 @@ public class Game {
 				System.out.println();
 			}
 		}
+	}
+	
+	public void moveW1(Direction d) {
+		w1.step(d);
+	}
+	
+	public void moveW2(Direction d) {
+		if (twoPlayerMode)
+			w2.step(d);
+	}
+	
+	public void oilW1(String oilType) {
+		switch(oilType) {
+		case "o":
+			w1.oilFieldWithOil();
+			break;
+		case "h":
+			w1.oilFieldWithHoney();
+			break;
+		}
+	}
+	
+	public void oilW2(String oilType) {
+		switch(oilType) {
+		case "n":
+			w2.oilFieldWithOil();
+			break;
+		case "m":
+			w2.oilFieldWithHoney();
+			break;
+		}
+	}
+
+	public List<Field> getWareHouse(){
+		return raktarepulet;
 	}
 }

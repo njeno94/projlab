@@ -1,27 +1,30 @@
 package Model;
 
-/**
- * A munkï¿½shoz tartozï¿½ osztï¿½ly. Feladata a munkï¿½s ï¿½letï¿½nek
- * valamint pontjainak kezelï¿½se, a lï¿½pï¿½s illetve a lï¿½dï¿½k tolï¿½sa.
- */
+import View.ThingView;
 
+/**
+ * A munkáshoz tartozó osztály. Feladata a munkás életének
+ * valamint pontjainak kezelése, a lépés illetve a ládák tolása.
+ */
 public class Worker extends Thing {
 	private int points;
 	private int force;
 	private String name;
+	private boolean playing;
 	/**
 	 * Konstruktor
 	 */
 	public Worker(String name) {
 		this.name = name;
 		points = 0;
-		force = 3;
+		force = 6;
+		playing = true;
 	}
 	
 	/**
-	 *  a munkï¿½s lï¿½pï¿½sï¿½ï¿½rt felelï¿½s metï¿½dus,
-	 *  paramï¿½terkï¿½nt megkapja, hogy milyen irï¿½nyba lï¿½pjen
-	 * @param d		az irï¿½ny, amerre lï¿½pni szeretne
+	 *  a munkás lépéséért felelõs metódus,
+	 *  paraméterként megkapja, hogy milyen irányba lépjen
+	 * @param d		az irány, amerre lépni szeretne
 	 */
 	public void step(Direction d) {
 		Field nextField = field.getNeighbour(d);
@@ -30,9 +33,9 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 * Ez a metï¿½dus kezeli a munkï¿½s tolï¿½sï¿½t, amennyiben egy mï¿½sik munkï¿½s tolja.
-	 * @param w		a mï¿½sik munkï¿½s, aki tolni szeretnï¿½ 
-	 * @param d		az irï¿½ny, amerre tolni szeretnï¿½ a munkï¿½st							
+	 * Ez a metódus kezeli a munkás tolását, amennyiben egy másik munkás tolja.
+	 * @param w		a másik munkás, aki tolni szeretné 
+	 * @param d		az irány, amerre tolni szeretné a munkást							
 	 */
 	@Override
 	public void pushed(Worker w, Direction d) {
@@ -40,11 +43,11 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 * Ez a metï¿½dus kezeli a Worker tolï¿½sï¿½t,
-	 * amennyiben Box tolja. Paramï¿½terkï¿½nt kapja a dobozt,
-	 * illetve, hogy milyen irï¿½nyba szeretnï¿½k tolni. 
-	 * @param b		a doboz, amit rï¿½ akarnak tolni a munkï¿½sra
-	 * @param d		az irï¿½ny, amerre tolni szeretnï¿½k a munkï¿½st
+	 * Ez a metódus kezeli a Worker tolását,
+	 * amennyiben Box tolja. Paraméterként kapja a dobozt,
+	 * illetve, hogy milyen irányba szeretnék tolni. 
+	 * @param b		a doboz, amit rá akarnak tolni a munkásra
+	 * @param d		az irány, amerre tolni szeretnék a munkást
 	 */
 	@Override
 	public void pushed(Box b, Direction d, int force, int friction) {
@@ -93,8 +96,30 @@ public class Worker extends Thing {
 	@Override
 	public void disappear() {
 		super.disappear();
-		System.out.println(name + " died ...");
-		Game.endGame();
+		playing = false;
+		System.out.println(points);
 	}
 	
+	public boolean canStep() {
+		Direction[] dirs = Direction.values();
+		for (Direction d : dirs) {
+			if (field != null) {
+				if (field.getNeighbour(d) != null) {
+					if (field.getNeighbour(d).isOpened()) {
+						return true;					
+					}
+				}				
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public ThingView getView() {
+		return new ThingView(this, name);
+	}
+	
+	public boolean isPlaying() {
+		return playing;
+	}
 }

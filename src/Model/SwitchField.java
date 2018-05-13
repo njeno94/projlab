@@ -1,53 +1,44 @@
 package Model;
 
 /**
- * A kapcsolï¿½ osztï¿½ly szerepï¿½t tï¿½lti be.
- * A hozzï¿½ tartozï¿½ kapcsolhatï¿½ lyuk ï¿½llapotï¿½t tudja megvï¿½ltoztatni.
+ * A kapcsoló osztály szerepét tölti be.
+ * A hozzá tartozó kapcsolható lyuk állapotát tudja megváltoztatni.
  */
 public class SwitchField extends Field {
 	
 	private SwitchHoleField hole;
+	private boolean active = false;
 	
 	/**
-	 * Befogadja a paramï¿½terkï¿½nt kapott Box objektumot.
-	 * Meghï¿½vja a hozzï¿½tartozï¿½ SwitchHoleField changeState() metï¿½dusï¿½t.
-	 * @param b		a lï¿½da, amit a mezï¿½re akarnak tolni
-	 * @param d		az irï¿½ny, amerre a lï¿½dï¿½t tolni szeretnï¿½k
+	 * Befogadja a paraméterként kapott Box objektumot.
+	 * Meghívja a hozzátartozó SwitchHoleField changeState() metódusát.
+	 * @param b		a láda, amit a mezõre akarnak tolni
+	 * @param d		az irány, amerre a ládátt tolni szeretnék
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
+			pushThingIfExists(b, d, force, friction + currentFriction);
 			if (thing == null) {
-				b.removeFromField();
-				addThing(b);
-				b.addField(this);
+				moveThingToCurrentField(b);
 				hole.setState(true);
 				hole.changeState();
-			}
-			else {
-				thing.pushed(b, d, force, friction);
-				if (thing == null) {
-					b.removeFromField();
-					addThing(b);
-					b.addField(this);
-					hole.setState(true);
-					hole.changeState();
-				}
+				active = true;
 			}			
 		}
 	}
 	
 	/**
-	 *  Beï¿½llï¿½tja a hozzï¿½ tartozï¿½ kapcsolhatï¿½ lyukat
-	 * @param sh 	a kapcsolhatï¿½ lyuk, amit kapcsolni fog tudni
+	 *  Beállítja a hozzá tartozó kapcsolható lyukat
+	 * @param sh 	a kapcsolható lyuk, amit kapcsolni fog tudni
 	 */
 	public void setSwitchHoleField(Field sh) {
 		hole = (SwitchHoleField)sh;
 	}
 	
 	/**
-	 * Eltï¿½volï¿½tja a pï¿½lyï¿½rï¿½l a rajta lï¿½vï¿½ dolgot,
-	 * ï¿½s kikapcsolja a hozzï¿½ tartozï¿½ kapcsolhatï¿½ lyukat
+	 * Eltávolítja a pályáról a rajta lévõ dolgot,
+	 * és kikapcsolja a hozzá tartozó kapcsolható lyukat
 	 */
 	@Override
 	public void removeThing() {
@@ -60,11 +51,13 @@ public class SwitchField extends Field {
 		System.out.print("s");
 		if (thing != null) {
 			thing.Draw();
-			DrawFriction();
 		} else {
 			System.out.print(" ");
-			DrawFriction();
 		}
+		DrawFriction();
 	}
 	
+	public boolean isActive() {
+		return active;
+	}
 }
