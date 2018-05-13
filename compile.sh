@@ -1,4 +1,4 @@
-rmdir /S /Q out
-mkdir out
+#!/bin/bash
+rm -r out/*
 javac -encoding utf8 -sourcepath src -d out src/Controller/Controller.java
-xcopy /s /i "src/Images" "out/Images"
+cp -r src/Images out/Images
