@@ -19,7 +19,7 @@ public class WallView implements Drawable {
 		try {
 			wallImage = ImageIO.read((WallView.class.getResource("/Images/wall.png")));
 		} catch (IOException e) {
-			System.out.println("Nincs meg a fal képe!");
+			System.out.println("Nincs meg a fal kÃ©pe!");
 			e.printStackTrace();
 		}
 	}

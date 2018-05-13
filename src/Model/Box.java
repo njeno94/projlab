@@ -3,14 +3,16 @@ package Model;
 import View.ThingView;
 
 /**
- * Ez az osztály reprezentálja a ládákat a játékban.
+ * Ez az osztÃ¡ly reprezentÃ¡lja a lÃ¡dÃ¡kat a jÃ¡tÃ©kban.
  */
 public class Box extends Thing {
+
+	private boolean onGoalField;
 	
 	/**
-	 * A ládák tolását valósítja meg, amikor munkás tolja a ládát.
-	 * @param w a munkás, aki tolja a ládát
-	 * @param d az irány, amelyik irányba a ládát tolja a munkás
+	 * A lÃ¡dÃ¡k tolÃ¡sÃ¡t valÃ³sÃ­tja meg, amikor munkÃ¡s tolja a lÃ¡dÃ¡t.
+	 * @param w a munkÃ¡s, aki tolja a lÃ¡dÃ¡t
+	 * @param d az irÃ¡ny, amelyik irÃ¡nyba a lÃ¡dÃ¡t tolja a munkÃ¡s
 	 */
 	public void pushed(Worker w, Direction d) {
 		Field nextField = field.getNeighbour(d);
@@ -20,9 +22,9 @@ public class Box extends Thing {
 	}
 	
 	/**
-	 * A ládák tolását valósítja meg, amikor munkás tolja a ládát.
-	 * @param b a láda, amit egy munkás ennek a ládának a helyére akar tolni.
-	 * @param d az irány, amelyikbe a ládát tolni akarják
+	 * A lÃ¡dÃ¡k tolÃ¡sÃ¡t valÃ³sÃ­tja meg, amikor munkÃ¡s tolja a lÃ¡dÃ¡t.
+	 * @param b a lÃ¡da, amit egy munkÃ¡s ennek a lÃ¡dÃ¡nak a helyÃ©re akar tolni.
+	 * @param d az irÃ¡ny, amelyikbe a lÃ¡dÃ¡t tolni akarjÃ¡k
 	 */
 	public void pushed(Box b, Direction d, int force, int friction) {
 		Field nextField = field.getNeighbour(d);
@@ -55,6 +57,10 @@ public class Box extends Thing {
 	}
 	
 	public boolean isReachedToGoalField() {
-		return field.isBoxReached();
+		return onGoalField;
+	}
+
+	public void arrivedOnGoalField() {
+		onGoalField = true;
 	}
 }

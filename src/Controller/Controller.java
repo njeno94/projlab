@@ -99,7 +99,7 @@ public class Controller implements ActionListener, KeyListener {
 		view.clear();
 		game = new Game(view);
 		game.startGame(twoPlayerMode);
-		game.setMap("src/Model/warehouse.txt");
+		game.setMap("Model/warehouse.txt");
 		timer.start();
 		running = true;
 	}
@@ -165,22 +165,22 @@ public class Controller implements ActionListener, KeyListener {
 	
 	public boolean checkGameEnd() {
 		if (!game.checkWorkersAlive()) {
-			JOptionPane.showMessageDialog(frame, "Meghalt az egyik munk·s!", "W valaki won", 0);
+			JOptionPane.showMessageDialog(frame, "Meghalt az egyik munk√°s!", "W valaki won", 0);
 			return true;
 		}
 		
 		if (!game.checkGoalFields()) {
-			JOptionPane.showMessageDialog(frame, "Minden cÈlhelyre ker¸lt l·da!", "W valaki won", 0);
+			JOptionPane.showMessageDialog(frame, "Minden c√©lhelyre ker√ºlt l√°da!", "W valaki won", 0);
 			return true;
 		}
 		
 		if (!game.checkBoxDeadlock()) {
-			JOptionPane.showMessageDialog(frame, "Nincs elÈg mozgathatÛ l·da!", "Game over", 0);
+			JOptionPane.showMessageDialog(frame, "Nincs el√©g mozgathat√≥ l√°da!", "Game over", 0);
 			return true;
 		}
 		
 		if (!game.checkWorkerDeadlock()) {
-			JOptionPane.showMessageDialog(frame, "Nem tud lÈpni egy munk·s sem!", "Game over", 0);
+			JOptionPane.showMessageDialog(frame, "Nem tud l√©pni egy munk√°s sem!", "Game over", 0);
 			return true;
 		}
 		

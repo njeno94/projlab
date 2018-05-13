@@ -10,7 +10,7 @@ import View.ThingView;
 import View.View;
 
 /**
- * Ez a singleton felelıs a j·tÈk ir·nyÌt·s·Èrt. ’ valÛsÌtja meg a rakt·r Èp¸letet.
+ * Ez a singleton felel≈ës a j√°t√©k ir√°ny√≠t√°s√°√©rt. ≈ê val√≥s√≠tja meg a rakt√°r √©p√ºletet.
  */
 public class Game {
 	private List<Field> raktarepulet;
@@ -32,14 +32,16 @@ public class Game {
 		raktarepulet = new ArrayList<Field>();
 		celmezok = new ArrayList<GoalField>();
 		dobozok = new ArrayList<Box>();
+		w1 = new Worker("w1");
+		w2 = new Worker("w2");
 	}
 	
 	public void addField(Field f) {
 		raktarepulet.add(f);
 	}
 	/**
-	 * ElindÌtja a j·tÈkot, inicializ·lja a p·ly·t,
-	 * l·d·kat Ès munk·sok kezdıpozÌciÛj·t
+	 * Elind√≠tja a j√°t√©kot, inicializ√°lja a p√°ly√°t,
+	 * l√°d√°kat √©s munk√°sok kezd≈ëpoz√≠ci√≥j√°t
 	 */
 	public void startGame(boolean twoPlayerMode){
 		raktarepulet.clear();
@@ -47,13 +49,11 @@ public class Game {
 		celmezok.clear();
 		firstWorkerSetted = false;
 		this.twoPlayerMode = twoPlayerMode;
-		w1 = new Worker("w1");
-		w2 = new Worker("w2");
 	}
 	
 	/**
-	 *  Megvizsg·lja, hogy a j·tÈk vÈget Èrt-e
-	 * @return Igaz ha vÈge, egyÈbkÈnt hamis
+	 *  Megvizsg√°lja, hogy a j√°t√©k v√©get √©rt-e
+	 * @return Igaz ha v√©ge, egy√©bk√©nt hamis
 	 */
 	public boolean checkGameEnd() {
 		if (checkGoalFields() || !checkWorkerDeadlock() || !checkBoxDeadlock()) {
@@ -69,8 +69,8 @@ public class Game {
 	}
 	
 	/**
-	 * Ellenırzi a munk·sokat, hogy tudnak-e mÈg Èrdemi lÈpÈst tenni.
-	 * @return igaz, ha van olyan munk·s, aki tud lÈpni, egyÈbkÈnt hamis
+	 * Ellen≈ërzi a munk√°sokat, hogy tudnak-e m√©g √©rdemi l√©p√©st tenni.
+	 * @return igaz, ha van olyan munk√°s, aki tud l√©pni, egy√©bk√©nt hamis
 	 */
 	public boolean checkWorkerDeadlock() {
 		if (w1.canStep() || w2.canStep()) {
@@ -79,8 +79,8 @@ public class Game {
 		return false;
 	}
 	/**
-	 * Ellenırzi,hogy a l·d·k mozgathatÛk-e.
-	 * @return igaz, ha van mozgathatÛ l·da, egyÈbkÈnt hamis
+	 * Ellen≈ërzi,hogy a l√°d√°k mozgathat√≥k-e.
+	 * @return igaz, ha van mozgathat√≥ l√°da, egy√©bk√©nt hamis
 	 */
 	public boolean checkBoxDeadlock() {
 		for (Box b : dobozok) {
@@ -92,8 +92,8 @@ public class Game {
 	}
 	
 	/**
-	 * Ellenırzi, hogy van-e mÈg pontot Èrı cÈlmezı.
-	 * @return igaz, ha van, egyÈbkÈnt hamis
+	 * Ellen≈ërzi, hogy van-e m√©g pontot √©r≈ë c√©lmez≈ë.
+	 * @return igaz, ha van, egy√©bk√©nt hamis
 	 */
 	public boolean checkGoalFields() {
 		int count = 0;
@@ -110,7 +110,7 @@ public class Game {
 	}
 	
 	/**
-	 * Le·llÌtja Ès befejezi a j·tÈkot.
+	 * Le√°ll√≠tja √©s befejezi a j√°t√©kot.
 	 */
 	public static void endGame() {
 		System.exit(0);

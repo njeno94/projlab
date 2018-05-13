@@ -47,7 +47,7 @@ public class ThingView implements Drawable {
 
 	@Override
 	public void Draw(Graphics g, int x, int y) {
-		//Konstans eltol·s, mert kisebb a thingImage, hogy jobban l·tszÛdjon, hogy hol van a thing
+		//Konstans eltol√°s, mert kisebb a thingImage, hogy jobban l√°tsz√≥djon, hogy hol van a thing
 		g.drawImage(thingImage, x + 10, y + 10, null);
 	}
 

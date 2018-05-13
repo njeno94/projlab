@@ -3,8 +3,8 @@ package Model;
 import View.ThingView;
 
 /**
- * A munkáshoz tartozó osztály. Feladata a munkás életének
- * valamint pontjainak kezelése, a lépés illetve a ládák tolása.
+ * A munkÃ¡shoz tartozÃ³ osztÃ¡ly. Feladata a munkÃ¡s Ã©letÃ©nek
+ * valamint pontjainak kezelÃ©se, a lÃ©pÃ©s illetve a lÃ¡dÃ¡k tolÃ¡sa.
  */
 public class Worker extends Thing {
 	private int points;
@@ -22,9 +22,9 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 *  a munkás lépéséért felelõs metódus,
-	 *  paraméterként megkapja, hogy milyen irányba lépjen
-	 * @param d		az irány, amerre lépni szeretne
+	 *  a munkÃ¡s lÃ©pÃ©sÃ©Ã©rt felelÅ‘s metÃ³dus,
+	 *  paramÃ©terkÃ©nt megkapja, hogy milyen irÃ¡nyba lÃ©pjen
+	 * @param d		az irÃ¡ny, amerre lÃ©pni szeretne
 	 */
 	public void step(Direction d) {
 		Field nextField = field.getNeighbour(d);
@@ -33,9 +33,9 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 * Ez a metódus kezeli a munkás tolását, amennyiben egy másik munkás tolja.
-	 * @param w		a másik munkás, aki tolni szeretné 
-	 * @param d		az irány, amerre tolni szeretné a munkást							
+	 * Ez a metÃ³dus kezeli a munkÃ¡s tolÃ¡sÃ¡t, amennyiben egy mÃ¡sik munkÃ¡s tolja.
+	 * @param w		a mÃ¡sik munkÃ¡s, aki tolni szeretnÃ© 
+	 * @param d		az irÃ¡ny, amerre tolni szeretnÃ© a munkÃ¡st							
 	 */
 	@Override
 	public void pushed(Worker w, Direction d) {
@@ -43,11 +43,11 @@ public class Worker extends Thing {
 	}
 	
 	/**
-	 * Ez a metódus kezeli a Worker tolását,
-	 * amennyiben Box tolja. Paraméterként kapja a dobozt,
-	 * illetve, hogy milyen irányba szeretnék tolni. 
-	 * @param b		a doboz, amit rá akarnak tolni a munkásra
-	 * @param d		az irány, amerre tolni szeretnék a munkást
+	 * Ez a metÃ³dus kezeli a Worker tolÃ¡sÃ¡t,
+	 * amennyiben Box tolja. ParamÃ©terkÃ©nt kapja a dobozt,
+	 * illetve, hogy milyen irÃ¡nyba szeretnÃ©k tolni. 
+	 * @param b		a doboz, amit rÃ¡ akarnak tolni a munkÃ¡sra
+	 * @param d		az irÃ¡ny, amerre tolni szeretnÃ©k a munkÃ¡st
 	 */
 	@Override
 	public void pushed(Box b, Direction d, int force, int friction) {

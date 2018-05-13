@@ -1,7 +1,7 @@
 package Model;
 
 /**
- * A falat illetve az oszlopot modellezı oszt·ly. 
+ * A falat illetve az oszlopot modellez≈ë oszt√°ly. 
  */
 public class Wall extends Field {
 	
@@ -11,13 +11,13 @@ public class Wall extends Field {
 	}
 	
 	/**
-	 * A fel¸ldefini·lt befogadÛ metÛdus,
-	 * ezt hÌvj·k meg a Worker objektumok,
-	 * Ès nem tudja ıket befogadni ez a mezÛ,
-	 * hiszen ez falat vagy oszlopot reprezent·lÛ mezı.
-	 * @param w		a munk·s, aki a mezıre akar lÈpni
-	 * @param d		az ir·ny, amerre a munk·s menni szeretne
-	 * @return		mivel nem tud semmilyen dolgot fogadni, mindig hamissal tÈr vissza
+	 * A fel√ºldefini√°lt befogad√≥ met√≥dus,
+	 * ezt h√≠vj√°k meg a Worker objektumok,
+	 * √©s nem tudja ≈ëket befogadni ez a mez√≥,
+	 * hiszen ez falat vagy oszlopot reprezent√°l√≥ mez≈ë.
+	 * @param w		a munk√°s, aki a mez≈ëre akar l√©pni
+	 * @param d		az ir√°ny, amerre a munk√°s menni szeretne
+	 * @return		mivel nem tud semmilyen dolgot fogadni, mindig hamissal t√©r vissza
 	 */
 	@Override
 	public boolean accept(Worker w, Direction d) {
@@ -25,12 +25,12 @@ public class Wall extends Field {
 	}
 	
 	/**
-	  * A fel¸ldefini·lt befogadÛ metÛdus,
-	  * ezt hÌvj·k meg a Box objektumok,
-	  * Ès nem tudja ıket befogadni ez a mezı, hiszen ez falat
-	  * vagy oszlopot reprezent·lÛ mezı.
-	  * @param b 	a l·da, amit a mezıre szeretnÈnek tolni
-	  * @param d	az ir·ny, amerre a l·d·t tolni szeretnÈk
+	  * A fel√ºldefini√°lt befogad√≥ met√≥dus,
+	  * ezt h√≠vj√°k meg a Box objektumok,
+	  * √©s nem tudja ≈ëket befogadni ez a mez≈ë, hiszen ez falat
+	  * vagy oszlopot reprezent√°l√≥ mez≈ë.
+	  * @param b 	a l√°da, amit a mez≈ëre szeretn√©nek tolni
+	  * @param d	az ir√°ny, amerre a l√°d√°t tolni szeretn√©k
 	  */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {

@@ -1,8 +1,8 @@
 package Model;
 
 /**
- * A kapcsoló osztály szerepét tölti be.
- * A hozzá tartozó kapcsolható lyuk állapotát tudja megváltoztatni.
+ * A kapcsolÃ³ osztÃ¡ly szerepÃ©t tÃ¶lti be.
+ * A hozzÃ¡ tartozÃ³ kapcsolhatÃ³ lyuk Ã¡llapotÃ¡t tudja megvÃ¡ltoztatni.
  */
 public class SwitchField extends Field {
 	
@@ -10,10 +10,10 @@ public class SwitchField extends Field {
 	private boolean active = false;
 	
 	/**
-	 * Befogadja a paraméterként kapott Box objektumot.
-	 * Meghívja a hozzátartozó SwitchHoleField changeState() metódusát.
-	 * @param b		a láda, amit a mezõre akarnak tolni
-	 * @param d		az irány, amerre a ládátt tolni szeretnék
+	 * Befogadja a paramÃ©terkÃ©nt kapott Box objektumot.
+	 * MeghÃ­vja a hozzÃ¡tartozÃ³ SwitchHoleField changeState() metÃ³dusÃ¡t.
+	 * @param b		a lÃ¡da, amit a mezÅ‘re akarnak tolni
+	 * @param d		az irÃ¡ny, amerre a lÃ¡dÃ¡tt tolni szeretnÃ©k
 	 */
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
@@ -29,16 +29,16 @@ public class SwitchField extends Field {
 	}
 	
 	/**
-	 *  Beállítja a hozzá tartozó kapcsolható lyukat
-	 * @param sh 	a kapcsolható lyuk, amit kapcsolni fog tudni
+	 *  BeÃ¡llÃ­tja a hozzÃ¡ tartozÃ³ kapcsolhatÃ³ lyukat
+	 * @param sh 	a kapcsolhatÃ³ lyuk, amit kapcsolni fog tudni
 	 */
 	public void setSwitchHoleField(Field sh) {
 		hole = (SwitchHoleField)sh;
 	}
 	
 	/**
-	 * Eltávolítja a pályáról a rajta lévõ dolgot,
-	 * és kikapcsolja a hozzá tartozó kapcsolható lyukat
+	 * EltÃ¡volÃ­tja a pÃ¡lyÃ¡rÃ³l a rajta lÃ©vÅ‘ dolgot,
+	 * Ã©s kikapcsolja a hozzÃ¡ tartozÃ³ kapcsolhatÃ³ lyukat
 	 */
 	@Override
 	public void removeThing() {

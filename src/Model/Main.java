@@ -11,7 +11,7 @@ public class Main {
 		Worker w2 = new Worker("Worker 2");
 
 		
-		Game game = new Game();
+		Game game = new Game(new View() );
 		game.setMap(w1, w2, args[0]);
 		
 

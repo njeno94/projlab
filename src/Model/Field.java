@@ -5,10 +5,10 @@ import java.util.Map;
 import View.ThingView;
 
 /**
- * A raktárépület egy négyzetét reprezentálja,
- * amely képes tárolni egy ládát, vagy állhat rajta egy munkás,
- * illetve vannak speciális változatai.
- * Ismeri a körülötte lévõ mezõket.
+ * A raktÃ¡rÃ©pÃ¼let egy nÃ©gyzetÃ©t reprezentÃ¡lja,
+ * amely kÃ©pes tÃ¡rolni egy lÃ¡dÃ¡t, vagy Ã¡llhat rajta egy munkÃ¡s,
+ * illetve vannak speciÃ¡lis vÃ¡ltozatai.
+ * Ismeri a kÃ¶rÃ¼lÃ¶tte lÃ©vÅ‘ mezÅ‘ket.
  */
 public class Field {
 	protected Thing thing;
@@ -16,7 +16,6 @@ public class Field {
 	public static final int frictionAtStart = 1;
 	protected int currentFriction;
 	protected boolean opened;
-	protected boolean boxReached;
 	/**
 	 * konstruktor
 	 */
@@ -25,36 +24,35 @@ public class Field {
 		fields = new HashMap<Direction, Field>();
 		currentFriction = frictionAtStart;
 		opened = true;
-		boxReached = false; //Csak a GoalFieldben használjuk, viszont a Box felõl mindenkit Fieldként kezelünk.
 	}
 	
 	/**
-	 * Beállítja d irányba az f mezõt szomszédnak.
-	 * @param d az irány, amerre a szomszádot beállítjuk
-	 * @param f a mezõ, ami a szomszéd lesz
+	 * BeÃ¡llÃ­tja d irÃ¡nyba az f mezÅ‘t szomszÃ©dnak.
+	 * @param d az irÃ¡ny, amerre a szomszÃ¡dot beÃ¡llÃ­tjuk
+	 * @param f a mezÅ‘, ami a szomszÃ©d lesz
 	 */
 	public void setNeighbour(Direction d, Field f) {
 		fields.put(d, f);
 	}
 	
 	/**
-	 * Visszaadja a d irányban lévõ szomszéd mezõt.
-	 * @param d az irány, amerre a mezõ van
-	 * @return d  irányban lévõ szomszéd mezõ
+	 * Visszaadja a d irÃ¡nyban lÃ©vÅ‘ szomszÃ©d mezÅ‘t.
+	 * @param d az irÃ¡ny, amerre a mezÅ‘ van
+	 * @return d  irÃ¡nyban lÃ©vÅ‘ szomszÃ©d mezÅ‘
 	 */
 	public Field getNeighbour(Direction d) {
 		return fields.get(d);
 	}
 	
 	/**
-	 *  Ez a függvény ellenõrzi, hogy a paraméterként kapott munkást
-	 *  be tudja-e fogadni a mezõ. Ha már van rajta valami,
-	 *  akkor meghívja a rajta lévõ thing pushed metódusát.
-	 *  Amennyiben a mezõ befogadja a paraméterként kapott Worker objektumot,
-	 *  az elõzõ mezõrõl eltávolítódik és a jelenlegi mezõre kerül.
-	 * @param w a munkás, aki szeretne a mezõre lépni
-	 * @param d az irány, amelyikbe a munkás menni szeretne
-	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
+	 *  Ez a fÃ¼ggvÃ©ny ellenÅ‘rzi, hogy a paramÃ©terkÃ©nt kapott munkÃ¡st
+	 *  be tudja-e fogadni a mezÅ‘. Ha mÃ¡r van rajta valami,
+	 *  akkor meghÃ­vja a rajta lÃ©vÅ‘ thing pushed metÃ³dusÃ¡t.
+	 *  Amennyiben a mezÅ‘ befogadja a paramÃ©terkÃ©nt kapott Worker objektumot,
+	 *  az elÅ‘zÅ‘ mezÅ‘rÅ‘l eltÃ¡volÃ­tÃ³dik Ã©s a jelenlegi mezÅ‘re kerÃ¼l.
+	 * @param w a munkÃ¡s, aki szeretne a mezÅ‘re lÃ©pni
+	 * @param d az irÃ¡ny, amelyikbe a munkÃ¡s menni szeretne
+	 * @return igazzal tÃ©r vissza, ha tudja fogadni, egyÃ©bkÃ©nt hamissal
 	 */
 	public boolean accept(Worker w, Direction d) {
 		pushThingIfExists(w, d);	
@@ -66,14 +64,14 @@ public class Field {
 	}
 	
 	/**
-	 *  Ez a függvény ellenõrzi, hogy a paraméterként kapott ládát
-	 *  be tudja-e fogadni a mezõ. Ha már van rajta valami,
-	 *  akkor meghívja a rajta lévõ thing pushed metódusát.
-	 *  Amennyiben a mezõ befogadja a paraméterként kapott Box objektumot,
-	 *  az elõzõ mezõrõl eltávolítódik és a jelenlegi mezõre kerül.
-	 * @param w a munkás, aki szeretne a mezõre lépni
-	 * @param d az irány, amelyikbe a munkás menni szeretne
-	 * @return igazzal tér vissza, ha tudja fogadni, egyébként hamissal
+	 *  Ez a fÃ¼ggvÃ©ny ellenÅ‘rzi, hogy a paramÃ©terkÃ©nt kapott lÃ¡dÃ¡t
+	 *  be tudja-e fogadni a mezÅ‘. Ha mÃ¡r van rajta valami,
+	 *  akkor meghÃ­vja a rajta lÃ©vÅ‘ thing pushed metÃ³dusÃ¡t.
+	 *  Amennyiben a mezÅ‘ befogadja a paramÃ©terkÃ©nt kapott Box objektumot,
+	 *  az elÅ‘zÅ‘ mezÅ‘rÅ‘l eltÃ¡volÃ­tÃ³dik Ã©s a jelenlegi mezÅ‘re kerÃ¼l.
+	 * @param w a munkÃ¡s, aki szeretne a mezÅ‘re lÃ©pni
+	 * @param d az irÃ¡ny, amelyikbe a munkÃ¡s menni szeretne
+	 * @return igazzal tÃ©r vissza, ha tudja fogadni, egyÃ©bkÃ©nt hamissal
 	 */
 	public void accept(Box b, Direction d, int force, int friction) {
 		if (force > friction) {
@@ -87,8 +85,8 @@ public class Field {
 	}
 	
 	/**
-	 * A rajta lévõ thingnek hívja a pontadásért felelõs metódusát.
-	 * @param d az irány, amerre van az adott thing
+	 * A rajta lÃ©vÅ‘ thingnek hÃ­vja a pontadÃ¡sÃ©rt felelÅ‘s metÃ³dusÃ¡t.
+	 * @param d az irÃ¡ny, amerre van az adott thing
 	 */
 	public void addPointToThing(Direction d) {
 		if (thing != null) {
@@ -97,15 +95,15 @@ public class Field {
 	}
 	
 	/**
-	 * Hozzáadja a mezõhöz a paraméterként kapott thing objektumot.
-	 * @param t egy Thing, ami a mezõre lép
+	 * HozzÃ¡adja a mezÅ‘hÃ¶z a paramÃ©terkÃ©nt kapott thing objektumot.
+	 * @param t egy Thing, ami a mezÅ‘re lÃ©p
 	 */
 	public void addThing(Thing t) {
 		thing = t;
 	}
 	
 	/**
-	 * Eltávolítja a rajta lévõ thinget a mezõrõl.
+	 * EltÃ¡volÃ­tja a rajta lÃ©vÅ‘ thinget a mezÅ‘rÅ‘l.
 	 */
 	public void removeThing() {
 		thing = null;
@@ -113,9 +111,9 @@ public class Field {
 	}
 	
 	/**
-	 * Megadja egy iránynak az ellentettjét
-	 * @param d az irány, aminek keressük az ellentettjét
-	 * @return a d irány ellentettje
+	 * Megadja egy irÃ¡nynak az ellentettjÃ©t
+	 * @param d az irÃ¡ny, aminek keressÃ¼k az ellentettjÃ©t
+	 * @return a d irÃ¡ny ellentettje
 	 */
 	public static Direction convertDir(Direction d) {
 		Direction opp = null;
@@ -197,9 +195,7 @@ public class Field {
 		return thing.getView();
 	}
 	
-	public boolean isBoxReached() {
-		return boxReached;
-	}
+
 	
 	
 }
