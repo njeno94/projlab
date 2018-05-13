@@ -68,12 +68,7 @@ public class Worker extends Thing {
 	
 	@Override
 	public void addPoint(Direction d) {
-		Field neighbour = field.getNeighbour(d);
-<<<<<<< HEAD
 		if (stepping) {
-=======
-		if (neighbour != null && !stepping) {
->>>>>>> 6f8bb64b15f57ab460863da04f88f553360eb8f0
 			neighbour.addPointToThing(d);
 		}
 		else {
