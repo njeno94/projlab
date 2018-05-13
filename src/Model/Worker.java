@@ -31,7 +31,6 @@ public class Worker extends Thing {
 	public void step(Direction d) {
 		stepping = true;
 		Field nextField = field.getNeighbour(d);
-		stepping = true;
 		if (nextField != null)
 			nextField.accept(this, d);
 		stepping = false;
