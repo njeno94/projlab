@@ -11,6 +11,7 @@ public class Worker extends Thing {
 	private int force;
 	private String name;
 	private boolean playing;
+	private boolean stepping;
 	/**
 	 * Konstruktor
 	 */
@@ -19,6 +20,7 @@ public class Worker extends Thing {
 		points = 0;
 		force = 6;
 		playing = true;
+		stepping = false;
 	}
 	
 	/**
@@ -27,9 +29,11 @@ public class Worker extends Thing {
 	 * @param d		az irány, amerre lépni szeretne
 	 */
 	public void step(Direction d) {
+		stepping = true;
 		Field nextField = field.getNeighbour(d);
 		if (nextField != null)
 			nextField.accept(this, d);
+		stepping = false;
 	}
 	
 	/**
@@ -64,11 +68,11 @@ public class Worker extends Thing {
 	@Override
 	public void addPoint(Direction d) {
 		Field neighbour = field.getNeighbour(d);
-		if (neighbour != null) {
-			neighbour.addPointToThing(d);
+		if (stepping) {
+			points++;
 		}
 		else {
-			points++;
+			neighbour.addPointToThing(d);
 		}
 	}
 	

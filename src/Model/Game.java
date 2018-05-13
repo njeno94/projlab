@@ -211,8 +211,9 @@ public class Game {
         	//
         }
         
-	width = fields.length;
-	if( !switchfields.isEmpty()  && !switchholefields.isEmpty()){
+		width = fields.length;
+		view.setColumns(width);
+		if( !switchfields.isEmpty()  && !switchholefields.isEmpty()){
         	setSwitchField(switchfields,switchholefields);
 	}
         setNeighbours();

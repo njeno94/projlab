@@ -14,6 +14,7 @@ public class View extends JPanel {
 	private LinkedList<Drawable> elements;
 	public static int width = 500;
 	public static int height = 500;
+	private int columns;
 	
 	
 	public View() {
@@ -55,7 +56,7 @@ public class View extends JPanel {
 		for (int i = 0; i < elements.size(); i++) {
 			elements.get(i).Draw(g, x, y);
 			x += 50;
-			if ((i + 1 )% 10 == 0) {
+			if ((i + 1 )% columns == 0) {
 				x = 0;
 				y += 50;
 			}
@@ -76,5 +77,13 @@ public class View extends JPanel {
 
 	public void clear() {
 		elements.clear();
+	}
+
+	public void setColumns(int col) {
+		columns = col;
+	}
+
+	public int getColumns() {
+		return columns;
 	}
 }

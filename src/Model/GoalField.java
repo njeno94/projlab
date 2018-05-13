@@ -45,8 +45,7 @@ public class GoalField extends Field {
 				if (thing == null) {
 					b.addPoint(convertDir(d));
 					moveThingToCurrentField(b);
-					opened = false;
-					boxReached = false;
+					boxReached = true;
 				}
 			}
 			else {
