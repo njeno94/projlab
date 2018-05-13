@@ -99,7 +99,7 @@ public class Controller implements ActionListener, KeyListener {
 		view.clear();
 		game = new Game(view);
 		game.startGame(twoPlayerMode);
-		game.setMap("Model/warehouse.txt");
+		game.setMap("src/Model/warehouse.txt");
 		timer.start();
 		running = true;
 	}

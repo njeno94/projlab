@@ -1,3 +1,3 @@
 rmdir /S /Q out
 mkdir out
-javac -sourcepath src -d out src/Model/Main.java
+javac -encoding utf8 -sourcepath src -d out src/Controller/Controller.java
