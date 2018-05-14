@@ -51,12 +51,12 @@ public class FieldView implements Drawable {
 				thingView.Draw(g, x, y);
 			}		
 		} else if (field.getFriction() < Field.frictionAtStart ){
-			g.drawImage(fieldWithHoneyImage, x, y, null);
+			g.drawImage(fieldWithOilImage, x, y, null);
 			if (thingView != null) {
 				thingView.Draw(g, x, y);
 			}			
 		} else if (field.getFriction() > Field.frictionAtStart ){
-			g.drawImage(fieldWithOilImage, x, y, null);
+			g.drawImage(fieldWithHoneyImage, x, y, null);
 			if (thingView != null) {
 				thingView.Draw(g, x, y);
 			}		
