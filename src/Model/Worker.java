@@ -91,17 +91,12 @@ public class Worker extends Thing {
 	public int getForce() {
 		return force;
 	}
-
-	@Override
-	public void Draw() {
-		System.out.print("w");
-	}
 	
 	@Override
 	public void disappear() {
 		super.disappear();
+		points = 0;
 		playing = false;
-		System.out.println(points);
 	}
 	
 	public boolean canStep() {

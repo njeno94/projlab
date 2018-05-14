@@ -1,5 +1,7 @@
 package View;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import javax.swing.JPanel;
@@ -16,7 +18,8 @@ public class View extends JPanel {
 	public static int height = 500;
 	public static final int imageWidth = 50;
 	private int columns;
-	
+	private int player1Points = 0;
+	private int player2Points = 0;
 	
 	public View() {
 		this.setPreferredSize(new Dimension(width, height));
@@ -63,6 +66,11 @@ public class View extends JPanel {
 				y += imageWidth;
 			}
 		}
+		
+		g.setColor(Color.yellow);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+		g.drawString("Player1: " + player1Points, 10, 35);
+		g.drawString("Player2: " + player2Points, 360, 35);
 	}
 	
 	public void addThingView(ThingView tv) {
@@ -87,5 +95,10 @@ public class View extends JPanel {
 
 	public int getColumns() {
 		return columns;
+	}
+	
+	public void setWorkersPoints(int w1Points, int w2Points) {
+		player1Points = w1Points;
+		player2Points = w2Points;
 	}
 }

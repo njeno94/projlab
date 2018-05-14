@@ -76,17 +76,6 @@ public class SwitchHoleField extends Field {
 		}
 	}
 	
-	@Override
-	public void Draw() {
-		System.out.print("t");
-		if (thing != null) {
-			thing.Draw();
-		} else {
-			System.out.print(" ");
-		}
-		DrawFriction();
-	}
-	
 	public boolean getState() {
 		return state;
 	}

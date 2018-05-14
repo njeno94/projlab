@@ -6,7 +6,6 @@ package Model;
  * Amennyiben toltak rá ládát, a láda nem mozdítható onnan. 
  */
 public class GoalField extends Field {
-
 	private boolean boxReached;
 
 	/**
@@ -54,19 +53,8 @@ public class GoalField extends Field {
 			}			
 		}
 	}
-	@Override
-	public void Draw() {
-		System.out.print("g");
-		if (thing != null) {
-			thing.Draw();
-		} else {
-			System.out.print(" ");
-		}
-		DrawFriction();
-	}
 
 	public boolean isBoxReached() {
 		return boxReached;
 	}
-	
 }

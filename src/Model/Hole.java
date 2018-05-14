@@ -29,9 +29,4 @@ public class Hole extends Field {
 			b.disappear();
 		}
 	}
-	
-	@Override
-	public void Draw() {
-		System.out.print("h  ");
-	}
 }

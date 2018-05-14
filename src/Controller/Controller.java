@@ -27,7 +27,7 @@ public class Controller implements ActionListener, KeyListener {
 	private JMenuItem exitMenuItem;
 	private JMenuItem onePlayerMenuI;
 	private JMenuItem twoPlayerMenuI;
-	
+	private boolean twoPlayerGame;
 	
 	private View view = new View();
 	private Game game = null;
@@ -71,14 +71,17 @@ public class Controller implements ActionListener, KeyListener {
 			}
 		});
 		
-		frame.setJMenuBar(menuBar);
+		twoPlayerGame = false;
 		
+		frame.setJMenuBar(menuBar);
 		frame.add(view);		
 		frame.addKeyListener(this);
 		
 		timer = new Timer(20, this);
 		
+		//Starting with 2 players mode game
 		startGame(true);
+		//Fit frame to View's JPanel
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -90,6 +93,7 @@ public class Controller implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		view.setWorkersPoints(game.getWorkerPoints()[0], game.getWorkerPoints()[1]);
 		updateViews();
 		view.update();
 		if (checkGameEnd()) {
@@ -101,6 +105,7 @@ public class Controller implements ActionListener, KeyListener {
 	public void startGame(boolean twoPlayerMode) {
 		view.clear();
 		game = new Game(view);
+		twoPlayerGame = twoPlayerMode;
 		game.startGame(twoPlayerMode);
 		game.setMap("src/Model/warehouse.txt");
 		timer.start();
@@ -168,12 +173,28 @@ public class Controller implements ActionListener, KeyListener {
 	
 	public boolean checkGameEnd() {
 		if (!game.checkWorkersAlive()) {
-			JOptionPane.showMessageDialog(frame, "Meghalt az egyik munkás!", "W valaki won", 0);
+			if (twoPlayerGame) {
+				if (game.getWorkerPoints()[0] > game.getWorkerPoints()[1]) {
+					JOptionPane.showMessageDialog(frame, "Player 2 meghalt... Player 1 győzött!", "Game over", 0);				
+				} else {
+					JOptionPane.showMessageDialog(frame, "Player 1 meghalt... Player 2 győzött!", "Game over", 0);
+				}				
+			} else {
+				JOptionPane.showMessageDialog(frame, "Player 1 meghalt...", "Game over", 0);
+			}
 			return true;
 		}
 		
 		if (!game.checkGoalFields()) {
-			JOptionPane.showMessageDialog(frame, "Minden célhelyre került láda!", "W valaki won", 0);
+			if (twoPlayerGame) {
+				if (game.getWorkerPoints()[0] > game.getWorkerPoints()[1]) {
+					JOptionPane.showMessageDialog(frame, "Minden célhelyre került láda! Player 1 győzött több ponttal!", "Congratulations!", 0);				
+				} else {
+					JOptionPane.showMessageDialog(frame, "Minden célhelyre került láda! Player 2 győzött több ponttal!", "Congratulations!", 0);
+				}				
+			} else {
+				JOptionPane.showMessageDialog(frame, "Minden célhelyre került láda! Player 1 győzött " + game.getWorkerPoints()[0] + " ponttal!", "Congratulations!", 0);
+			}
 			return true;
 		}
 		
@@ -189,5 +210,4 @@ public class Controller implements ActionListener, KeyListener {
 		
 		return false;
 	}
-	
 }

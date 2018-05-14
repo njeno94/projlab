@@ -146,26 +146,6 @@ public class Field {
 		return currentFriction;
 	}
 	
-	public void Draw() {
-		System.out.print("f");
-		if (thing != null) {
-			thing.Draw();
-		} else {
-			System.out.print(" ");
-		}
-		DrawFriction();
-	}
-
-	public void DrawFriction() {
-		if( currentFriction == frictionAtStart ){
-			System.out.print(" ");		
-		} else if( currentFriction < frictionAtStart ){
-			System.out.print("h");			
-		} else if( currentFriction > frictionAtStart ){
-			System.out.print("o");		
-		}
-	}
-	
 	protected void moveThingToCurrentField(Thing t) {
 		t.removeFromField();
 		addThing(t);
@@ -177,25 +157,29 @@ public class Field {
 			thing.pushed(b, d, force, friction);
 		}
 	}
-	
+
 	protected void pushThingIfExists(Worker w, Direction d){
 		if (thing != null) {
 			thing.pushed(w, d);
 		}
 	}
 	
+	/**
+	 * Ellenőrizni lehet, hogy doboz került-e a mezőre. A játék vége vizsgálatnál használatos.
+	 * @return igaz, ha szabad a mező, egyébként hamis.
+	 */
 	public boolean isOpened() {
 		return opened;
 	}
 	
+	/**
+	 * A mezőn levő dolog aktuális nézetét adja vissza.
+	 * @return Ha van a mezőn thing, akkor az elkészült nézete, egyébként null.
+	 */
 	public ThingView getActualThingView() {
 		if (thing == null) {
 			return null;
 		}
 		return thing.getView();
 	}
-	
-
-	
-	
 }

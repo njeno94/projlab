@@ -47,17 +47,6 @@ public class SwitchField extends Field {
 		active = false;
 	}
 	
-	@Override
-	public void Draw() {
-		System.out.print("s");
-		if (thing != null) {
-			thing.Draw();
-		} else {
-			System.out.print(" ");
-		}
-		DrawFriction();
-	}
-	
 	public boolean isActive() {
 		return active;
 	}

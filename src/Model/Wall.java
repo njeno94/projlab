@@ -35,15 +35,4 @@ public class Wall extends Field {
 	@Override
 	public void accept(Box b, Direction d, int force, int friction) {
 	}
-	
-	@Override
-	public void Draw() {
-		System.out.print("w");
-		if (thing != null) {
-			thing.Draw();
-		}
-		else {
-			System.out.print("  ");
-		}
-	}
 }

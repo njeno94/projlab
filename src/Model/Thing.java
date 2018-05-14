@@ -60,7 +60,9 @@ public abstract class Thing {
 		field = null;
 	}
 	
-	public abstract void Draw();
-	
+	/**
+	 * A dolog nézetét lérehozó metódus, mely a leszármazottakban kerül implementálásra.
+	 * @return Az aktuális dologhoz tartozó nézet.
+	 */
 	public abstract ThingView getView();
 }

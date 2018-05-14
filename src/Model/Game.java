@@ -18,7 +18,7 @@ public class Game {
 	private List<Box> dobozok;
 	private boolean firstWorkerSetted;
 	private boolean twoPlayerMode;
-	public static int width = 500;
+	public static int width = 520;
 	private Worker w1;
 	private Worker w2;
 	
@@ -243,17 +243,6 @@ public class Game {
 		}
 	}
 	
-	public void showWareHouse() {
-		for (int i=0; i < raktarepulet.size(); i++) {
-			System.out.print("|");
-			raktarepulet.get(i).Draw();
-			if ((i + 1 )% width == 0) {
-				System.out.print("|");				
-				System.out.println();
-			}
-		}
-	}
-	
 	public void moveW1(Direction d) {
 		w1.step(d);
 	}
@@ -287,5 +276,10 @@ public class Game {
 
 	public List<Field> getWareHouse(){
 		return raktarepulet;
+	}
+	
+	public int[] getWorkerPoints() {
+		int[] points = {w1.getPoint(), w2.getPoint()};
+		return points;
 	}
 }

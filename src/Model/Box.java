@@ -6,9 +6,7 @@ import View.ThingView;
  * Ez az osztály reprezentálja a ládákat a játékban.
  */
 public class Box extends Thing {
-
 	private boolean onGoalField;
-	
 	/**
 	 * A ládák tolását valósítja meg, amikor munkás tolja a ládát.
 	 * @param w a munkás, aki tolja a ládát
@@ -18,7 +16,6 @@ public class Box extends Thing {
 		Field nextField = field.getNeighbour(d);
 		
 		nextField.accept(this, d, w.getForce(), field.getFriction());
-
 	}
 	
 	/**
@@ -31,12 +28,11 @@ public class Box extends Thing {
 	
 		nextField.accept(this, d, force, friction);
 	}
-
-	@Override
-	public void Draw() {
-		System.out.print("b");
-	}
 	
+	/**
+	 * A ládák tolhatóságát vizsgáló függvény. 
+	 * @return Igaz, ha tolható valamerről a láda, hamis ha nem.
+	 */
 	public boolean canBePushed() {
 		Direction[] dirs = Direction.values();
 		for (int i = 0; i < dirs.length; i++) {
@@ -51,15 +47,26 @@ public class Box extends Thing {
 		return false;
 	}
 
+	/**
+	 * A doboz nézetét létrehozó metódus.
+	 * @return az aktuális doboz ThingView objektuma.
+	 */
 	@Override
 	public ThingView getView() {
 		return new ThingView(this);
 	}
 	
+	/**
+	 * Visszaadja, hogy a doboz elért-e már célmezőre.
+	 * @return Igaz, ha célmezőn van, egyébként hamis.
+	 */
 	public boolean isReachedToGoalField() {
 		return onGoalField;
 	}
 
+	/**
+	 * A doboz célmezőre jutásakor hívódik.
+	 */
 	public void arrivedOnGoalField() {
 		onGoalField = true;
 	}
