@@ -44,6 +44,7 @@ public class SwitchField extends Field {
 	public void removeThing() {
 		thing = null;
 		hole.setState(false);
+		active = false;
 	}
 	
 	@Override
