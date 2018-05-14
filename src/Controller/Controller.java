@@ -38,8 +38,8 @@ public class Controller implements ActionListener, KeyListener {
 	public Controller() {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(view.width, view.height);
 		frame.setTitle("Sokoban Killer by emoji");
+		frame.setResizable(false);
 		
 		menuBar = new JMenuBar();
 		newGameMenu = new JMenu("New Game");
@@ -75,9 +75,12 @@ public class Controller implements ActionListener, KeyListener {
 		
 		frame.add(view);		
 		frame.addKeyListener(this);
-		frame.setVisible(true);
 		
 		timer = new Timer(20, this);
+		
+		startGame(true);
+		frame.pack();
+		frame.setVisible(true);
 	}
 	
 	
