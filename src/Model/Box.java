@@ -7,6 +7,7 @@ import View.ThingView;
  */
 public class Box extends Thing {
 	private boolean onGoalField;
+	private boolean disappeared = false;
 	/**
 	 * A ládák tolását valósítja meg, amikor munkás tolja a ládát.
 	 * @param w a munkás, aki tolja a ládát
@@ -46,7 +47,17 @@ public class Box extends Thing {
 		}
 		return false;
 	}
-
+	
+	@Override
+	public void disappear() {
+		removeFromField();
+		field = null;
+		disappeared = true;
+	} 
+	
+	public boolean disappeared() {
+		return disappeared;
+	}
 	/**
 	 * A doboz nézetét létrehozó metódus.
 	 * @return az aktuális doboz ThingView objektuma.

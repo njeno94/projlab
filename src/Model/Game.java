@@ -61,7 +61,6 @@ public class Game {
 		} else {
 			return false;
 		}
-		
 	}
 	
 	public boolean checkWorkersAlive() {
@@ -83,6 +82,16 @@ public class Game {
 	 * @return igaz, ha van mozgatható láda, egyébként hamis
 	 */
 	public boolean checkBoxDeadlock() {
+		int disappeared = 0;
+		for (Box b : dobozok) {
+			if (b.disappeared()) {
+				disappeared++;
+			}
+		}
+		if ((dobozok.size() - disappeared) < celmezok.size()) {
+			return false;
+		}
+		
 		for (Box b : dobozok) {
 			if (b.canBePushed()  && !b.isReachedToGoalField()) {
 				return true;
