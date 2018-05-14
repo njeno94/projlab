@@ -1,4 +1,5 @@
 package View;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ public class View extends JPanel {
 	
 	
 	public View() {
+		this.setPreferredSize(new Dimension(width, height));
 		this.setSize(width, height);
 		
 		elements = new LinkedList<Drawable>();
