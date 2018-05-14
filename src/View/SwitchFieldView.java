@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import Model.Field;
 import Model.SwitchField;
 
 public class SwitchFieldView implements Drawable {
@@ -33,11 +35,13 @@ public class SwitchFieldView implements Drawable {
 	public void Draw(Graphics g, int x, int y) {
 		if (switchField.isActive()) {
 			g.drawImage(activeswitchFieldImage, x, y, null);
+			FieldView.DrawFrictionImage(switchField, g, x, y);
 			if (thingView != null) {
 				thingView.Draw(g, x, y);
 			}
 		} else {
 			g.drawImage(inactiveswitchFieldImage, x, y, null);
+			FieldView.DrawFrictionImage(switchField, g, x, y);
 			if (thingView != null) {
 				thingView.Draw(g, x, y);
 			}

@@ -48,7 +48,7 @@ public class ThingView implements Drawable {
 	@Override
 	public void Draw(Graphics g, int x, int y) {
 		//Konstans eltolás, mert kisebb a thingImage, hogy jobban látszódjon, hogy hol van a thing
-		g.drawImage(thingImage, x + 10, y + 10, null);
+		g.drawImage(thingImage, x + View.imageWidth / 5, y + 10, null);
 	}
 
 	@Override

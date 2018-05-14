@@ -10,10 +10,10 @@ import Model.SwitchHoleField;
 import Model.Wall;
 
 public class View extends JPanel {
-
 	private LinkedList<Drawable> elements;
 	public static int width = 500;
 	public static int height = 500;
+	public static final int imageWidth = 50;
 	private int columns;
 	
 	
@@ -55,10 +55,10 @@ public class View extends JPanel {
 		int y = 0;
 		for (int i = 0; i < elements.size(); i++) {
 			elements.get(i).Draw(g, x, y);
-			x += 50;
-			if ((i + 1 )% columns == 0) {
+			x += imageWidth;
+			if ((i + 1 ) % columns == 0) {
 				x = 0;
-				y += 50;
+				y += imageWidth;
 			}
 		}
 	}

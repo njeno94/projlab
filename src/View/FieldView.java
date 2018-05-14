@@ -3,16 +3,14 @@ package View;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import Model.Field;
 
 public class FieldView implements Drawable {
 	private Field field;
 	private BufferedImage fieldImage;
-	private BufferedImage fieldWithOilImage;
-	private BufferedImage fieldWithHoneyImage;
+	public static BufferedImage oilImage;
+	public static BufferedImage honeyImage;
 	
 	private ThingView thingView;
 	
@@ -26,13 +24,13 @@ public class FieldView implements Drawable {
 			e.printStackTrace();
 		}
 		try {
-			fieldWithOilImage = ImageIO.read((FieldView.class.getResource("/Images/fieldWithOil.png")));
+			oilImage = ImageIO.read((FieldView.class.getResource("/Images/oil.png")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			fieldWithHoneyImage = ImageIO.read((FieldView.class.getResource("/Images/fieldWithHoney.png")));
+			honeyImage = ImageIO.read((FieldView.class.getResource("/Images/honey.png")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,21 +43,19 @@ public class FieldView implements Drawable {
 	
 	@Override
 	public void Draw(Graphics g, int x, int y) {
-		if (field.getFriction() == Field.frictionAtStart ){
-			g.drawImage(fieldImage, x, y, null);
-			if (thingView != null) {
-				thingView.Draw(g, x, y);
-			}		
-		} else if (field.getFriction() < Field.frictionAtStart ){
-			g.drawImage(fieldWithOilImage, x, y, null);
-			if (thingView != null) {
-				thingView.Draw(g, x, y);
-			}			
-		} else if (field.getFriction() > Field.frictionAtStart ){
-			g.drawImage(fieldWithHoneyImage, x, y, null);
-			if (thingView != null) {
-				thingView.Draw(g, x, y);
-			}		
+		g.drawImage(fieldImage, x, y, null);
+		DrawFrictionImage(field, g, x, y);
+		if (thingView != null) {
+			thingView.Draw(g, x, y);
+		}		
+	}
+	
+	public static void DrawFrictionImage(Field f, Graphics g, int x, int y) {
+		if (f.getFriction() < Field.frictionAtStart ){;
+			g.drawImage(oilImage, x, y, null);
+		
+		} else if (f.getFriction() > Field.frictionAtStart ){
+			g.drawImage(honeyImage, x, y, null);	
 		}
 	}
 }
