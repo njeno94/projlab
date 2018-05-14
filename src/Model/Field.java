@@ -135,11 +135,11 @@ public class Field {
 	}
 	
 	public void increaseFriction() {
-		currentFriction -= 2;
+		currentFriction += 2;
 	}
 	
 	public void decreaseFriction() {
-		currentFriction += 2;
+		currentFriction -= 2;
 	}
 	
 	public int getFriction() {
